@@ -1,0 +1,42 @@
+<div class="d-flex">
+    <div class="d-flex flex-shrink-0 p-3 sidebar-body flex-column">
+        <p class="d-flex align-items-center ps-3 pb-1 mb-3 link-dark text-decoration-none border-bottom">
+            <span class="fs-5 fw-semibold">CATEGORÍAS</span>
+        </p>
+        <ul class="list-unstyled ps-0">
+            <li class="mb-1" *ngFor="let category of categories">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                    attr.data-bs-target="#home-collapse{{category.id}}" aria-expanded="false">
+                    {{category.name}}
+                </button>
+                <div class="collapse" [id]="'home-collapse'+category.id">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li *ngFor="let subCategory of category.subCategories"><a class="link-dark rounded">{{subCategory.name}}</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <p class="d-flex align-items-center ps-3 py-1 my-3 link-dark text-decoration-none border-bottom border-top">
+            <span class="fs-5 fw-semibold">FILTROS</span>
+        </p>
+        <ul class="list-unstyled ps-0">
+            <li class="mb-1">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#account-collapse" aria-expanded="false">
+                    Color
+                </button>
+                <div class="collapse" id="account-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li class="my-2" *ngFor="let color of colors"> 
+                            <input class="form-check-input ms-4" type="checkbox" value="" [id]="'check' + color.name">
+                            <label class="form-check-label ms-2" [for]="'check' + color.name">
+                                {{color.name}}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <router-outlet></router-outlet>
+</div>
