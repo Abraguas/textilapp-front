@@ -1,0 +1,60 @@
+<button class="btn btn-light rounded ms-2 mt-3" data-bs-toggle="modal" attr.data-bs-target="#modal{{modalId}}">
+    <div style="">
+        <div class="row p-1 d-flex flex-column align-items-center justify-content-center">
+            <div class="d-flex align-items-center">
+                <img [src]="product.image? product.image : defaultRoute" class="img-fluid rounded ms-2"
+                    style="max-height: 170px;" [alt]="product.name">
+            </div>
+
+            <div class="text-center">
+                <p class="m-0">{{product.name}}</p>
+                <p class="text-muted m-0" style="font-size: 12px; min-height: 36px;">{{product.description}}</p>
+                <p class=" m-0"><strong>$ {{product.pricePerUnit}}</strong> x {{product.unit.name}}</p>
+            </div>
+        </div>
+    </div>
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" [id]="'modal'+modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 930px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{product.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <img [src]="product.image? product.image : defaultRoute" [alt]="product.name" class="img-fluid"
+                            style="height: 400px;">
+                    </div>
+                    <div class="col-6">
+                        <p>{{product.description}}</p>
+                        <p>Color: {{product.color.name}}</p>
+                        <p>Marca: {{product.brand.name}}</p>
+                        <p>Medida: {{product.measurment}}</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <span class="text-muted">
+                    Cantidad:
+                </span>
+                <div class="input-group border-secondary me-5" style="max-width: 180px;">
+                    <button class="btn btn-secondary" (click)="quantityChange(false)"><strong>-</strong></button>
+                    <span class="input-group-text">{{quantity}} {{product.unit.name}}/s</span>
+                    <button class="btn btn-secondary" (click)="quantityChange(true)"><strong>+</strong></button>
+
+                </div>
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="clearModal()">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="add()" data-bs-dismiss="modal">Agregar
+                    producto</button>
+            </div>
+        </div>
+    </div>
+</div>
