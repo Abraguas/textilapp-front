@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">TextilApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="role === 'ADMIN'">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Gestión</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tienda</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="role === 'CLIENT'">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tienda</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!role || (role !== 'ADMIN' && role !== 'CLIENT')">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <ng-container *ngIf="!role">
+                    <button class="btn btn-secondary mx-2" type="submit">Registrarme</button>
+                    <button class="btn btn-primary mx-2" type="submit">Iniciar Sesion</button>
+                </ng-container>
+                <ng-container *ngIf="role">
+                    <button class="btn btn-secondary mx-2" type="submit">Cerrar Sesión</button>
+                </ng-container>
+            </form>
+        </div>
+    </div>
+</nav>
