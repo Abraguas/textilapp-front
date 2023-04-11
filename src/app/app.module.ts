@@ -7,11 +7,16 @@ import { NavbarComponent } from './components/bars/navbar/navbar.component';
 import { StoreSidebarComponent } from './components/bars/store-sidebar/store-sidebar.component';
 import { ManagementSidebarComponent } from './components/bars/management-sidebar/management-sidebar.component';
 import { HomeComponent } from './components/home/home.component';
-import { TestComponent } from './components/test/test.component';
 import { ProductButtonComponent } from './components/product/product-button/product-button.component';
 import { CategoryService } from './services/category.service';
-import { StorePageComponent } from './components/store/store-page/store-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductCatalogComponent } from './components/product/product-catalog/product-catalog.component';
+import { ProductService } from './services/product.service';
+import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SessionService } from './services/session.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -20,17 +25,22 @@ import { HttpClientModule } from '@angular/common/http';
     StoreSidebarComponent,
     ManagementSidebarComponent,
     HomeComponent,
-    TestComponent,
     ProductButtonComponent,
-    StorePageComponent
+    ProductCatalogComponent,
+    LogoutButtonComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [
-    CategoryService
+    CategoryService,
+    ProductService,
+    UserService,
+    SessionService
   ],
   bootstrap: [AppComponent]
 })
