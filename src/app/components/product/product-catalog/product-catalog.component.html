@@ -1,0 +1,55 @@
+<div class="container-fluid d-flex p-0">
+    <div class="row  p-0" style="width: 100%;">
+        <div class="col-md-9 col-sm-12 p-5 " style="height: 95vh;">
+            <div class="container-fluid">
+                <h1>Productos</h1>
+                <h5 class="text-muted">Seleccione el producto que desee agregar a su pedido:</h5>
+            </div>
+            <div class="d-flex catalog justify-content-around flex-wrap p-5">
+                <ng-container *ngFor="let p of products">
+                    <app-product-button (onAdd)="addDetail($event)" [product]="p" [modalId]="p.id" [disabled]="isAdded(p)"></app-product-button>
+                </ng-container>
+            </div>
+
+        </div>
+        <div class="col-md-3 col-sm-12 bg-light m-0">
+            <div class="container-fluid py-3">
+                <div class="row">
+
+                    <h1>Carrito:</h1>
+                </div>
+                <div class="row">
+                    <ol class="list-group">
+                        <li *ngFor="let d of order.details"
+                            class="list-group-item d-flex justify-content-between align-items-start">
+                            <span class="badge align-self-center bg-primary rounded-pill">{{d.quantity}} {{d.product.unit.name}}</span>
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">{{d.product.name}}</div>
+                                ${{d.pricePerUnit*d.quantity}}
+                            </div>
+                            <button class="btn btn-close align-self-center ms-2" (click)="removeDetail(d)"></button>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start"
+                            [ngClass]="'list-group-item-primary' ">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">TOTAL: ${{totalPrice}}</div>
+                            </div>
+                            <p class="m-0">Items: {{totalQuantity}}</p>
+                        </li>
+                    </ol>
+                    <div class="row">
+                        <div class="container-fluid p-0">
+                            <div class="mb-3 mt-5">
+                                <label for="observaciones" class="form-label">Observaciones</label>
+                                <textarea class="form-control" id="observaciones" rows="3"
+                                    ></textarea>
+                            </div>
+                            <button class="btn btn-primary mt-3">Enviar Pedido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

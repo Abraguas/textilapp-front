@@ -1,0 +1,4 @@
+.catalog {
+    overflow-y: scroll;
+    max-height: 92%;
+}
