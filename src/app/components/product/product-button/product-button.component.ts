@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { OrderDetailDTO } from 'src/app/models/order-detail-dto';
 import { Product } from 'src/app/models/product';
 
 @Component({
@@ -10,7 +11,10 @@ export class ProductButtonComponent {
   @Input() modalId: number = 1;
   @Input() disabled: boolean;
   @Input() product: Product;
-  defaultRoute:string;
+  @Output() onAdd = new EventEmitter<OrderDetailDTO>();
+
+  orderDetail: OrderDetailDTO;
+  defaultRoute:string = "../../assets/img/default-item.jpg";
   quantity: number = 1;
   maxQuantity: number = 20;
   minQuantity: number = 1;
@@ -31,9 +35,18 @@ export class ProductButtonComponent {
     }
   }
   add(): void {
-
+    this.orderDetail = {
+      quantity: this.quantity,
+      pricePerUnit: this.product.pricePerUnit,
+      product: this.product
+    }
+    this.onAdd.emit(this.orderDetail);
+    this.disabled = true;
+    this.clearModal();
   }
-  clearModal(): void {
 
+  clearModal(): void {
+    this.orderDetail = new OrderDetailDTO();
+    this.quantity = 1;
   }
 }
