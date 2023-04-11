@@ -1,4 +1,4 @@
-<button class="btn btn-light rounded ms-2 mt-3" data-bs-toggle="modal" attr.data-bs-target="#modal{{modalId}}">
+<button class="btn btn-light rounded ms-2 mt-3" [disabled]="disabled" data-bs-toggle="modal" attr.data-bs-target="#modal{{modalId}}">
     <div style="">
         <div class="row p-1 d-flex flex-column align-items-center justify-content-center">
             <div class="d-flex align-items-center">
@@ -43,7 +43,7 @@
                 <span class="text-muted">
                     Cantidad:
                 </span>
-                <div class="input-group border-secondary me-5" style="max-width: 180px;">
+                <div class="input-group border-secondary me-5" style="max-width: 200px;">
                     <button class="btn btn-secondary" (click)="quantityChange(false)"><strong>-</strong></button>
                     <span class="input-group-text">{{quantity}} {{product.unit.name}}/s</span>
                     <button class="btn btn-secondary" (click)="quantityChange(true)"><strong>+</strong></button>
