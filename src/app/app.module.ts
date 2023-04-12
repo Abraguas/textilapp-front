@@ -14,9 +14,10 @@ import { ProductCatalogComponent } from './components/product/product-catalog/pr
 import { ProductService } from './services/product.service';
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionService } from './services/session.service';
 import { UserService } from './services/user.service';
+import { OrderService } from './services/order.service';
 
 @NgModule({
   declarations: [
@@ -34,13 +35,15 @@ import { UserService } from './services/user.service';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [
     CategoryService,
     ProductService,
     UserService,
-    SessionService
+    SessionService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })
