@@ -1,10 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderDetailDTO } from 'src/app/models/order-detail-dto';
 import { OrderDTO } from 'src/app/models/order-dto';
 import { Product } from 'src/app/models/product';
+import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
+import { SweetAlert } from 'sweetalert/typings/core';
+declare var require: any
+const swal: SweetAlert = require('sweetalert');
 
 @Component({
   selector: 'app-product-catalog',
@@ -18,10 +23,13 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
   products: Product[];
   subscription: Subscription;
   order: OrderDTO;
+  observationsControl = new FormControl('');
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private router: Router,
+    private productService: ProductService,
+    private orderService: OrderService
   ) { }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -80,7 +88,7 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
         })
       );
     }
-    
+
   }
   getTotal(): void {
     let total = 0;
@@ -103,5 +111,20 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
+  }
+  save(): void {
+    this.order.observations = this.observationsControl.value ? this.observationsControl.value : "";
+    this.subscription.add(
+      this.orderService.save(this.order).subscribe({
+        next: () => {
+          swal({ title: 'Listo!', text: 'Registraste tu pedido con éxito.', icon: 'success' });
+          this.router.navigate(['/home']);
+        },
+        error: (e) => {
+          swal({ title: 'Error!', text: 'Ocurrió un error', icon: 'error' });
+          console.error(e);
+        }
+      })
+    )
   }
 }
