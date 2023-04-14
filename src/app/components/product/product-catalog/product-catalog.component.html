@@ -24,7 +24,9 @@
                         <li *ngFor="let d of order.details"
                             class="list-group-item d-flex justify-content-between align-items-start">
                             <span class="badge align-self-center bg-primary rounded-pill">{{d.quantity}}
-                                {{d.product.unit.name}}</span>
+                                {{d.product.unit.name}}<ng-container *ngIf="d.quantity > 1"><ng-container 
+                                *ngIf="!['a','e','i','o','u'].includes(d.product.unit.name.charAt(d.product.unit.name.length - 1).toLowerCase())">e</ng-container>s</ng-container>
+                            </span>
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">{{d.product.name}}</div>
                                 ${{d.pricePerUnit*d.quantity}}

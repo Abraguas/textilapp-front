@@ -45,7 +45,8 @@
                 </span>
                 <div class="input-group border-secondary me-5" style="max-width: 200px;">
                     <button class="btn btn-secondary" (click)="quantityChange(false)"><strong>-</strong></button>
-                    <span class="input-group-text">{{quantity}} {{product.unit.name}}/s</span>
+                    <span class="input-group-text">{{quantity}} {{product.unit.name}}<ng-container *ngIf="quantity > 1"><ng-container 
+                        *ngIf="!['a','e','i','o','u'].includes(product.unit.name.charAt(product.unit.name.length - 1).toLowerCase())">e</ng-container>s</ng-container></span>
                     <button class="btn btn-secondary" (click)="quantityChange(true)"><strong>+</strong></button>
 
                 </div>
