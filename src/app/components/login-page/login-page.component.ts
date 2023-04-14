@@ -52,7 +52,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
           },
           error: (e) => { 
             let message = "Error de servidor"
-            if(e.status == 401) {
+            if(e.status == 403) {
               message = "Usuario y/o contraseña incorrecto"
             }
             console.log(e);
