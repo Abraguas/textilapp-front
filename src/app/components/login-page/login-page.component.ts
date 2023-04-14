@@ -66,6 +66,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     }
   }
   return(): void {
-
+    this.router.navigate(['home']);
   }
 }
