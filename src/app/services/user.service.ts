@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginDTO } from '../models/login-dto';
 import { Observable } from 'rxjs';
+import { ClientRegisterDTO } from '../models/client-register-dto';
 
 @Injectable()
 export class UserService {
@@ -11,6 +12,9 @@ export class UserService {
   constructor(private http: HttpClient) { }
   login(loginDTO: LoginDTO): Observable<any> {
     return this.http.post<any>(`${this.API_URL}authenticate`, loginDTO);
+  }
+  registerClient(user: ClientRegisterDTO): Observable<any> {
+    return this.http.post<any>(`${this.API_URL}user/client`, user);
   }
   getRole(): Observable<string> {
     let auth_token = localStorage.getItem('token');

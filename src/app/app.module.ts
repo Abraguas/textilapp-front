@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionService } from './services/session.service';
 import { UserService } from './services/user.service';
 import { OrderService } from './services/order.service';
+import { RegisterComponent } from './components/user/register/register.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { OrderService } from './services/order.service';
     ProductButtonComponent,
     ProductCatalogComponent,
     LogoutButtonComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

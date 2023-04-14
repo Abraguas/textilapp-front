@@ -4,11 +4,13 @@ import { StoreSidebarComponent } from './components/bars/store-sidebar/store-sid
 import { HomeComponent } from './components/home/home.component';
 import { ProductCatalogComponent } from './components/product/product-catalog/product-catalog.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { RegisterComponent } from './components/user/register/register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginPageComponent},
+  { path: 'register', component: RegisterComponent},
   { 
     path: 'store', component: StoreSidebarComponent,
     children: [
