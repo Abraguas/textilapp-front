@@ -1,6 +1,6 @@
 <div class="text-white fondo py-5">
-    <div class="row">
-        <div class="col-6 p-5">
+    <div class="row overflow-auto">
+        <div class="col-md-6 col-12 p-5 order-md-1 order-2">
             <div class="container p-5 text-end">
                 <h1 class="display-1" style="font-size: 8rem;">
                     Textil App
@@ -9,20 +9,20 @@
                     blanca como en telas.</p>
             </div>
         </div>
-        <div class="col-6 p-5">
+        <div class="col-md-6 col-12 p-md-5 order-md-2 order-1 p-0">
 
-            <div class="container bg-light text-dark login-form border border-secondary rounded my-5 mx-5">
+            <div class="container bg-light text-dark login-form border border-secondary rounded m-0 m-md-5 text-center">
                 <div class="py-5 px-5">
-                    <h3 class="mb-5">Iniciar Sesión</h3>
+                    <h3 class="mb-5 text-start">Iniciar Sesión</h3>
                     <form [formGroup]="form">
-                        <div class="mb-5">
+                        <div class="mb-5 text-start">
                             <label for="inputUser" class="form-label">Nombre de usuario</label>
                             <input type="text" class="form-control" id="inputUser" formControlName="username"
                                 [class.is-invalid]="form.controls['username'].hasError('required') && form.controls['username'].touched" />
                             <p *ngIf="form.controls['username'].hasError('required') && form.controls['username'].touched"
                                 class="invalid-feedback">Debe ingresar un nombre de usuario</p>
                         </div>
-                        <div class="mb-5">
+                        <div class="mb-5 text-start">
                             <label for="inputPassword" class="form-label">Contraseña</label>
                             <input type="password" class="form-control" id="inputPassword"
                                 formControlName="password"
