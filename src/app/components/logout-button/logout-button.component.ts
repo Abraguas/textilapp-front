@@ -27,13 +27,9 @@ export class LogoutButtonComponent {
     })
     .then((cerrarSesion: boolean) => {
       if (cerrarSesion) {
-        localStorage.removeItem('token');
-        this.sessionService.changeState(false);
-        this.router.navigate(['home']);
-        swal("Hasta pronto!", {
-          icon: "success",
-        });
+        this.sessionService.logout();
       }
     });
+
   }
 }
