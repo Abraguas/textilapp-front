@@ -19,6 +19,7 @@ import { SessionService } from './services/session.service';
 import { UserService } from './services/user.service';
 import { OrderService } from './services/order.service';
 import { RegisterComponent } from './components/user/register/register.component';
+import { MyAccountComponent } from './components/user/my-account/my-account.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { RegisterComponent } from './components/user/register/register.component
     ProductCatalogComponent,
     LogoutButtonComponent,
     LoginPageComponent,
-    RegisterComponent
+    RegisterComponent,
+    MyAccountComponent
   ],
   imports: [
     BrowserModule,

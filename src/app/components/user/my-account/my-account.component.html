@@ -1,0 +1,115 @@
+<div class="fondo">
+    <div id="main" class="container mt-5 border border-secondary rounded bg-white">
+        <div class="py-5 px-5">
+            <h3 class="mb-3">Mi Cuenta</h3>
+            <form [formGroup]="form">
+                <div class="mb-3">
+                    <label for="usernameInput" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="usernameInput" formControlName="username"
+                        [class.is-invalid]="
+                    (form.controls['username'].hasError('required') 
+                    || form.controls['username'].hasError('minlength') 
+                    || form.controls['username'].hasError('maxlength')  )
+                    && form.controls['username'].touched" />
+                    <span class="invalid-feedback">
+                        <div *ngIf="form.controls['username'].hasError('required')">Debe
+                            ingresar un usuario.</div>
+                        <div *ngIf="form.controls['username'].hasError('minlength')">El
+                            usuario debe tener más de 3 caracteres.</div>
+                        <div *ngIf="form.controls['username'].hasError('maxlength')">El usuario
+                            no debe tener más de 32 caracteres.</div>
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="passwordInput" formControlName="password"
+                        [class.is-invalid]="
+                    (form.controls['password'].hasError('required') 
+                    || form.controls['password'].hasError('minlength') 
+                    || form.controls['password'].hasError('maxlength')  )
+                    && form.controls['password'].touched" />
+                    <span class="invalid-feedback">
+                        <div *ngIf="form.controls['password'].hasError('required')">Debe
+                            ingresar una contraseña.</div>
+                        <div *ngIf="form.controls['password'].hasError('minlength')">La contraseña
+                            debe tener más de 3 caracteres.</div>
+                        <div *ngIf="form.controls['password'].hasError('maxlength')">La contraseña
+                            no debe tener más de 32 caracteres.</div>
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label for="nameInput" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nameInput" formControlName="name" [class.is-invalid]="
+                    (form.controls['name'].hasError('required') 
+                    || form.controls['name'].hasError('minlength') 
+                    || form.controls['name'].hasError('maxlength')  )
+                    && form.controls['name'].touched" />
+                    <span class="invalid-feedback">
+                        <div *ngIf="form.controls['name'].hasError('required')">Debe
+                            ingresar un Nombre.</div>
+                        <div *ngIf="form.controls['name'].hasError('minlength')">El nombre
+                            debe tener más de 3 caracteres.</div>
+                        <div *ngIf="form.controls['name'].hasError('maxlength')">El nombre
+                            no debe tener más de 32 caracteres.</div>
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label for="lastnameInput" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="lastnameInput" formControlName="lastname"
+                        [class.is-invalid]="
+                    (form.controls['lastname'].hasError('required') 
+                    || form.controls['lastname'].hasError('minlength') 
+                    || form.controls['lastname'].hasError('maxlength')  )
+                    && form.controls['lastname'].touched" />
+                    <span class="invalid-feedback">
+                        <div *ngIf="form.controls['lastname'].hasError('required')">Debe
+                            ingresar un apellido.</div>
+                        <div *ngIf="form.controls['lastname'].hasError('minlength')">El apellido
+                            debe tener más de 3 caracteres.</div>
+                        <div *ngIf="form.controls['lastname'].hasError('maxlength')">El apellido
+                            no debe tener más de 32 caracteres.</div>
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label for="emailInput" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="emailInput" formControlName="email" [class.is-invalid]="
+                    (form.controls['email'].hasError('required') 
+                    || form.controls['email'].hasError('email')  )
+                    && form.controls['email'].touched" />
+                    <span class="invalid-feedback">
+                        <div *ngIf="form.controls['email'].hasError('required')">Debe
+                            ingresar un email.</div>
+                        <div *ngIf="form.controls['email'].hasError('email')">Debe ingresar un email válido</div>
+                    </span>
+                </div>
+                <div class="mb-3">
+                    <label for="phonenumberInput" class="form-label">Número de Teléfono</label>
+                    <input type="text" class="form-control" id="phonenumberInput" formControlName="phonenumber"
+                        [class.is-invalid]="
+                    (form.controls['phonenumber'].hasError('required') 
+                    || form.controls['phonenumber'].hasError('minlength') 
+                    || form.controls['phonenumber'].hasError('maxlength')  )
+                    && form.controls['phonenumber'].touched" />
+                    <span class="invalid-feedback">
+                        <div *ngIf="form.controls['phonenumber'].hasError('required')">Debe
+                            ingresar un teléfono.</div>
+                        <div *ngIf="form.controls['phonenumber'].hasError('minlength')">El teléfono
+                            debe tener más de 3 caracteres.</div>
+                        <div *ngIf="form.controls['phonenumber'].hasError('maxlength')">El teléfono
+                            no debe tener más de 32 caracteres.</div>
+                    </span>
+                </div>
+                <div class="text-end">
+                    <ng-container *ngIf="editingEnabled">
+                        <button type="submit" class="btn btn-success" (click)="save()">Guardar</button>
+                        <button type="submit" class="btn btn-secondary ms-3" (click)="toggleEditing()">Cancelar</button>
+                    </ng-container>
+                    <ng-container *ngIf="!editingEnabled">
+                        <button type="submit" class="btn btn-success" (click)="toggleEditing()">Editar</button>
+                        <button type="submit" class="btn btn-secondary ms-3" (click)="return()">Volver</button>
+                    </ng-container>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

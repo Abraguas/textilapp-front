@@ -36,6 +36,7 @@
                     <button class="btn btn-primary mx-2" type="button" routerLink="/login">Iniciar Sesion</button>
                 </ng-container>
                 <ng-container *ngIf="role != 'NotLogged'">
+                    <a class="nav-item nav-link text-secondary" routerLink="/my-account">Mi Cuenta</a>
                     <app-logout-button></app-logout-button>
                 </ng-container>
             </form>
