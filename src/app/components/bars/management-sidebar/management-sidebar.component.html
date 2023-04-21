@@ -1,72 +1,35 @@
 <div class="d-flex">
-  <div class="flex-shrink-0 p-3 sidebar-body">
-    <p class="d-flex align-items-center ps-3 pb-1 mb-3 link-dark text-decoration-none border-bottom">
-      <span class="fs-5 fw-semibold">CATEGORÍAS</span>
-    </p>
-    <ul class="list-unstyled ps-0">
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-          Cama
-        </button>
-        <div class="collapse" id="home-collapse" >
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Updates</a></li>
-            <li><a href="#" class="link-dark rounded">Reports</a></li>
-          </ul>
+    <div class="row container-fluid p-0 justify-content-between">
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="d-flex flex-shrink-0 p-3 sidebar-body flex-column">
+                <p class="d-flex align-items-center ps-3 pb-1 mb-3 link-dark text-decoration-none border-bottom">
+                    <span class="fs-5 fw-semibold">ABM</span>
+                </p>
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                            data-bs-target="#home-collapse1" aria-expanded="false">
+                            Productos
+                        </button>
+                        <div class="collapse" id="home-collapse1">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a class="link-dark rounded" routerLink="product/register">Registrar Producto</a>
+                                </li>
+                                <li><a class="link-dark rounded" routerLink="product/list">Listado de Productos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <p
+                    class="d-flex align-items-center ps-3 py-1 my-3 link-dark text-decoration-none border-bottom border-top">
+                    <span class="fs-5 fw-semibold">REPORTES</span>
+                </p>
+            </div>
         </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-          Baños
-        </button>
-        <div class="collapse" id="dashboard-collapse" >
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Weekly</a></li>
-            <li><a href="#" class="link-dark rounded">Monthly</a></li>
-            <li><a href="#" class="link-dark rounded">Annually</a></li>
-          </ul>
+        <div class="col-lg-10 col-md-8 col-sm-6 content">
+            <router-outlet class="content m-0"></router-outlet>
         </div>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-          Cocina
-        </button>
-        <div class="collapse" id="orders-collapse" >
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New</a></li>
-            <li><a href="#" class="link-dark rounded">Processed</a></li>
-            <li><a href="#" class="link-dark rounded">Shipped</a></li>
-            <li><a href="#" class="link-dark rounded">Returned</a></li>
-          </ul>
-        </div>
-      </li>
-    </ul>
-    <p class="d-flex align-items-center ps-3 py-1 my-3 link-dark text-decoration-none border-bottom border-top">
-      <span class="fs-5 fw-semibold">FILTROS</span>
-    </p>
-    <ul class="list-unstyled ps-0">
-    <li class="mb-1">
-      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-        Color
-      </button>
-      <div class="collapse" id="account-collapse" >
-        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-          <li><a href="#" class="link-dark rounded">New...</a></li>
-          <li><a href="#" class="link-dark rounded">Profile</a></li>
-          <li><a href="#" class="link-dark rounded">Settings</a></li>
-          <li><a href="#" class="link-dark rounded">Sign out</a></li>
-        </ul>
-      </div>
-    </li>
-  </ul>
-  </div>
+    </div>
 
 </div>
