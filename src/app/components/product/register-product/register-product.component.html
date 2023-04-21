@@ -1,0 +1,149 @@
+<div class="container py-5 px-5 formulario">
+    <h3 class="mb-3">Registrar un Producto</h3>
+    <form [formGroup]="form">
+        <div class="mb-3">
+            <label for="nameInput" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nameInput" formControlName="name" [class.is-invalid]="
+            (form.controls['name'].hasError('required') 
+            || form.controls['name'].hasError('minlength') 
+            || form.controls['name'].hasError('maxlength')  )
+            && form.controls['name'].touched" />
+            <span class="invalid-feedback">
+                <div *ngIf="form.controls['name'].hasError('required')">Debe
+                    ingresar un nombre.</div>
+                <div *ngIf="form.controls['name'].hasError('minlength')">El
+                    nombre debe tener más de 3 caracteres.</div>
+                <div *ngIf="form.controls['name'].hasError('maxlength')">El nombre
+                    no debe tener más de 32 caracteres.</div>
+            </span>
+        </div>
+        <div class="mb-3">
+            <label for="pricePerUnitInput" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="pricePerUnitInput" formControlName="pricePerUnit"
+                [class.is-invalid]="
+            (form.controls['pricePerUnit'].hasError('required') 
+            || form.controls['pricePerUnit'].hasError('min')  )
+            && form.controls['pricePerUnit'].touched" />
+            <span class="invalid-feedback">
+                <div *ngIf="form.controls['pricePerUnit'].hasError('required')">Debe
+                    ingresar un precio.</div>
+                <div *ngIf="form.controls['pricePerUnit'].hasError('min')">El precio no puede ser menor a 1</div>
+            </span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for='unit'>Tipo</label>
+            <select class="form-control form-select" name="unit" id="unit" formControlName="unit" [class.is-invalid]="
+            form.controls['unit'].hasError('required')
+            && form.controls['unit'].touched">
+                <option *ngFor="let u of units" [ngValue]="u">
+                    Por {{u.name}}
+                </option>
+            </select>
+            <span class="invalid-feedback">
+                Debe seleccionar un tipo
+            </span>
+        </div>
+        <div class="mb-3">
+            <label for="descriptionInput" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="descriptionInput" formControlName="description"
+                [class.is-invalid]="form.controls['description'].hasError('maxlength')  
+            && form.controls['description'].touched" />
+            <span class="invalid-feedback">
+                <div *ngIf="form.controls['description'].hasError('maxlength')">La descripcion
+                    no debe tener más de 300 caracteres.</div>
+            </span>
+        </div>
+        <div class="mb-3">
+            <label for="observationsInput" class="form-label">Observaciones</label>
+            <input type="text" class="form-control" id="observationsInput" formControlName="observations"
+                [class.is-invalid]=" form.controls['observations'].hasError('maxlength')  
+            && form.controls['observations'].touched" />
+            <span class="invalid-feedback">
+                <div *ngIf="form.controls['observations'].hasError('maxlength')">Las observaciones
+                    no deben tener más de 300 caracteres.</div>
+            </span>
+        </div>
+        <div class="mb-3">
+            <label for="measurmentInput" class="form-label">Medidas</label>
+            <input type="text" class="form-control" id="measurmentInput" formControlName="measurment"
+                [class.is-invalid]=" form.controls['measurment'].hasError('maxlength')  
+            && form.controls['measurment'].touched" />
+            <span class="invalid-feedback">
+                <div *ngIf="form.controls['measurment'].hasError('maxlength')">Las medidas
+                    no deben tener más de 30 caracteres.</div>
+            </span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for='brand'>Marca</label>
+            <select class="form-control form-select" name="brand" id="brand" formControlName="brand" [class.is-invalid]="
+            form.controls['brand'].hasError('required')
+            && form.controls['brand'].touched">
+                <option *ngFor="let b of brands" [ngValue]="b">
+                    {{b.name}}
+                </option>
+            </select>
+            <span class="invalid-feedback">
+                Debe seleccionar una marca
+            </span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for='color'>Color</label>
+            <select class="form-control form-select" name="color" id="color" formControlName="color" [class.is-invalid]="
+            form.controls['color'].hasError('required')
+            && form.controls['color'].touched">
+                <option *ngFor="let c of colors" [ngValue]="c">
+                    {{c.name}}
+                </option>
+            </select>
+            <span class="invalid-feedback">
+                Debe seleccionar un Color
+            </span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for='category'>Categoría</label>
+            <select class="form-control form-select" name="category" id="category" formControlName="category"
+                [class.is-invalid]="
+        form.controls['category'].hasError('required')
+        && form.controls['category'].touched">
+                <option *ngFor="let c of categories" [ngValue]="c">
+                    {{c.name}}
+                </option>
+            </select>
+            <span class="invalid-feedback">
+                Debe seleccionar una Categoría
+            </span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for='subCategory'>Sub Categoría</label>
+            <select class="form-control form-select" name="subCategory" id="subCategory" formControlName="subCategory"
+                [class.is-invalid]="
+            form.controls['subCategory'].hasError('required')
+            && form.controls['subCategory'].touched">
+                <option *ngFor="let s of subCategories" [ngValue]="s">
+                    {{s.name}}
+                </option>
+            </select>
+            <span class="invalid-feedback">
+                Debe seleccionar una sub Categoría
+            </span>
+        </div>
+        <div class="mb-3">
+            <label for="imageInput" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="imageInput" formControlName="image" />
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="isListedInput" class="form-check-input" id="isListedInput"
+                formControlName="isListed" />
+            <label class="form-check-label" for="isListedInput">Listar producto</label>
+        </div>
+        <div class="text-end">
+            <button type="button" class="btn btn-primary" [disabled]="!this.form.valid"
+                (click)="save()">Guardar</button>
+        </div>
+    </form>
+    <h5 class="mb-3">Previsualización del producto:</h5>
+    <div class="div d-flex justify-content-center">
+
+        <app-product-button *ngIf="product" [product]="product" [isNonFunctional]="true"></app-product-button>
+    </div>
+</div>
