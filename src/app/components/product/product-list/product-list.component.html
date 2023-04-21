@@ -1,0 +1,61 @@
+<div class="container-fluid" style="max-width: 1800px;">
+    <h1 class="display-4 my-3">Listado Productos</h1>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Precio Unitario</th>
+                <th scope="col">Observaciones</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Medidas</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">¿Esta listado?</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Unidad</th>
+                <th scope="col">Color</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Sub Categoría</th>
+                <th scope="col" colspan="2">Acciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of products">
+                <td><span>{{ p.name }}</span></td>
+                <td><span>{{ p.description }}</span></td>
+                <td><span>{{ p.pricePerUnit }}</span></td>
+                <td><span>{{ p.observations? p.observations : '-' }}</span></td>
+                <td><span>{{ p.stock}}</span></td>
+                <td><span>{{ p.measurment }}</span></td>
+                <td><img style="object-fit: cover; height: 100px; width: 100px;" (error)="onImgError($event)"
+                        [src]="p.image" alt="">
+                </td>
+                <td><span>{{ !p.isListed? 'NO' : 'SI'}}</span></td>
+                <td><span>{{p.brand.name}}</span></td>
+                <td><span>{{p.unit.name}}</span></td>
+                <td><span>{{p.color.name}}</span></td>
+                <td><span>{{p.subCategory.category.name}}</span></td>
+                <td><span>{{p.subCategory.name}}</span></td>
+                <td>
+                    <a [routerLink]="['/management/product/update/',p.id]" routerLinkActive="active">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </td>
+                <td>
+                    <a *ngIf="p.isListed" (click)="unlist(p.id)">
+                        <i style="color: rgb(216, 34, 34)" class="fa-solid fa-eye-slash"></i>
+                    </a>
+                    <a *ngIf="!p.isListed" (click)="list(p.id)">
+                        <i style="color: rgb(20, 159, 43)" class="fa-solid fa-eye"></i>
+                    </a>
+                </td>
+                <!-- <td>
+                    <a [routerLink]="['/management/product/update/',p.id]" routerLinkActive="active">
+                        <i style="color: rgb(177, 33, 33)" class="fa-solid fa-trash"></i>
+                    </a>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>
