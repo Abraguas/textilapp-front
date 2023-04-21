@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderDetailDTO } from 'src/app/models/order-detail-dto';
 import { OrderDTO } from 'src/app/models/order-dto';
@@ -18,10 +18,12 @@ const swal: SweetAlert = require('sweetalert');
     styleUrls: ['./product-catalog.component.css']
 })
 export class ProductCatalogComponent implements OnInit, OnDestroy {
+    queryParams: Params;
     totalPrice: number = 0;
     totalQuantity: number = 0;
     subCategory: number;
     products: Product[];
+    filteredProducts: Product[];
     subscription: Subscription;
     order: OrderDTO;
     observationsControl = new FormControl('');
@@ -39,38 +41,87 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscription = new Subscription();
-        this.getSubCategory();
+        this.getQueryParams();
         this.order = new OrderDTO();
         this.order.details = [];
+        this.loadProducts();
 
     }
-    getSubCategory(): void {
+    getQueryParams(): void {
         this.subscription.add(
-            this.route.params.subscribe(params => {
+            this.route.queryParams.subscribe(params => {
+                this.queryParams = params;
+                if (this.subCategory != params["subCategory"]) {
+                    this.subCategory = params["subCategory"];
+                    this.loadProducts();
+                } else {
 
-                this.subCategory = params["subCategory"];
-                this.loadProducts();
+                    this.filterProducts();
+                }
             })
         );
     }
-    addDetail(detail: OrderDetailDTO): void {
-        this.order.details.push(detail);
-        this.getTotal();
-        this.getTotalQuantity();
+    filterProducts(): void {
+        this.filterProductsByBrand();
+        this.filterProductsByColor();
+        this.filterProductsByUnit();
     }
-    removeDetail(detail: OrderDetailDTO): void {
-        let i = this.order.details.indexOf(detail);
-        this.order.details.splice(i, 1);
-        this.getTotal();
-        this.getTotalQuantity();
+    filterProductsByBrand(): void {
+        let brandIds = this.queryParams['brand'];
+        if (!Array.isArray(brandIds) && brandIds) {
+            this.filteredProducts = this.products.filter((p: Product) => {
+                return brandIds === p.brand.id.toString();
+            })
+            return;
+        }
+        if (!brandIds || brandIds.length === 0) {
+            this.filteredProducts = this.products
+            return;
+        }
+        this.filteredProducts = this.products.filter((p: Product) => {
+            return brandIds.includes(p.brand.id.toString());
+        })
+    }
+    filterProductsByColor(): void {
+        let colorIds = this.queryParams['color'];
+        if (!Array.isArray(colorIds) && colorIds) {
+            this.filteredProducts = this.filteredProducts.filter((p: Product) => {
+                return colorIds === p.color.id.toString();
+            })
+            return;
+        }
+        if (!colorIds || colorIds.length === 0) {
+            this.filteredProducts = this.filteredProducts
+            return;
+        }
+        this.filteredProducts = this.filteredProducts.filter((p: Product) => {
+            return colorIds.includes(p.color.id.toString());
+        })
+    }
+    filterProductsByUnit(): void {
+        let unitIds = this.queryParams['unit'];
+        if (!Array.isArray(unitIds) && unitIds) {
+            this.filteredProducts = this.filteredProducts.filter((p: Product) => {
+                return unitIds === p.unit.id.toString();
+            })
+            return;
+        }
+        if (!unitIds || unitIds.length === 0) {
+            this.filteredProducts = this.filteredProducts
+            return;
+        }
+        this.filteredProducts = this.filteredProducts.filter((p: Product) => {
+            return unitIds.includes(p.unit.id.toString());
+        })
     }
     loadProducts(): void {
         if (this.subCategory < 1 || !this.subCategory) {
             this.subscription.add(
-                this.productService.getAll().subscribe({
+                this.productService.getAllListed().subscribe({
                     next: (r: Product[]) => {
                         this.products = r;
-                        return;
+                        this.filteredProducts = r;
+                        this.filterProducts();
                     },
                     error: (e) => {
                         if (e.status === 403) {
@@ -92,9 +143,11 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
             );
         } else {
             this.subscription.add(
-                this.productService.getBySubcategory(this.subCategory).subscribe({
+                this.productService.getListedBySubcategory(this.subCategory).subscribe({
                     next: (r: Product[]) => {
                         this.products = r;
+                        this.filteredProducts = r;
+                        this.filterProducts();
                     },
                     error: (e) => {
                         console.error(e);
@@ -104,6 +157,8 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
         }
 
     }
+
+
     getTotal(): void {
         let total = 0;
         this.order.details.forEach(x => {
@@ -118,6 +173,17 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
             total = total + 1;
         })
         this.totalQuantity = total;
+    }
+    addDetail(detail: OrderDetailDTO): void {
+        this.order.details.push(detail);
+        this.getTotal();
+        this.getTotalQuantity();
+    }
+    removeDetail(detail: OrderDetailDTO): void {
+        let i = this.order.details.indexOf(detail);
+        this.order.details.splice(i, 1);
+        this.getTotal();
+        this.getTotalQuantity();
     }
     isAdded(p: Product): boolean {
         let cond = this.order.details.find(x => x.product.id === p.id);
@@ -145,6 +211,11 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
                     if (e.status === 401) {
                         swal({ title: 'Error!', text: 'Tu sesión ha expirado!', icon: 'error' }).then(() => {
                             this.sessionService.logout();
+                            return;
+                        });
+                    }
+                    if (e.status === 422) {
+                        swal({ title: 'Error!', text: 'No hay suficiente stock', icon: 'error' }).then(() => {
                             return;
                         });
                     }
