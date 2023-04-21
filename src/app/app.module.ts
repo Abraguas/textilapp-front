@@ -20,35 +20,43 @@ import { UserService } from './services/user.service';
 import { OrderService } from './services/order.service';
 import { RegisterComponent } from './components/user/register/register.component';
 import { MyAccountComponent } from './components/user/my-account/my-account.component';
+import { RegisterProductComponent } from './components/product/register-product/register-product.component';
+import { AuxiliarService } from './services/auxiliar.service';
+import { UpdateProductComponent } from './components/product/update-product/update-product.component';
+import { ProductListComponent } from './components/product/product-list/product-list.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    StoreSidebarComponent,
-    ManagementSidebarComponent,
-    HomeComponent,
-    ProductButtonComponent,
-    ProductCatalogComponent,
-    LogoutButtonComponent,
-    LoginPageComponent,
-    RegisterComponent,
-    MyAccountComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  providers: [
-    CategoryService,
-    ProductService,
-    UserService,
-    SessionService,
-    OrderService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        StoreSidebarComponent,
+        ManagementSidebarComponent,
+        HomeComponent,
+        ProductButtonComponent,
+        ProductCatalogComponent,
+        LogoutButtonComponent,
+        LoginPageComponent,
+        RegisterComponent,
+        MyAccountComponent,
+        RegisterProductComponent,
+        UpdateProductComponent,
+        ProductListComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule
+    ],
+    providers: [
+        CategoryService,
+        ProductService,
+        UserService,
+        SessionService,
+        OrderService,
+        AuxiliarService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
