@@ -7,7 +7,7 @@
                 </p>
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
-                        <button [routerLink]="'/store/'+ 0" class="btn btn-all align-items-center rounded">
+                        <button (click)="changeSubcategory(0)" class="btn btn-all align-items-center rounded">
                             Todos los productos
                         </button>
                     </li>
@@ -19,7 +19,7 @@
                         <div class="collapse" [id]="'home-collapse'+category.id">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li *ngFor="let subCategory of category.subCategories"><a class="link-dark rounded"
-                                        [routerLink]="'/store/'+subCategory.id">{{subCategory.name}}</a></li>
+                                        (click)="changeSubcategory(subCategory.id)">{{subCategory.name}}</a></li>
                             </ul>
                         </div>
                     </li>
@@ -29,22 +29,64 @@
                     <span class="fs-5 fw-semibold">FILTROS</span>
                 </p>
                 <ul class="list-unstyled ps-0">
-                    <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#account-collapse" aria-expanded="false">
-                            Color
-                        </button>
-                        <div class="collapse" id="account-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li class="my-2" *ngFor="let color of colors">
-                                    <input class="form-check-input ms-4" type="checkbox" value=""
-                                        [id]="'check' + color.name">
-                                    <label class="form-check-label ms-2" [for]="'check' + color.name">
-                                        {{color.name}}
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="mb-1" *ngIf="brands">
+                        <form [formGroup]="brandForm">
+
+                            <button class="btn btn-toggle align-items-center rounded collapsed"
+                                data-bs-toggle="collapse" data-bs-target="#brand-collapse" aria-expanded="false">
+                                Marca
+                            </button>
+                            <div *ngIf="brands" class="collapse" id="brand-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="my-2" *ngFor="let brand of brands">
+                                        <input class="form-check-input ms-4" type="checkbox" [value]="brand.id"
+                                            [id]="'checkBrand' + brand.id" [formControlName]="brand.id">
+                                        <label class="form-check-label ms-2" [for]="'checkBrand' + brand.id">
+                                            {{brand.name}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="mb-1" *ngIf="units">
+                        <form [formGroup]="unitForm">
+                            <button class="btn btn-toggle align-items-center rounded collapsed"
+                                data-bs-toggle="collapse" data-bs-target="#unit-collapse" aria-expanded="false">
+                                Unidad
+                            </button>
+                            <div class="collapse" id="unit-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="my-2" *ngFor="let unit of units">
+                                        <input (click)="addQueryParams()" class="form-check-input ms-4" type="checkbox"
+                                            [value]="unit.id" [id]="'checkUnit' + unit.id" [formControlName]="unit.id">
+                                        <label class="form-check-label ms-2" [for]="'checkUnit' + unit.id">
+                                            {{unit.name}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="mb-1" *ngIf="colors">
+                        <form [formGroup]="colorForm">
+                            <button class="btn btn-toggle align-items-center rounded collapsed"
+                                data-bs-toggle="collapse" data-bs-target="#color-collapse" aria-expanded="false">
+                                Color
+                            </button>
+                            <div class="collapse" id="color-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                    <li class="my-2" *ngFor="let color of colors">
+                                        <input (click)="addQueryParams()" class="form-check-input ms-4" type="checkbox"
+                                            [value]="color.id" [id]="'checkColor' + color.id"
+                                            [formControlName]="color.id">
+                                        <label class="form-check-label ms-2" [for]="'checkColor' + color.id">
+                                            {{color.name}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
                     </li>
                 </ul>
             </div>
