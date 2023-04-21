@@ -1,14 +1,19 @@
+import { Brand } from "./brand";
+import { Color } from "./color";
+import { Unit } from "./unit";
+
 export class Product {
     id: number;
     name: string;
     description: string;
-    brand: any;
+    brand: Brand;
     pricePerUnit: number;
-    unit: any;
+    unit: Unit;
     observations: string;
     stock: number;
     measurment: string;
-    color: any;
+    color: Color;
     subCategory: any;
     image: string;
+    isListed: boolean;
 }
