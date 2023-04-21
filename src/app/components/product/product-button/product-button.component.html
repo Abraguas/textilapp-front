@@ -1,15 +1,19 @@
-<button class="btn btn-light rounded ms-2 mt-3" [disabled]="disabled" data-bs-toggle="modal" attr.data-bs-target="#modal{{modalId}}">
+<button class="btn btn-light product-button rounded ms-2 mt-3" [disabled]="disabled" data-bs-toggle="modal"
+    attr.data-bs-target="#modal{{modalId}}">
     <div>
         <div class="row p-1 d-flex flex-column align-items-center justify-content-center">
             <div class="d-flex align-items-center">
-                <img [src]="product.image? product.image : defaultRoute" class="img-fluid rounded ms-2"
-                    style="max-height: 170px;" [alt]="product.name">
+                <img [src]="product.image || defaultRoute" class="img-fluid rounded prod-img"
+                    (error)="onImgError($event)" style="object-fit: cover; height: 170px; width: 170px;"
+                    [alt]="product.name">
             </div>
 
             <div class="text-center">
-                <p class="m-0">{{product.name}}</p>
-                <p class="text-muted m-0" style="font-size: 12px; min-height: 36px;">{{product.description}}</p>
-                <p class=" m-0"><strong>$ {{product.pricePerUnit}}</strong> x {{product.unit.name}}</p>
+                <p class="m-0 name">{{product.name}}</p>
+                <p class="text-muted m-0 description">{{product.description}}
+                </p>
+                <p class=" m-0"><strong>$ {{product.pricePerUnit}}</strong> x {{product.unit ? product.unit.name : ''}}
+                </p>
             </div>
         </div>
     </div>
@@ -17,7 +21,8 @@
 
 
 <!-- Modal -->
-<div class="modal fade" [id]="'modal'+modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div *ngIf="!isNonFunctional" class="modal fade" [id]="'modal'+modalId" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 930px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,8 +32,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <img [src]="product.image? product.image : defaultRoute" [alt]="product.name" class="img-fluid"
-                            style="height: 400px;">
+                        <img (error)="onImgError($event)" [src]="product.image? product.image : defaultRoute"
+                            [alt]="product.name" class="img-fluid" style="height: 400px; object-fit: cover;">
                     </div>
                     <div class="col-6">
                         <p>{{product.description}}</p>
@@ -45,8 +50,9 @@
                 </span>
                 <div class="input-group border-secondary me-5" style="max-width: 200px;">
                     <button class="btn btn-secondary" (click)="quantityChange(false)"><strong>-</strong></button>
-                    <span class="input-group-text">{{quantity}} {{product.unit.name}}<ng-container *ngIf="quantity > 1"><ng-container 
-                        *ngIf="!['a','e','i','o','u'].includes(product.unit.name.charAt(product.unit.name.length - 1).toLowerCase())">e</ng-container>s</ng-container></span>
+                    <span class="input-group-text">{{quantity}} {{product.unit.name}}<ng-container
+                            *ngIf="quantity > 1"><ng-container
+                                *ngIf="!['a','e','i','o','u'].includes(product.unit.name.charAt(product.unit.name.length - 1).toLowerCase())">e</ng-container>s</ng-container></span>
                     <button class="btn btn-secondary" (click)="quantityChange(true)"><strong>+</strong></button>
 
                 </div>
