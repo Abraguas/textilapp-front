@@ -1,0 +1,26 @@
+<div class="container-fluid" style="max-width: 1800px;">
+    <h1 class="display-4 my-3">Mis pedidos</h1>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nro de pedido</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Observaciones</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="orders">
+            <tr *ngFor="let o of orders">
+                <td><span>{{o.id}}</span></td>
+                <td><span>{{o.date | date}}</span></td>
+                <td><span>{{o.observations? o.observations : '-'}}</span>
+                </td>
+                <td><span>{{o.state.name}}</span></td>
+                <td><span><app-order-detail-button [modalId]="o.id" [order]="o"></app-order-detail-button>
+                        <button class="btn btn-danger ms-2" (click)="cancelOrder(o.id)"
+                            [disabled]="o.state.name === 'Cancelado'">Cancelar</button></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
