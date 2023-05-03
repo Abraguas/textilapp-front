@@ -16,7 +16,7 @@
                 <th scope="col">Color</th>
                 <th scope="col">Categoría</th>
                 <th scope="col">Sub Categoría</th>
-                <th scope="col" colspan="2">Acciones</th>
+                <th scope="col" colspan="3">Acciones</th>
 
             </tr>
         </thead>
@@ -38,23 +38,24 @@
                 <td><span>{{p.subCategory.category.name}}</span></td>
                 <td><span>{{p.subCategory.name}}</span></td>
                 <td>
-                    <a [routerLink]="['/management/product/update/',p.id]" routerLinkActive="active">
+                    <a [routerLink]="['/management/product/update/',p.id]" routerLinkActive="active"
+                        title="Modificar producto">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                 </td>
                 <td>
-                    <a *ngIf="p.isListed" (click)="unlist(p.id)">
-                        <i style="color: rgb(216, 34, 34)" class="fa-solid fa-eye-slash"></i>
+                    <a *ngIf="p.isListed" (click)="unlist(p.id)" title="No listar producto">
+                        <i style="color: rgb(70, 70, 70); cursor: pointer;" class="fa-solid fa-eye-slash"></i>
                     </a>
-                    <a *ngIf="!p.isListed" (click)="list(p.id)">
-                        <i style="color: rgb(20, 159, 43)" class="fa-solid fa-eye"></i>
+                    <a *ngIf="!p.isListed" (click)="list(p.id)" title="Listar Producto">
+                        <i style="color: rgb(70, 70, 70); cursor: pointer;" class="fa-solid fa-eye"></i>
                     </a>
                 </td>
-                <!-- <td>
-                    <a [routerLink]="['/management/product/update/',p.id]" routerLinkActive="active">
-                        <i style="color: rgb(177, 33, 33)" class="fa-solid fa-trash"></i>
+                <td>
+                    <a [routerLink]="['/management/stock/list/',p.id]" title="Movimientos de stock">
+                        <i style="color: rgb(31, 138, 52); cursor: pointer;" class="fa-solid fa-box"></i>
                     </a>
-                </td> -->
+                </td>
             </tr>
         </tbody>
     </table>
