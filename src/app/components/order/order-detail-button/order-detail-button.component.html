@@ -1,0 +1,58 @@
+<button class="btn btn-primary" data-bs-toggle="modal" attr.data-bs-target="#modal{{modalId}}">
+    Detalles
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" [id]="'modal'+modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 930px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles del pedido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="div text-start text-break fs-6 ">
+                            <p>Fecha: <span class="fw-light"></span> {{order.date | date}}</p>
+                            <p>Observaciones: <span class="fw-light">{{order.observations? "'"+order.observations + "'":
+                                    "'Sin observaciones'"}}</span></p>
+                            <p>Estado: <span class="fw-light"> {{order.state.name}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio Unitario</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Subtotal</th>
+
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="order.details">
+                                <tr *ngFor="let d of order.details">
+                                    <td><span>{{d.product.name}}</span></td>
+                                    <td><span>{{d.pricePerUnit | currency}}</span></td>
+                                    <td><span>{{d.quantity}} {{d.product.unit.name}}<ng-container
+                                                *ngIf="d.quantity > 1"><ng-container *ngIf="!['a','e','i','o','u'].includes(
+                                                        d.product.unit.name.charAt(d.product.unit.name.length - 1)
+                                                        .toLowerCase())">e</ng-container>s</ng-container></span>
+                                    </td>
+                                    <td><span>{{d.pricePerUnit*d.quantity | currency}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-end px-4 mb-0 fs-5 fw-bold">TOTAL: {{totalPrice | currency}}</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
