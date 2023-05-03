@@ -198,6 +198,12 @@ export class StoreSidebarComponent implements OnInit, OnDestroy {
                 return false;
             });
         }
+        if (e.status === 0) {
+            swal({ title: 'El servidor se encuentra caido!', text: 'Intenta denuevo más tarde, lamentamos el inconveniente', icon: 'error' }).then(() => {
+                this.sessionService.logout();
+                return false;
+            });
+        }
         console.error(e);
         return true;
     }
