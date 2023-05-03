@@ -1,0 +1,35 @@
+<div class="container-fluid" style="max-width: 1800px;">
+    <h1 class="display-5 my-3">Todos los movimientos de stock</h1>
+    <table class="table text-center catalog">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Ingreso o Egreso</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Stock previo</th>
+                <th scope="col">Stock posterior</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Observaciones</th>
+
+            </tr>
+        </thead>
+        <tbody *ngIf="stockMovements">
+            <tr *ngFor="let m of stockMovements" [ngClass]="m.quantity > 0? 'table-info':'table-warning'">
+                <td style="max-width: 50px;"><i class="fa-solid me-5"
+                        [ngClass]="m.quantity > 0? 'fa-arrow-left-long' : 'fa-arrow-right-long'"></i></td>
+                <td><span> {{ m.quantity > 0? 'Ingreso':'Egreso'}}</span></td>
+                <td><span>{{ m.product? m.product : '-' }}</span></td>
+                <td><span>{{ Math.abs( m.quantity )}} {{m.unit}}<ng-container
+                            *ngIf="m.quantity > 1 || m.quantity < -1"><ng-container
+                                *ngIf="!['a','e','i','o','u'].includes(m.unit.charAt(m.unit.length - 1).toLowerCase())">e</ng-container>s</ng-container>
+
+                    </span></td>
+                <td><span>{{ m.priorStock? m.priorStock : '-' }}</span></td>
+                <td><span>{{ m.priorStock? m.priorStock + m.quantity : '-' }}</span></td>
+                <td><span>{{ m.date? (m.date | date) : '-' }}</span></td>
+                <td style="max-width: 200px;"><span>{{ m.observations? m.observations : '-' }}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
