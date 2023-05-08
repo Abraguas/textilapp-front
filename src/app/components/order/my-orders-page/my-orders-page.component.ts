@@ -32,7 +32,12 @@ export class MyOrdersPageComponent {
         this.subscription.add(
             this.orderService.getMyOrders().subscribe({
                 next: (r: GetOrderDTO[]) => {
-                    this.orders = r;
+                    this.orders = r.sort((a, b) => {
+                        if (b.state.name === 'Pendiente' && a.state.name !== 'Pendiente') {
+                            return 1;
+                        }
+                        return a.date < b.date ? 1 : -1;
+                    });
                 },
                 error: (e) => {
                     if (this.statusCheck(e)) {
@@ -41,6 +46,10 @@ export class MyOrdersPageComponent {
                 }
             })
         );
+    }
+    payOrder(orderId: number): void {
+        this.router.navigate(['pay-order'],
+            { queryParams: { 'external_reference': orderId } });
     }
     cancelOrder(orderId: number): void {
         swal({
@@ -53,8 +62,8 @@ export class MyOrdersPageComponent {
                 confirm: true,
             }
         })
-            .then((cerrarSesion: boolean) => {
-                if (cerrarSesion) {
+            .then((cancelar: boolean) => {
+                if (cancelar) {
                     this.subscription.add(
                         this.orderService.cancelOrder(orderId).subscribe({
                             next: () => {

@@ -192,14 +192,30 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
         }
         return false;
     }
-    save(): void {
+    confirmSave(): void {
+        swal({
+            title: "Registrar Pedido",
+            text: "¿Desea registrar el pedido y proceder a pagar?",
+            icon: "info",
+            dangerMode: false,
+            buttons: {
+                cancel: true,
+                confirm: true,
+            }
+        }).then((save: boolean) => {
+            if (save) {
+                this.saveOrder();
+            }
+        })
+    }
+    saveOrder(): void {
+
         this.order.observations = this.observationsControl.value ? this.observationsControl.value : "";
         this.subscription.add(
             this.orderService.save(this.order).subscribe({
-                next: () => {
-                    swal({ title: 'Listo!', text: 'Registraste tu pedido con éxito.', icon: 'success' }).then(() => {
-                        this.router.navigate(['home']);
-                    });
+                next: (r) => {
+                    this.router.navigate(['pay-order'],
+                        { queryParams: { 'external_reference': r } });
                 },
                 error: (e) => {
                     if (e.status === 403) {

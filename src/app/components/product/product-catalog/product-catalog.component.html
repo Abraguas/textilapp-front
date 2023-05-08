@@ -48,7 +48,8 @@
                                 <textarea class="form-control" id="observations" rows="3"
                                     [formControl]="observationsControl"></textarea>
                             </div>
-                            <button class="btn btn-primary mt-3" [disabled]="totalQuantity < 1" (click)="save()">Enviar
+                            <button class="btn btn-primary mt-3" [disabled]="totalQuantity < 1"
+                                (click)="confirmSave()">Enviar
                                 Pedido</button>
                         </div>
                     </div>
