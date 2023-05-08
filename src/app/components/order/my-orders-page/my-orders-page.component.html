@@ -16,10 +16,18 @@
                 <td><span>{{o.date | date}}</span></td>
                 <td><span>{{o.observations? o.observations : '-'}}</span>
                 </td>
-                <td><span>{{o.state.name}}</span></td>
+                <td [ngClass]="{'table-danger': o.state.name === 'Cancelado', 
+                                'table-success': o.state.name === 'Cobrado', 
+                                'table-primary': o.state.name === 'Pendiente'}">
+                    <span>{{o.state.name}}</span>
+                </td>
                 <td><span><app-order-detail-button [modalId]="o.id" [order]="o"></app-order-detail-button>
+                        <button class="btn btn-success ms-2" (click)="payOrder(o.id)"
+                            *ngIf="o.state.name === 'Pendiente'">Pagar</button>
                         <button class="btn btn-danger ms-2" (click)="cancelOrder(o.id)"
-                            [disabled]="o.state.name === 'Cancelado'">Cancelar</button></span></td>
+                            *ngIf="o.state.name === 'Pendiente'">Cancelar</button>
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>
