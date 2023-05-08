@@ -1,0 +1,112 @@
+<div class="fondo">
+    <div id="main" class="container mt-5 border border-secondary rounded bg-white payments-card text-center">
+        <div class="py-5 px-5">
+            <h3 class="display-6 mb-5">Pagar pedido</h3>
+            <div class="row mb-3 px-2">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal1">
+                    Detalles del pedido
+                </button>
+
+            </div>
+            <div class="row mb-3 px-2">
+                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalTrans">
+                    Pagar con Transferencia
+                </button>
+            </div>
+            <div id="walletBrick_container">
+                <div *ngIf="!brickLoaded">
+                    <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalTrans" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 630px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pagar con transferencia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <p>
+                        Luego de realizar la transferencia, aguarde a que el pago sea verificado por un empleado. Cuando
+                        esto suceda, el estado del pedido se acutalizará a "Cobrado".
+                        Puedes verificar el estado de tu pedido en la pagina "Mis Pedidos"
+                    </p>
+                    <p class="fs-7 fw-bold">
+                        Datos para pagar:
+                    </p>
+                    <p>
+                        Alias: franco.moises
+                    </p>
+                    <p>
+                        CVU: 0000044105823907592
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" routerLink="/my-orders">Mis
+                    pedidos</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 930px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles del pedido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="div text-start text-break fs-6 ">
+                            <p>Fecha: <span class="fw-light"></span> {{order.date | date}}</p>
+                            <p>Observaciones: <span class="fw-light">{{order.observations? "'"+order.observations + "'":
+                                    "'Sin observaciones'"}}</span></p>
+                            <p>Estado: <span class="fw-light"> {{order.state.name}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio Unitario</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Subtotal</th>
+
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="order.details">
+                                <tr *ngFor="let d of order.details">
+                                    <td><span>{{d.product.name}}</span></td>
+                                    <td><span>{{d.pricePerUnit | currency}}</span></td>
+                                    <td><span>{{d.quantity}} {{d.product.unit.name}}<ng-container
+                                                *ngIf="d.quantity > 1"><ng-container *ngIf="!['a','e','i','o','u'].includes(
+                                                        d.product.unit.name.charAt(d.product.unit.name.length - 1)
+                                                        .toLowerCase())">e</ng-container>s</ng-container></span>
+                                    </td>
+                                    <td><span>{{d.pricePerUnit*d.quantity | currency}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-end px-4 mb-0 fs-5 fw-bold">TOTAL: {{totalPrice | currency}}</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
