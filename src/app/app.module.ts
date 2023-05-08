@@ -24,6 +24,13 @@ import { RegisterProductComponent } from './components/product/register-product/
 import { AuxiliarService } from './services/auxiliar.service';
 import { UpdateProductComponent } from './components/product/update-product/update-product.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
+import { StockMovementsListComponent } from './components/stock/stock-movements-list/stock-movements-list.component';
+import { StockMovementService } from './services/stock-movement.service';
+import { AllStockMovementsListComponent } from './components/stock/all-stock-movements-list/all-stock-movements-list.component';
+import { MyOrdersPageComponent } from './components/order/my-orders-page/my-orders-page.component';
+import { OrderDetailButtonComponent } from './components/order/order-detail-button/order-detail-button.component';
+import { PaymentService } from './services/payment.service';
+import { PayOrderPageComponent } from './components/order/pay-order-page/pay-order-page.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +47,12 @@ import { ProductListComponent } from './components/product/product-list/product-
         MyAccountComponent,
         RegisterProductComponent,
         UpdateProductComponent,
-        ProductListComponent
+        ProductListComponent,
+        StockMovementsListComponent,
+        AllStockMovementsListComponent,
+        MyOrdersPageComponent,
+        OrderDetailButtonComponent,
+        PayOrderPageComponent
     ],
     imports: [
         BrowserModule,
@@ -55,7 +67,9 @@ import { ProductListComponent } from './components/product/product-list/product-
         UserService,
         SessionService,
         OrderService,
-        AuxiliarService
+        AuxiliarService,
+        StockMovementService,
+        PaymentService
     ],
     bootstrap: [AppComponent]
 })
