@@ -14,6 +14,7 @@ import { StockMovementsListComponent } from './components/stock/stock-movements-
 import { AllStockMovementsListComponent } from './components/stock/all-stock-movements-list/all-stock-movements-list.component';
 import { MyOrdersPageComponent } from './components/order/my-orders-page/my-orders-page.component';
 import { PayOrderPageComponent } from './components/order/pay-order-page/pay-order-page.component';
+import { ManagementPageComponent } from './components/management-page/management-page.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -34,6 +35,7 @@ const routes: Routes = [
     {
         path: 'management', component: ManagementSidebarComponent,
         children: [
+            { path: '', component: ManagementPageComponent },
             { path: 'product/register', component: RegisterProductComponent },
             { path: 'product/update/:id', component: UpdateProductComponent },
             { path: 'product/list', component: ProductListComponent },

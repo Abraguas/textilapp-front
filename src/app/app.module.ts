@@ -31,6 +31,7 @@ import { MyOrdersPageComponent } from './components/order/my-orders-page/my-orde
 import { OrderDetailButtonComponent } from './components/order/order-detail-button/order-detail-button.component';
 import { PaymentService } from './services/payment.service';
 import { PayOrderPageComponent } from './components/order/pay-order-page/pay-order-page.component';
+import { ManagementPageComponent } from './components/management-page/management-page.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import { PayOrderPageComponent } from './components/order/pay-order-page/pay-ord
         AllStockMovementsListComponent,
         MyOrdersPageComponent,
         OrderDetailButtonComponent,
-        PayOrderPageComponent
+        PayOrderPageComponent,
+        ManagementPageComponent
     ],
     imports: [
         BrowserModule,

@@ -1,0 +1,8 @@
+.fondo {
+    background-image: url("../../../assets/img/bg-min.png");
+    background-repeat: repeat;
+    background-position: center;
+    background-color: rgb(0, 4, 111);
+    min-height: 94vh;
+    overflow: hidden;
+}
