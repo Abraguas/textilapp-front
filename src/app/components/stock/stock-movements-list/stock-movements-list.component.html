@@ -43,10 +43,7 @@
                 <div class="mb-3">
                     <label for="quantityInput" class="form-label">Cantidad</label>
                     <input type="number" class="form-control" id="quantityInput" formControlName="quantity"
-                        [class.is-invalid]="
-                    (form.controls['quantity'].hasError('required') 
-                    || form.controls['quantity'].hasError('min')  )
-                    && form.controls['quantity'].touched" />
+                        [class.is-invalid]="form.controls['quantity'].errors && form.controls['quantity'].touched" />
                     <span class="invalid-feedback">
                         <div *ngIf="form.controls['quantity'].hasError('required')">Debe
                             ingresar una cantidad.</div>

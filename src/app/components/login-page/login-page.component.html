@@ -18,17 +18,14 @@
                         <div class="mb-5 text-start">
                             <label for="inputUser" class="form-label">Nombre de usuario</label>
                             <input type="text" class="form-control" id="inputUser" formControlName="username"
-                                [class.is-invalid]="form.controls['username'].hasError('required') && form.controls['username'].touched" />
-                            <p *ngIf="form.controls['username'].hasError('required') && form.controls['username'].touched"
-                                class="invalid-feedback">Debe ingresar un nombre de usuario</p>
+                                [class.is-invalid]="form.controls['username'].errors && form.controls['username'].touched" />
+                            <span class="invalid-feedback">Debe ingresar un nombre de usuario</span>
                         </div>
                         <div class="mb-5 text-start">
                             <label for="inputPassword" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="inputPassword"
-                                formControlName="password"
-                                [class.is-invalid]="form.controls['password'].hasError('required') && form.controls['password'].touched" />
-                            <p *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched"
-                                class="invalid-feedback">Debe ingresar una contraseña</p>
+                            <input type="password" class="form-control" id="inputPassword" formControlName="password"
+                                [class.is-invalid]="form.controls['password'].errors && form.controls['password'].touched" />
+                            <span class="invalid-feedback">Debe ingresar una contraseña</span>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-primary" [disabled]="!form.valid"

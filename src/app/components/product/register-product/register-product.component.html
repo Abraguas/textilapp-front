@@ -3,11 +3,8 @@
     <form [formGroup]="form">
         <div class="mb-3">
             <label for="nameInput" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nameInput" formControlName="name" [class.is-invalid]="
-            (form.controls['name'].hasError('required') 
-            || form.controls['name'].hasError('minlength') 
-            || form.controls['name'].hasError('maxlength')  )
-            && form.controls['name'].touched" />
+            <input type="text" class="form-control" id="nameInput" formControlName="name"
+                [class.is-invalid]="form.controls['name'].errors && form.controls['name'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['name'].hasError('required')">Debe
                     ingresar un nombre.</div>
@@ -17,13 +14,12 @@
                     no debe tener más de 32 caracteres.</div>
             </span>
         </div>
+
+
         <div class="mb-3">
             <label for="pricePerUnitInput" class="form-label">Precio</label>
             <input type="number" class="form-control" id="pricePerUnitInput" formControlName="pricePerUnit"
-                [class.is-invalid]="
-            (form.controls['pricePerUnit'].hasError('required') 
-            || form.controls['pricePerUnit'].hasError('min')  )
-            && form.controls['pricePerUnit'].touched" />
+                [class.is-invalid]="form.controls['pricePerUnit'].errors && form.controls['pricePerUnit'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['pricePerUnit'].hasError('required')">Debe
                     ingresar un precio.</div>
@@ -33,7 +29,7 @@
         <div class="mb-3">
             <label class="form-label" for='unit'>Tipo</label>
             <select class="form-control form-select" name="unit" id="unit" formControlName="unit" [class.is-invalid]="
-            form.controls['unit'].hasError('required')
+            form.controls['unit'].errors
             && form.controls['unit'].touched">
                 <option *ngFor="let u of units" [ngValue]="u">
                     Por {{u.name}}
@@ -46,7 +42,7 @@
         <div class="mb-3">
             <label for="descriptionInput" class="form-label">Descripción</label>
             <input type="text" class="form-control" id="descriptionInput" formControlName="description"
-                [class.is-invalid]="form.controls['description'].hasError('maxlength')  
+                [class.is-invalid]="form.controls['description'].errors  
             && form.controls['description'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['description'].hasError('maxlength')">La descripcion
@@ -56,7 +52,7 @@
         <div class="mb-3">
             <label for="observationsInput" class="form-label">Observaciones</label>
             <input type="text" class="form-control" id="observationsInput" formControlName="observations"
-                [class.is-invalid]=" form.controls['observations'].hasError('maxlength')  
+                [class.is-invalid]=" form.controls['observations'].errors
             && form.controls['observations'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['observations'].hasError('maxlength')">Las observaciones
@@ -66,7 +62,7 @@
         <div class="mb-3">
             <label for="measurmentInput" class="form-label">Medidas</label>
             <input type="text" class="form-control" id="measurmentInput" formControlName="measurment"
-                [class.is-invalid]=" form.controls['measurment'].hasError('maxlength')  
+                [class.is-invalid]=" form.controls['measurment'].errors 
             && form.controls['measurment'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['measurment'].hasError('maxlength')">Las medidas
@@ -76,7 +72,7 @@
         <div class="mb-3">
             <label class="form-label" for='brand'>Marca</label>
             <select class="form-control form-select" name="brand" id="brand" formControlName="brand" [class.is-invalid]="
-            form.controls['brand'].hasError('required')
+            form.controls['brand'].errors
             && form.controls['brand'].touched">
                 <option *ngFor="let b of brands" [ngValue]="b">
                     {{b.name}}
@@ -89,7 +85,7 @@
         <div class="mb-3">
             <label class="form-label" for='color'>Color</label>
             <select class="form-control form-select" name="color" id="color" formControlName="color" [class.is-invalid]="
-            form.controls['color'].hasError('required')
+            form.controls['color'].errors
             && form.controls['color'].touched">
                 <option *ngFor="let c of colors" [ngValue]="c">
                     {{c.name}}
@@ -103,7 +99,7 @@
             <label class="form-label" for='category'>Categoría</label>
             <select class="form-control form-select" name="category" id="category" formControlName="category"
                 [class.is-invalid]="
-        form.controls['category'].hasError('required')
+        form.controls['category'].errors
         && form.controls['category'].touched">
                 <option *ngFor="let c of categories" [ngValue]="c">
                     {{c.name}}
@@ -117,7 +113,7 @@
             <label class="form-label" for='subCategory'>Sub Categoría</label>
             <select class="form-control form-select" name="subCategory" id="subCategory" formControlName="subCategory"
                 [class.is-invalid]="
-            form.controls['subCategory'].hasError('required')
+            form.controls['subCategory'].errors
             && form.controls['subCategory'].touched">
                 <option *ngFor="let s of subCategories" [ngValue]="s">
                     {{s.name}}
