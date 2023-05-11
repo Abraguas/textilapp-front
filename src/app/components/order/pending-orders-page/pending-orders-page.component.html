@@ -1,0 +1,41 @@
+<div class="container-fluid" style="max-width: 1800px;">
+    <h1 class="display-4 my-3">Pedidos pendientes</h1>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nro de pedido</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Observaciones</th>
+                <th scope="col">Estado</th>
+                <th scope="col" colspan="3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="orders">
+            <tr *ngFor="let o of orders">
+                <td><span>{{o.id}}</span></td>
+                <td><span>{{o.username}}</span></td>
+                <td><span>{{o.date | date}}</span></td>
+                <td><span>{{o.observations? o.observations : '-'}}</span>
+                </td>
+                <td [ngClass]="{'table-danger': o.state.name === 'Cancelado', 
+                                'table-success': o.state.name === 'Cobrado', 
+                                'table-primary': o.state.name === 'Entregado',
+                                'table-warning': o.state.name === 'Pendiente'}">
+                    <span>{{o.state.name}}</span>
+                </td>
+                <td style="max-width: 180px;"><span><app-order-detail-button [modalId]="o.id"
+                            [order]="o"></app-order-detail-button>
+                        <app-pay-order-button (onPaymentRegister)="loadOrders()" [orderId]="o.id"
+                            [paymentMethods]="paymentMethods"
+                            *ngIf="o.state.name === 'Pendiente'"></app-pay-order-button>
+                        <button class=" btn btn-danger ms-2" (click)="cancelOrder(o.id)"
+                            *ngIf="o.state.name === 'Pendiente'||o.state.name === 'Cobrado'">Cancelar</button>
+                        <button class="btn btn-secondary ms-2" (click)="payOrder(o.id)"
+                            *ngIf="o.state.name === 'Cobrado'">Actualizar Estado</button>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

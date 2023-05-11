@@ -15,6 +15,7 @@ import { AllStockMovementsListComponent } from './components/stock/all-stock-mov
 import { MyOrdersPageComponent } from './components/order/my-orders-page/my-orders-page.component';
 import { PayOrderPageComponent } from './components/order/pay-order-page/pay-order-page.component';
 import { ManagementPageComponent } from './components/management-page/management-page.component';
+import { PendingOrdersPageComponent } from './components/order/pending-orders-page/pending-orders-page.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -40,7 +41,8 @@ const routes: Routes = [
             { path: 'product/update/:id', component: UpdateProductComponent },
             { path: 'product/list', component: ProductListComponent },
             { path: 'stock/list/:id', component: StockMovementsListComponent },
-            { path: 'stock/list', component: AllStockMovementsListComponent }
+            { path: 'stock/list', component: AllStockMovementsListComponent },
+            { path: 'order/pending', component: PendingOrdersPageComponent }
         ]
     },
     { path: '**', redirectTo: 'home', pathMatch: 'full' },

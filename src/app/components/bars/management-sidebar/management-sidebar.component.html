@@ -8,10 +8,22 @@
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#home-collapse1" aria-expanded="false">
+                            data-bs-target="#home-collapse-order" aria-expanded="false">
+                            Pedidos
+                        </button>
+                        <div class="collapse" id="home-collapse-order">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a class="link-dark rounded" routerLink="order/pending">Pedidos Pendientes</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                            data-bs-target="#home-collapse-product" aria-expanded="false">
                             Productos
                         </button>
-                        <div class="collapse" id="home-collapse1">
+                        <div class="collapse" id="home-collapse-product">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a class="link-dark rounded" routerLink="product/register">Registrar Producto</a>
                                 </li>
@@ -22,10 +34,10 @@
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                            data-bs-target="#home-collapse2" aria-expanded="false">
+                            data-bs-target="#home-collapse-stock" aria-expanded="false">
                             Stock
                         </button>
-                        <div class="collapse" id="home-collapse2">
+                        <div class="collapse" id="home-collapse-stock">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a class="link-dark rounded" routerLink="stock/list">Movimientos de
                                         stock</a>
