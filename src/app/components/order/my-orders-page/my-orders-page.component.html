@@ -18,7 +18,8 @@
                 </td>
                 <td [ngClass]="{'table-danger': o.state.name === 'Cancelado', 
                                 'table-success': o.state.name === 'Cobrado', 
-                                'table-primary': o.state.name === 'Pendiente'}">
+                                'table-primary': o.state.name === 'Entregado',
+                                'table-warning': o.state.name === 'Pendiente'}">
                     <span>{{o.state.name}}</span>
                 </td>
                 <td><span><app-order-detail-button [modalId]="o.id" [order]="o"></app-order-detail-button>
