@@ -32,6 +32,8 @@ import { OrderDetailButtonComponent } from './components/order/order-detail-butt
 import { PaymentService } from './services/payment.service';
 import { PayOrderPageComponent } from './components/order/pay-order-page/pay-order-page.component';
 import { ManagementPageComponent } from './components/management-page/management-page.component';
+import { PendingOrdersPageComponent } from './components/order/pending-orders-page/pending-orders-page.component';
+import { PayOrderButtonComponent } from './components/order/pay-order-button/pay-order-button.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +56,9 @@ import { ManagementPageComponent } from './components/management-page/management
         MyOrdersPageComponent,
         OrderDetailButtonComponent,
         PayOrderPageComponent,
-        ManagementPageComponent
+        ManagementPageComponent,
+        PendingOrdersPageComponent,
+        PayOrderButtonComponent
     ],
     imports: [
         BrowserModule,
