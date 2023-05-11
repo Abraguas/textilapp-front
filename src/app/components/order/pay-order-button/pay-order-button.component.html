@@ -1,0 +1,62 @@
+<button class="btn btn-success ms-2" data-bs-toggle="modal" attr.data-bs-target="#pay-modal-{{orderId}}">
+    Cobrar
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" [id]="'pay-modal-'+orderId" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 730px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar cobro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-start p-5">
+                    <form [formGroup]="form">
+                        <div class="mb-3">
+                            <label for="observations" class="form-label">Observaciones</label>
+                            <textarea class="form-control" id="observations" rows="3" formControlName="observations"
+                                [class.is-invalid]=" form.controls['observations'].errors 
+                                && form.controls['observations'].touched"></textarea>
+                            <span class="invalid-feedback">
+                                <div *ngIf="form.controls['observations'].hasError('maxlength')">Las observaciones
+                                    no deben tener más de 300 caracteres.</div>
+                            </span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="transactionNumber" class="form-label">Nro de Transacción</label>
+                            <input type="text" class="form-control" id="transactionNumber"
+                                formControlName="transactionNumber" [class.is-invalid]=" form.controls['transactionNumber'].errors 
+                            && form.controls['transactionNumber'].touched" />
+                            <span class="invalid-feedback">
+                                <div *ngIf="form.controls['transactionNumber'].hasError('maxlength')">Las medidas
+                                    no deben tener más de 30 caracteres.</div>
+                            </span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for='paymentMethod'>Tipo de pago</label>
+                            <select class="form-control form-select" name="paymentMethod" id="paymentMethod"
+                                formControlName="paymentMethod" [class.is-invalid]="
+                            form.controls['paymentMethod'].errors
+                            && form.controls['paymentMethod'].touched">
+                                <option *ngFor="let pm of paymentMethods" [ngValue]="pm">
+                                    {{pm.name}}
+                                </option>
+                            </select>
+                            <span class="invalid-feedback">
+                                Debe seleccionar un tipo de pago
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary me-2" data-bs-dismiss="modal"
+                    (click)="registerPayment()">Registrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
