@@ -45,15 +45,15 @@
                 </td>
                 <td>
                     <a *ngIf="p.isListed" (click)="unlist(p.id)" title="No listar producto">
-                        <i style="color: rgb(70, 70, 70); cursor: pointer;" class="fa-solid fa-eye-slash"></i>
+                        <i style="cursor: pointer;" class="fa-solid fa-eye-slash text-secondary"></i>
                     </a>
                     <a *ngIf="!p.isListed" (click)="list(p.id)" title="Listar Producto">
-                        <i style="color: rgb(70, 70, 70); cursor: pointer;" class="fa-solid fa-eye"></i>
+                        <i style="cursor: pointer;" class="fa-solid fa-eye text-secondary"></i>
                     </a>
                 </td>
                 <td>
                     <a [routerLink]="['/management/stock/list/',p.id]" title="Movimientos de stock">
-                        <i style="color: rgb(31, 138, 52); cursor: pointer;" class="fa-solid fa-box"></i>
+                        <i style="cursor: pointer;" class="fa-solid fa-box text-success"></i>
                     </a>
                 </td>
             </tr>
