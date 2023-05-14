@@ -48,4 +48,40 @@ export class AuxiliarService {
         const requestOptions = { headers: headers };
         return this.http.get<Brand[]>(this.API_URL + 'brand', requestOptions);
     }
+    deleteBrand(brandId: number): Observable<any> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        const requestOptions = { headers: headers };
+        return this.http.delete<any>(this.API_URL + 'brand/' + brandId, requestOptions);
+    }
+    updateBrand(brandId: number, brand: Brand): Observable<any> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        const requestOptions = { headers: headers };
+        return this.http.put<any>(this.API_URL + 'brand/' + brandId, brand, requestOptions);
+    }
+    registerBrand(brand: Brand): Observable<any> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        const requestOptions = { headers: headers };
+        return this.http.post<any>(this.API_URL + 'brand', brand, requestOptions);
+    }
 }

@@ -16,6 +16,7 @@ import { MyOrdersPageComponent } from './components/order/my-orders-page/my-orde
 import { PayOrderPageComponent } from './components/order/pay-order-page/pay-order-page.component';
 import { ManagementPageComponent } from './components/management-page/management-page.component';
 import { PendingOrdersPageComponent } from './components/order/pending-orders-page/pending-orders-page.component';
+import { BrandAbmPageComponent } from './components/brand/brand-abm-page/brand-abm-page.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,7 +43,8 @@ const routes: Routes = [
             { path: 'product/list', component: ProductListComponent },
             { path: 'stock/list/:id', component: StockMovementsListComponent },
             { path: 'stock/list', component: AllStockMovementsListComponent },
-            { path: 'order/pending', component: PendingOrdersPageComponent }
+            { path: 'order/pending', component: PendingOrdersPageComponent },
+            { path: 'brand', component: BrandAbmPageComponent }
         ]
     },
     { path: '**', redirectTo: 'home', pathMatch: 'full' },
