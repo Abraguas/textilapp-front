@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +37,10 @@ import { PayOrderButtonComponent } from './components/order/pay-order-button/pay
 import { BrandAbmPageComponent } from './components/brand/brand-abm-page/brand-abm-page.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { UserRankComponent } from './components/user/user-rank/user-rank.component';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es-AR';
+
+registerLocaleData(localeEs);
 
 @NgModule({
     declarations: [
@@ -74,6 +78,7 @@ import { UserRankComponent } from './components/user/user-rank/user-rank.compone
         HttpClientModule
     ],
     providers: [
+        { provide: LOCALE_ID, useValue: 'es-AR' },
         CategoryService,
         ProductService,
         UserService,
