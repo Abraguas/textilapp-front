@@ -1,0 +1,25 @@
+<div class="container-fluid" style="max-width: 1800px;">
+    <h1 class="display-4 my-3">Listado de Usuarios</h1>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Email</th>
+                <th scope="col">Nro de Telefono</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of users">
+                <td><span>{{ u.id }}</span></td>
+                <td><span>{{ u.username }}</span></td>
+                <td><span>{{ u.name }}</span></td>
+                <td><span>{{ u.lastname }}</span></td>
+                <td><span>{{ u.email }}</span></td>
+                <td><span>{{ u.phonenumber }}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

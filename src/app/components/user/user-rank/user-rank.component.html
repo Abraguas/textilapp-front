@@ -1,0 +1,23 @@
+<div class="container-fluid" style="max-width: 1800px;">
+    <h1 class="display-4 my-3">Ranking de Clientes</h1>
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nro</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Total de dinero gastado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of users; let i = index">
+                <td><span><strong> # {{ i+1}}</strong></span></td>
+                <td><span>{{ u.username }}</span></td>
+                <td><span>{{ u.name }}</span></td>
+                <td><span>{{ u.lastname }}</span></td>
+                <td><span>{{ u.totalMoneySpent | currency}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

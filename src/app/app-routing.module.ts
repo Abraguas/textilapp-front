@@ -17,6 +17,8 @@ import { PayOrderPageComponent } from './components/order/pay-order-page/pay-ord
 import { ManagementPageComponent } from './components/management-page/management-page.component';
 import { PendingOrdersPageComponent } from './components/order/pending-orders-page/pending-orders-page.component';
 import { BrandAbmPageComponent } from './components/brand/brand-abm-page/brand-abm-page.component';
+import { UserRankComponent } from './components/user/user-rank/user-rank.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -44,7 +46,9 @@ const routes: Routes = [
             { path: 'stock/list/:id', component: StockMovementsListComponent },
             { path: 'stock/list', component: AllStockMovementsListComponent },
             { path: 'order/pending', component: PendingOrdersPageComponent },
-            { path: 'brand', component: BrandAbmPageComponent }
+            { path: 'brand', component: BrandAbmPageComponent },
+            { path: 'user/list', component: UserListComponent },
+            { path: 'user/ranking', component: UserRankComponent }
         ]
     },
     { path: '**', redirectTo: 'home', pathMatch: 'full' },

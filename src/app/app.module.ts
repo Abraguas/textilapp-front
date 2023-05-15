@@ -35,6 +35,8 @@ import { ManagementPageComponent } from './components/management-page/management
 import { PendingOrdersPageComponent } from './components/order/pending-orders-page/pending-orders-page.component';
 import { PayOrderButtonComponent } from './components/order/pay-order-button/pay-order-button.component';
 import { BrandAbmPageComponent } from './components/brand/brand-abm-page/brand-abm-page.component';
+import { UserListComponent } from './components/user/user-list/user-list.component';
+import { UserRankComponent } from './components/user/user-rank/user-rank.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +62,9 @@ import { BrandAbmPageComponent } from './components/brand/brand-abm-page/brand-a
         ManagementPageComponent,
         PendingOrdersPageComponent,
         PayOrderButtonComponent,
-        BrandAbmPageComponent
+        BrandAbmPageComponent,
+        UserListComponent,
+        UserRankComponent
     ],
     imports: [
         BrowserModule,
