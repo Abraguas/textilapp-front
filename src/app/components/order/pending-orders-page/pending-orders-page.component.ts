@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetOrderDTO } from 'src/app/models/get-order-dto';
+import { OrderState } from 'src/app/models/order-state';
 import { PaymentMethod } from 'src/app/models/payment-method';
+import { AuxiliarService } from 'src/app/services/auxiliar.service';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -16,23 +19,50 @@ const swal: SweetAlert = require('sweetalert');
     styleUrls: ['./pending-orders-page.component.css']
 })
 export class PendingOrdersPageComponent implements OnInit, OnDestroy {
+    form: FormGroup;
     orders: GetOrderDTO[];
+    orderStates: OrderState[];
     paymentMethods: PaymentMethod[];
+    selectedOrderId: number;
     subscription: Subscription;
     constructor(
         private orderService: OrderService,
         private sessionService: SessionService,
         private router: Router,
         private paymentService: PaymentService,
-    ) { }
+        private formBuilder: FormBuilder,
+        private auxiliarService: AuxiliarService
+    ) {
+        this.form = this.formBuilder.group({
+            orderState: [, [Validators.required]],
+        })
+    }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
     ngOnInit(): void {
         this.subscription = new Subscription();
+        this.loadOrderStates();
         this.loadPaymentMethods();
         this.loadOrders();
 
+    }
+    selectOrder(id: number) {
+        this.selectedOrderId = id;
+    }
+    loadOrderStates(): void {
+        this.subscription.add(
+            this.auxiliarService.getOrderStates().subscribe({
+                next: (r: OrderState[]) => {
+                    this.orderStates = r;
+                },
+                error: (e) => {
+                    if (this.statusCheck(e)) {
+                        swal({ title: 'Error!', text: 'Se ha producido un error al cargar los estados de pedido', icon: 'error' });
+                    }
+                }
+            })
+        );
     }
     loadPaymentMethods(): void {
         this.subscription.add(
@@ -97,6 +127,21 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
                 }
             });
 
+    }
+    updateState(): void {
+        let os: OrderState = this.form.value.orderState;
+        this.subscription.add(
+            this.orderService.updateOrderState(this.selectedOrderId, os).subscribe({
+                next: () => {
+                    this.loadOrders();
+                },
+                error: (e) => {
+                    if (this.statusCheck(e)) {
+                        swal({ title: 'Error!', text: 'Se ha producido un error al actualizar la orden', icon: 'error' });
+                    }
+                }
+            })
+        );
     }
     statusCheck(e: any): boolean {
         if (e.status === 403) {

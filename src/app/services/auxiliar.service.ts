@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Unit } from '../models/unit';
 import { Color } from '../models/color';
 import { Brand } from '../models/brand';
+import { OrderState } from '../models/order-state';
 
 @Injectable()
 export class AuxiliarService {
@@ -47,6 +48,18 @@ export class AuxiliarService {
         });
         const requestOptions = { headers: headers };
         return this.http.get<Brand[]>(this.API_URL + 'brand', requestOptions);
+    }
+    getOrderStates(): Observable<OrderState[]> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        const requestOptions = { headers: headers };
+        return this.http.get<OrderState[]>(this.API_URL + 'orderState', requestOptions);
     }
     deleteBrand(brandId: number): Observable<any> {
         let auth_token = localStorage.getItem('token');

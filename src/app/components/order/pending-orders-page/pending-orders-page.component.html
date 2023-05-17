@@ -31,11 +31,45 @@
                             *ngIf="o.state.name === 'Pendiente'"></app-pay-order-button>
                         <button class=" btn btn-danger ms-2" (click)="cancelOrder(o.id)"
                             *ngIf="o.state.name === 'Pendiente'||o.state.name === 'Cobrado'">Cancelar</button>
-                        <button class="btn btn-secondary ms-2" (click)="payOrder(o.id)"
-                            *ngIf="o.state.name === 'Cobrado'">Actualizar Estado</button>
+                        <button class="btn btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#stateModal"
+                            *ngIf="o.state.name === 'Cobrado'" (click)="selectOrder(o.id)">
+                            Actualizar Estado
+                        </button>
                     </span>
                 </td>
             </tr>
         </tbody>
     </table>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="stateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 430px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Actualizar estado del pedido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form">
+                    <div class="mb-3">
+                        <label class="form-label" for='orderState'>Estado</label>
+                        <select class="form-control form-select" name="orderState" id="orderState"
+                            formControlName="orderState">
+                            <option *ngFor="let os of orderStates" [ngValue]="os">
+                                {{os.name}}
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="form.invalid" type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="updateState()">Actualizar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>

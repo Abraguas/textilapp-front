@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { OrderDTO } from '../models/order-dto';
 import { Observable } from 'rxjs';
 import { GetOrderDTO } from '../models/get-order-dto';
+import { OrderState } from '../models/order-state';
 
 @Injectable()
 export class OrderService {
@@ -56,6 +57,18 @@ export class OrderService {
         });
         const requestOptions = { headers: headers };
         return this.http.put<any>(`${this.API_URL}/cancel/${orderId}`, {}, requestOptions);
+    }
+    updateOrderState(orderId: number, state: OrderState): Observable<any> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        const requestOptions = { headers: headers };
+        return this.http.put<any>(`${this.API_URL}/state/${orderId}`, state, requestOptions);
     }
     getById(orderId: number): Observable<GetOrderDTO> {
         let auth_token = localStorage.getItem('token');
