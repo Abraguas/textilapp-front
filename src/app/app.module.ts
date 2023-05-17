@@ -39,6 +39,8 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserRankComponent } from './components/user/user-rank/user-rank.component';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es-AR';
+import { TotalEarningsPerMonthComponent } from './components/reports/total-earnings-per-month/total-earnings-per-month.component';
+import { BarChartComponent } from './components/chart/bar-chart/bar-chart.component';
 
 registerLocaleData(localeEs);
 
@@ -68,7 +70,9 @@ registerLocaleData(localeEs);
         PayOrderButtonComponent,
         BrandAbmPageComponent,
         UserListComponent,
-        UserRankComponent
+        UserRankComponent,
+        TotalEarningsPerMonthComponent,
+        BarChartComponent
     ],
     imports: [
         BrowserModule,

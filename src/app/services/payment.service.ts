@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PaymentMethod } from '../models/payment-method';
 import { RegisterPaymentDTO } from '../models/register-payment-dto';
+import { EarningsPerMonthDTO } from '../models/earnings-per-month-dto';
 
 @Injectable()
 export class PaymentService {
@@ -32,6 +33,24 @@ export class PaymentService {
         });
         const requestOptions = { headers: headers };
         return this.http.get<PaymentMethod[]>(`${this.API_URL}-method`, requestOptions);
+    }
+    getTotalEarningsPerMonth(startDate: string, endDate: string): Observable<EarningsPerMonthDTO[]> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        // Initialize Params Object
+        let params = new HttpParams();
+
+        // Begin assigning parameters
+        params = params.append('startDate', startDate);
+        params = params.append('endDate', endDate);
+        const requestOptions = { headers: headers, params: params };
+        return this.http.get<EarningsPerMonthDTO[]>(`${this.API_URL}/totalEarningsPerMonth`, requestOptions);
     }
     registerPayment(body: RegisterPaymentDTO): Observable<PaymentMethod[]> {
         let auth_token = localStorage.getItem('token');
