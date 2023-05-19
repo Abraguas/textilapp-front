@@ -1,0 +1,111 @@
+<div class="container-fluid d-flex p-0">
+    <div class="row  p-0" style="width: 100%;">
+        <div class="col-md-5 col-sm-12 p-5 " style="height: 95vh;">
+            <h1 class="display-6 my-3">Listado Productos</h1>
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let p of products">
+                        <tr *ngIf="!isAdded(p)">
+                            <td><span>{{ p.name }}</span></td>
+                            <td><span>{{ p.description }}</span></td>
+                            <td><span>{{ p.stock }}</span></td>
+                            <td><img style="object-fit: cover; height: 100px; width: 100px;"
+                                    (error)="onImgError($event)" [src]="p.image" alt="">
+                            </td>
+                            <td><button class="btn btn-primary" (click)="selectProduct(p)">Seleccionar</button></td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+
+        </div>
+        <div class=" border border-start col-md-4 col-sm-12 p-5 bg-light " style="height: 95vh;">
+            <h1 class="display-6 my-3">Registrar un Movimiento</h1>
+
+            <form [formGroup]="form">
+                <div class="mb-3">
+                    <label class="form-label">Producto seleccionado: '{{selectedProduct? selectedProduct.name :
+                        '-'}}'</label>
+                </div>
+                <div class="mb-3">
+                    <label for="observations" class="form-label">Observaciones</label>
+                    <textarea class="form-control" name="observations" id="observations" cols="30" rows="10"
+                        formControlName="observations"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="quantityInput" class="form-label">Cantidad</label>
+                    <input type="number" class="form-control" id="quantityInput" formControlName="quantity"
+                        [class.is-invalid]="form.controls['quantity'].errors && form.controls['quantity'].touched" />
+                    <span class="invalid-feedback">
+                        <div *ngIf="form.controls['quantity'].hasError('required')">Debe
+                            ingresar una cantidad.</div>
+                        <div *ngIf="form.controls['quantity'].hasError('min')">La cantidad no puede ser menor a 1</div>
+                        <div *ngIf="form.controls['quantity'].hasError('insufficientStock')">La cantidad de un egreso no
+                            puede superar el stock del producto</div>
+                    </span>
+                </div>
+                <div class="mb-3 ps-0 form-check">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="isIncome" id="inlineRadio1" [value]="true"
+                            formControlName="isIncome">
+                        <label class="form-check-label" for="inlineRadio1">Ingreso</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="isIncome" id="inlineRadio2" [value]="false"
+                            formControlName="isIncome">
+                        <label class="form-check-label" for="inlineRadio2">Egreso</label>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="button" class="btn btn-primary mb-4"
+                        [disabled]="this.form.invalid || !selectedProduct" (click)="addMovement()">Guardar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3 col-sm-12 m-0 py-5">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <h1 class="display-6 my-3">Movimientos:</h1>
+                </div>
+                <div class="row">
+                    <ol class="list-group">
+                        <li *ngFor="let sm of stockMovements"
+                            class="list-group-item d-flex justify-content-between align-items-start">
+                            <span class=" badge align-self-center rounded-pill"
+                                [ngClass]="sm.quantity > 0? 'bg-info': 'bg-warning'"><i class="fa-solid me-1"
+                                    [ngClass]="sm.quantity > 0? 'fa-arrow-left-long' : 'fa-arrow-right-long'"></i>
+                                {{ sm.quantity > 0? 'Ingreso':'Egreso'}}
+                            </span>
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">{{sm.product.name}}</div>
+                                {{ Math.abs( sm.quantity )}} {{sm.product.unit.name}}<ng-container
+                                    *ngIf="sm.quantity > 1 || sm.quantity < -1"><ng-container
+                                        *ngIf="!['a','e','i','o','u'].includes(sm.product.unit.name.charAt(sm.product.unit.name.length - 1).toLowerCase())">e</ng-container>s</ng-container>
+
+                            </div>
+                            <button class="btn btn-close align-self-center ms-2" (click)="removeMovement(sm)"></button>
+                        </li>
+                    </ol>
+                    <div class="row">
+                        <div class="container-fluid p-0">
+                            <button [disabled]="stockMovements.length < 1" class="btn btn-primary mt-3"
+                                (click)="registerMovements()">Registrar
+                                Movimientos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

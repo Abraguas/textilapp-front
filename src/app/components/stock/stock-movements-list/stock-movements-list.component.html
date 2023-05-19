@@ -48,6 +48,8 @@
                         <div *ngIf="form.controls['quantity'].hasError('required')">Debe
                             ingresar una cantidad.</div>
                         <div *ngIf="form.controls['quantity'].hasError('min')">La cantidad no puede ser menor a 1</div>
+                        <div *ngIf="form.controls['quantity'].hasError('insufficientStock')">La cantidad de un egreso no
+                            puede superar el stock del producto</div>
                     </span>
                 </div>
                 <div class="mb-3 ps-0 form-check">

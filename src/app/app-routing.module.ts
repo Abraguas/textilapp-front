@@ -20,6 +20,7 @@ import { BrandAbmPageComponent } from './components/brand/brand-abm-page/brand-a
 import { UserRankComponent } from './components/user/user-rank/user-rank.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
 import { TotalEarningsPerMonthComponent } from './components/reports/total-earnings-per-month/total-earnings-per-month.component';
+import { RegisterStockMovementComponent } from './components/stock/register-stock-movement/register-stock-movement.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -46,6 +47,7 @@ const routes: Routes = [
             { path: 'product/list', component: ProductListComponent },
             { path: 'stock/list/:id', component: StockMovementsListComponent },
             { path: 'stock/list', component: AllStockMovementsListComponent },
+            { path: 'stock/register', component: RegisterStockMovementComponent },
             { path: 'order/pending', component: PendingOrdersPageComponent },
             { path: 'brand', component: BrandAbmPageComponent },
             { path: 'user/list', component: UserListComponent },

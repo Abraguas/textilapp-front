@@ -24,6 +24,18 @@ export class StockMovementService {
         const requestOptions = { headers: headers };
         return this.http.post<any>(this.API_URL, movement, requestOptions);
     }
+    registerAll(movements: StockMovement[]): Observable<any> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        const requestOptions = { headers: headers };
+        return this.http.post<any>(this.API_URL + '/all', movements, requestOptions);
+    }
     getStockByProductId(id: number): Observable<number> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({

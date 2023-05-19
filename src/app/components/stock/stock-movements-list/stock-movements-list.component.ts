@@ -8,6 +8,7 @@ import { StockMovementDTO } from 'src/app/models/stock-movement-dto';
 import { ProductService } from 'src/app/services/product.service';
 import { SessionService } from 'src/app/services/session.service';
 import { StockMovementService } from 'src/app/services/stock-movement.service';
+import { stockQuantityValidator } from 'src/app/validators/stock-quantity.validator';
 import { SweetAlert } from 'sweetalert/typings/core';
 declare var require: any
 const swal: SweetAlert = require('sweetalert');
@@ -47,6 +48,12 @@ export class StockMovementsListComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
     ngOnInit(): void {
+        this.subscription.add(
+            this.form.controls['isIncome'].valueChanges.subscribe((isIncome) => {
+                console.log("ola")
+                this.updateQuantityValidators(isIncome, this.product?.stock);
+            })
+        );
         this.route.params
             .pipe(first())
             .subscribe(params => {
@@ -104,6 +111,13 @@ export class StockMovementsListComponent implements OnInit, OnDestroy {
         }
         console.error(e);
         return true;
+    }
+    updateQuantityValidators(isIncome: boolean, prodStock: number | undefined): void {
+        this.form.controls['quantity'].setValidators([
+            Validators.min(1), Validators.required,
+            stockQuantityValidator(prodStock, isIncome)
+        ]);
+        this.form.controls['quantity'].updateValueAndValidity();
     }
     save(): void {
 
