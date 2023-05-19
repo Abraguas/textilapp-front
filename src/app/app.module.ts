@@ -42,6 +42,7 @@ import localeEs from '@angular/common/locales/es-AR';
 import { TotalEarningsPerMonthComponent } from './components/reports/total-earnings-per-month/total-earnings-per-month.component';
 import { BarChartComponent } from './components/chart/bar-chart/bar-chart.component';
 import { RegisterStockMovementComponent } from './components/stock/register-stock-movement/register-stock-movement.component';
+import { CategoryAbmPageComponent } from './components/category/category-abm-page/category-abm-page.component';
 
 registerLocaleData(localeEs);
 
@@ -74,7 +75,8 @@ registerLocaleData(localeEs);
         UserRankComponent,
         TotalEarningsPerMonthComponent,
         BarChartComponent,
-        RegisterStockMovementComponent
+        RegisterStockMovementComponent,
+        CategoryAbmPageComponent
     ],
     imports: [
         BrowserModule,
