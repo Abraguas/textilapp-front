@@ -43,6 +43,7 @@ import { TotalEarningsPerMonthComponent } from './components/reports/total-earni
 import { BarChartComponent } from './components/chart/bar-chart/bar-chart.component';
 import { RegisterStockMovementComponent } from './components/stock/register-stock-movement/register-stock-movement.component';
 import { CategoryAbmPageComponent } from './components/category/category-abm-page/category-abm-page.component';
+import { HighestSellingProductsComponent } from './components/reports/highest-selling-products/highest-selling-products.component';
 
 registerLocaleData(localeEs);
 
@@ -76,7 +77,8 @@ registerLocaleData(localeEs);
         TotalEarningsPerMonthComponent,
         BarChartComponent,
         RegisterStockMovementComponent,
-        CategoryAbmPageComponent
+        CategoryAbmPageComponent,
+        HighestSellingProductsComponent
     ],
     imports: [
         BrowserModule,

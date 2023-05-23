@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OrderDTO } from '../models/order-dto';
 import { Observable } from 'rxjs';
 import { GetOrderDTO } from '../models/get-order-dto';
 import { OrderState } from '../models/order-state';
+import { HighestSellingProductDTO } from '../models/highest-selling-product-dto';
 
 @Injectable()
 export class OrderService {
@@ -81,5 +82,20 @@ export class OrderService {
         });
         const requestOptions = { headers: headers };
         return this.http.get<GetOrderDTO>(`${this.API_URL}/${orderId}`, requestOptions);
+    }
+    getHighestSellingProducts(startDate: string, endDate: string): Observable<HighestSellingProductDTO[]> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        let params = new HttpParams();
+        params = params.append('startDate', startDate);
+        params = params.append('endDate', endDate);
+        const requestOptions = { headers: headers, params: params };
+        return this.http.get<HighestSellingProductDTO[]>(`${this.API_URL}/highestSellingProducts`, requestOptions);
     }
 }

@@ -22,6 +22,7 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { TotalEarningsPerMonthComponent } from './components/reports/total-earnings-per-month/total-earnings-per-month.component';
 import { RegisterStockMovementComponent } from './components/stock/register-stock-movement/register-stock-movement.component';
 import { CategoryAbmPageComponent } from './components/category/category-abm-page/category-abm-page.component';
+import { HighestSellingProductsComponent } from './components/reports/highest-selling-products/highest-selling-products.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -56,6 +57,7 @@ const routes: Routes = [
             { path: 'user/list', component: UserListComponent },
             { path: 'user/ranking', component: UserRankComponent },
             { path: 'totalEarningsPerMonth', component: TotalEarningsPerMonthComponent },
+            { path: 'highestSellingProducts', component: HighestSellingProductsComponent }
         ]
     },
     { path: '**', redirectTo: 'home', pathMatch: 'full' },
