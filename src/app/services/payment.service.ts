@@ -43,10 +43,7 @@ export class PaymentService {
             'Authorization': `Bearer ${auth_token}`
 
         });
-        // Initialize Params Object
         let params = new HttpParams();
-
-        // Begin assigning parameters
         params = params.append('startDate', startDate);
         params = params.append('endDate', endDate);
         const requestOptions = { headers: headers, params: params };
