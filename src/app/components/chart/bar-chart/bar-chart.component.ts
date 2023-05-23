@@ -13,6 +13,7 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
     @Input() areValuesMoney: boolean = false;
     @Input() width: string = '700px';
     @Input() dataEntries: { label: any, data: number }[];
+    @Input() label: string = 'Label por defecto';
     colors = ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#9C27B0', '#FF5722'];
     ngOnChanges(): void {
         this.updateChart();
@@ -24,7 +25,7 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
         let data = {
             labels: [],
             datasets: [{
-                label: 'Total de ingresos',
+                label: this.label,
                 data: [],
                 backgroundColor: this.colors.slice(0, this.dataEntries.length),
                 borderWidth: 1
@@ -45,13 +46,13 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
                         beginAtZero: true,
                         ticks: this.areValuesMoney ? {
 
-                            callback: function (value) {
+                            callback: (value) => {
                                 // Customize the number format here
-                                return value.toLocaleString('es-AR', {
+                                return this.areValuesMoney ? value.toLocaleString('es-AR', {
                                     style: 'currency',
                                     currency: 'ARS',
                                     minimumFractionDigits: 2,
-                                });
+                                }) : value.toLocaleString('es-AR');
                             },
                         } : undefined,
                     },
@@ -61,11 +62,11 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
                         callbacks: this.areValuesMoney ? {
                             label: (context) => {
                                 // Customize the number format for tooltip values
-                                return parseFloat(context.formattedValue?.replace(/,/g, ''))?.toLocaleString('es-AR', {
+                                return this.areValuesMoney ? parseFloat(context.formattedValue?.replace(/,/g, ''))?.toLocaleString('es-AR', {
                                     style: 'currency',
                                     currency: 'ARS',
                                     minimumFractionDigits: 2,
-                                });
+                                }) : parseFloat(context.formattedValue?.replace(/,/g, ''))?.toLocaleString('es-AR');
                             },
                         } : undefined,
                     }
