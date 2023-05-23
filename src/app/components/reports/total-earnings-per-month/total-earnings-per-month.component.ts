@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,7 +16,7 @@ const swal: SweetAlert = require('sweetalert');
     templateUrl: './total-earnings-per-month.component.html',
     styleUrls: ['./total-earnings-per-month.component.css']
 })
-export class TotalEarningsPerMonthComponent {
+export class TotalEarningsPerMonthComponent implements OnInit, OnDestroy {
     form: FormGroup;
     report: EarningsPerMonthDTO[];
     dataEntries: DataEntry[];
@@ -62,6 +62,10 @@ export class TotalEarningsPerMonthComponent {
                     this.report = r;
                 },
                 error: (e) => {
+                    if (e.status === 400) {
+                        swal({ title: 'Error!', text: 'El mes de inicio no puede superar el mes final', icon: 'error' });
+                        return;
+                    }
                     if (this.statusCheck(e)) {
                         swal({ title: 'Error!', text: 'Se ha producido un error al cargar el reporte', icon: 'error' });
                     }
