@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { Subscription, first } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { StockMovement } from 'src/app/models/stock-movement';
@@ -21,7 +22,8 @@ const swal: SweetAlert = require('sweetalert');
 export class StockMovementsListComponent implements OnInit, OnDestroy {
     private subscription = new Subscription();
     stockMovements: StockMovementDTO[];
-    form: FormGroup
+    form: FormGroup;
+    dateForm: FormGroup;
     product: Product;
     productId: number;
     Math: any = Math;
@@ -33,6 +35,10 @@ export class StockMovementsListComponent implements OnInit, OnDestroy {
         private sessionService: SessionService,
         private productService: ProductService
     ) {
+        this.dateForm = this.formBuilder.group({
+            startDate: [, [Validators.required]],
+            endDate: [, [Validators.required]],
+        });
         this.form = this.formBuilder.group(
             {
                 observations: [, []],
@@ -63,8 +69,34 @@ export class StockMovementsListComponent implements OnInit, OnDestroy {
                     this.loadProduct();
                 }
             });
+        this.subscription.add(
+            this.dateForm.valueChanges.subscribe(() => {
+                this.loadMovements(this.productId);
+            })
+        );
     }
     loadMovements(productId: number): void {
+        if (this.dateForm.valid) {
+            const startDate = moment(this.dateForm.value.startDate).utc();
+            const endDate = moment(this.dateForm.value.endDate).utc();
+
+            startDate.startOf('day');
+            endDate.endOf('day');
+
+            const startDateString = startDate.format('YYYY-MM-DDTHH:mm:ss');
+            const endDateString = endDate.format('YYYY-MM-DDTHH:mm:ss');
+            this.subscription.add(
+                this.stockMovementService.getMovementsByProductIdAndDatePeriod(productId, startDateString, endDateString).subscribe({
+                    next: (r: StockMovementDTO[]) => {
+                        this.stockMovements = r;
+                    },
+                    error: (e) => {
+                        this.statusCheck(e);
+                    }
+                })
+            );
+            return;
+        }
         this.subscription.add(
             this.stockMovementService.getMovementsByProductId(productId).subscribe({
                 next: (r: StockMovementDTO[]) => {
@@ -75,6 +107,7 @@ export class StockMovementsListComponent implements OnInit, OnDestroy {
                 }
             })
         );
+
     }
     loadProduct(): void {
         this.subscription.add(

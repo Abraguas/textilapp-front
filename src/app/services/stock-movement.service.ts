@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StockMovement } from '../models/stock-movement';
@@ -59,6 +59,22 @@ export class StockMovementService {
         });
         const requestOptions = { headers: headers };
         return this.http.get<StockMovementDTO[]>(`${this.API_URL}/${id}`, requestOptions);
+    }
+    getMovementsByProductIdAndDatePeriod(id: number, startDate: string, endDate: string): Observable<StockMovementDTO[]> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        let params = new HttpParams();
+        params = params.append('startDate', startDate);
+        params = params.append('endDate', endDate);
+        params = params.append('productId', id);
+        const requestOptions = { headers: headers, params: params };
+        return this.http.get<StockMovementDTO[]>(`${this.API_URL}/report`, requestOptions);
     }
     getAllMovements(): Observable<StockMovementProdDTO[]> {
         let auth_token = localStorage.getItem('token');
