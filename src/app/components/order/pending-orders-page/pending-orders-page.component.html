@@ -1,11 +1,15 @@
 <div class="container-fluid" style="max-width: 1800px;">
     <h1 class="display-4 my-3">Pedidos pendientes</h1>
-    <table class="table text-center">
+    <div class="text-center" *ngIf="!orders || !(orders.length > 0)">
+        <h1 class="display-6 my-3">¡No hay pedidos pendientes!</h1>
+    </div>
+    <table class="table text-center" *ngIf="orders && orders.length > 0">
         <thead>
             <tr>
                 <th scope="col">Nro de pedido</th>
                 <th scope="col">Usuario</th>
                 <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
                 <th scope="col">Observaciones</th>
                 <th scope="col">Estado</th>
                 <th scope="col" colspan="3">Acciones</th>
@@ -16,6 +20,7 @@
                 <td><span>{{o.id}}</span></td>
                 <td><span>{{o.username}}</span></td>
                 <td><span>{{o.date | date}}</span></td>
+                <td><span>{{o.date | date: 'HH:mm'}}</span></td>
                 <td><span>{{o.observations? o.observations : '-'}}</span>
                 </td>
                 <td [ngClass]="{'table-danger': o.state.name === 'Cancelado', 
