@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetOrderDTO } from 'src/app/models/get-order-dto';
@@ -13,7 +13,7 @@ const swal: SweetAlert = require('sweetalert');
     templateUrl: './my-orders-page.component.html',
     styleUrls: ['./my-orders-page.component.css']
 })
-export class MyOrdersPageComponent {
+export class MyOrdersPageComponent implements OnInit, OnDestroy {
     orders: GetOrderDTO[];
     subscription: Subscription;
     constructor(
