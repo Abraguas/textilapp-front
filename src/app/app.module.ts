@@ -44,6 +44,7 @@ import { BarChartComponent } from './components/chart/bar-chart/bar-chart.compon
 import { RegisterStockMovementComponent } from './components/stock/register-stock-movement/register-stock-movement.component';
 import { CategoryAbmPageComponent } from './components/category/category-abm-page/category-abm-page.component';
 import { HighestSellingProductsComponent } from './components/reports/highest-selling-products/highest-selling-products.component';
+import { AllOrdersPageComponent } from './components/order/all-orders-page/all-orders-page.component';
 
 registerLocaleData(localeEs);
 
@@ -78,7 +79,8 @@ registerLocaleData(localeEs);
         BarChartComponent,
         RegisterStockMovementComponent,
         CategoryAbmPageComponent,
-        HighestSellingProductsComponent
+        HighestSellingProductsComponent,
+        AllOrdersPageComponent
     ],
     imports: [
         BrowserModule,

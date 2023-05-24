@@ -23,6 +23,7 @@ import { TotalEarningsPerMonthComponent } from './components/reports/total-earni
 import { RegisterStockMovementComponent } from './components/stock/register-stock-movement/register-stock-movement.component';
 import { CategoryAbmPageComponent } from './components/category/category-abm-page/category-abm-page.component';
 import { HighestSellingProductsComponent } from './components/reports/highest-selling-products/highest-selling-products.component';
+import { AllOrdersPageComponent } from './components/order/all-orders-page/all-orders-page.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -50,6 +51,7 @@ const routes: Routes = [
             { path: 'stock/list/:id', component: StockMovementsListComponent },
             { path: 'stock/list', component: AllStockMovementsListComponent },
             { path: 'stock/register', component: RegisterStockMovementComponent },
+            { path: 'order/all', component: AllOrdersPageComponent },
             { path: 'order/pending', component: PendingOrdersPageComponent },
             { path: 'brand', component: BrandAbmPageComponent },
             { path: 'category', component: CategoryAbmPageComponent },

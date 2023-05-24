@@ -98,4 +98,19 @@ export class OrderService {
         const requestOptions = { headers: headers, params: params };
         return this.http.get<HighestSellingProductDTO[]>(`${this.API_URL}/highestSellingProducts`, requestOptions);
     }
+    getAllPaginated(pageNum: number, pageSize: number): Observable<any> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        let params = new HttpParams();
+        params = params.append('pageNum', pageNum);
+        params = params.append('pageSize', pageSize);
+        const requestOptions = { headers: headers, params: params };
+        return this.http.get<any>(`${this.API_URL}/paginated`, requestOptions);
+    }
 }
