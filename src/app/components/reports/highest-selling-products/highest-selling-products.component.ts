@@ -40,12 +40,10 @@ export class HighestSellingProductsComponent implements OnInit, OnDestroy {
     loadReport(): void {
         const startDate = moment(this.form.value.startDate).utc();
         const endDate = moment(this.form.value.endDate).utc();
-        // Round the start date to the beginning of the month
-        startDate.startOf('day');
 
-        console.log(startDate);
-        // Round the end date to the end of the month
+        startDate.startOf('day');
         endDate.endOf('day');
+        
         const startDateString = startDate.format('YYYY-MM-DDTHH:mm:ss');
         const endDateString = endDate.format('YYYY-MM-DDTHH:mm:ss');
 
@@ -71,13 +69,6 @@ export class HighestSellingProductsComponent implements OnInit, OnDestroy {
                 }
             })
         );
-    }
-    getMonthName(monthNumber: number): any {
-        const date = new Date();
-        date.setMonth(monthNumber - 1);
-
-        const str = date.toLocaleString('es-AR', { month: 'long' });
-        return str.charAt(0).toUpperCase() + str.slice(1);
     }
     statusCheck(e: any): boolean {
         if (e.status === 403) {
