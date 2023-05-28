@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="display-4 my-3">Ganancias por Mes</h1>
+    <h1 class="display-4 my-3">Ingresos por mes</h1>
     <form [formGroup]="form">
         <div class="form-group">
             <div class="mb-3">
@@ -35,6 +35,6 @@
     </form>
     <div *ngIf="report">
         <app-bar-chart width="70vw" [dataEntries]="dataEntries" [areValuesMoney]="true"
-            label="Ganancias Totales"></app-bar-chart>
+            label="Ingresos Totales"></app-bar-chart>
     </div>
 </div>
