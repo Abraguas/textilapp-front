@@ -26,6 +26,7 @@ import { HighestSellingProductsComponent } from './components/reports/highest-se
 import { AllOrdersPageComponent } from './components/order/all-orders-page/all-orders-page.component';
 import { AdminGuard } from './guards/admin.guard';
 import { LoggedGuard } from './guards/logged.guard';
+import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -56,6 +57,7 @@ const routes: Routes = [
             { path: 'stock/register', component: RegisterStockMovementComponent },
             { path: 'order/all', component: AllOrdersPageComponent },
             { path: 'order/pending', component: PendingOrdersPageComponent },
+            { path: 'payment/all', component: PaymentListComponent },
             { path: 'brand', component: BrandAbmPageComponent },
             { path: 'category', component: CategoryAbmPageComponent },
             { path: 'category/:id', component: CategoryAbmPageComponent },

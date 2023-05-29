@@ -45,6 +45,7 @@ import { RegisterStockMovementComponent } from './components/stock/register-stoc
 import { CategoryAbmPageComponent } from './components/category/category-abm-page/category-abm-page.component';
 import { HighestSellingProductsComponent } from './components/reports/highest-selling-products/highest-selling-products.component';
 import { AllOrdersPageComponent } from './components/order/all-orders-page/all-orders-page.component';
+import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 
 registerLocaleData(localeEs);
 
@@ -80,7 +81,8 @@ registerLocaleData(localeEs);
         RegisterStockMovementComponent,
         CategoryAbmPageComponent,
         HighestSellingProductsComponent,
-        AllOrdersPageComponent
+        AllOrdersPageComponent,
+        PaymentListComponent
     ],
     imports: [
         BrowserModule,
