@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetOrderDTO } from 'src/app/models/get-order-dto';
 import { OrderState } from 'src/app/models/order-state';
@@ -25,10 +25,15 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
     paymentMethods: PaymentMethod[];
     selectedOrderId: number;
     subscription: Subscription;
+    totalPages: number;
+    currentPage: number;
+    pagesToShow: number[];
+    queryParams: Params;
     constructor(
         private orderService: OrderService,
         private sessionService: SessionService,
         private router: Router,
+        private route: ActivatedRoute,
         private paymentService: PaymentService,
         private formBuilder: FormBuilder,
         private auxiliarService: AuxiliarService
@@ -44,7 +49,11 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
         this.subscription = new Subscription();
         this.loadOrderStates();
         this.loadPaymentMethods();
-        this.loadOrders();
+        this.subscription.add(
+            this.route.queryParams.subscribe((params) => {
+                this.loadOrders(params['pageNum']);
+            })
+        );
 
     }
     selectOrder(id: number) {
@@ -78,13 +87,14 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
             })
         );
     }
-    loadOrders(): void {
+    loadOrders(page: number | undefined): void {
         this.subscription.add(
-            this.orderService.getPendingOrders().subscribe({
-                next: (r: GetOrderDTO[]) => {
-                    this.orders = r.sort((a, b) => {
-                        return a.date > b.date ? 1 : -1;
-                    });
+            this.orderService.getPendingOrders(page ? page : 0, 15).subscribe({
+                next: (r: any) => {
+                    this.orders = r.result;
+                    this.currentPage = r.currentPage;
+                    this.totalPages = r.totalPages;
+                    this.getPagesToShow(2);
                 },
                 error: (e) => {
                     if (this.statusCheck(e)) {
@@ -114,7 +124,7 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
                     this.subscription.add(
                         this.orderService.cancelOrder(orderId).subscribe({
                             next: () => {
-                                this.loadOrders();
+                                this.loadOrders(this.currentPage);
                             },
                             error: (e) => {
                                 if (this.statusCheck(e)) {
@@ -133,7 +143,7 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.orderService.updateOrderState(this.selectedOrderId, os).subscribe({
                 next: () => {
-                    this.loadOrders();
+                    this.loadOrders(this.currentPage);
                 },
                 error: (e) => {
                     if (this.statusCheck(e)) {
@@ -165,5 +175,31 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
         }
         console.error(e);
         return true;
+    }
+    getPagesToShow(margin: number): void {
+        const pages: number[] = [];
+        const startPage = Math.max(0, this.currentPage - margin);
+        const endPage = Math.min(this.totalPages - 1, this.currentPage + margin);
+
+        for (let page = startPage; page <= endPage; page++) {
+            pages.push(page);
+        }
+        this.pagesToShow = pages;
+    }
+    goToPage(page: number): void {
+        this.currentPage = page;
+        let params: Params = {
+            pageNum: 0
+        };
+        params['pageNum'] = page;
+        this.router.navigate(
+            [
+
+            ],
+            {
+                relativeTo: this.route,
+                queryParams: params,
+                queryParamsHandling: 'merge'
+            });
     }
 }

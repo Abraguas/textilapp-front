@@ -35,7 +35,7 @@ export class OrderService {
         const requestOptions = { headers: headers };
         return this.http.get<GetOrderDTO[]>(this.API_URL + '/myOrders', requestOptions);
     }
-    getPendingOrders(): Observable<GetOrderDTO[]> {
+    getPendingOrders(pageNum: number, pageSize: number): Observable<GetOrderDTO[]> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -44,7 +44,10 @@ export class OrderService {
             'Authorization': `Bearer ${auth_token}`
 
         });
-        const requestOptions = { headers: headers };
+        let params = new HttpParams();
+        params = params.append('pageNum', pageNum);
+        params = params.append('pageSize', pageSize);
+        const requestOptions = { headers: headers, params: params };
         return this.http.get<GetOrderDTO[]>(this.API_URL + '/pending', requestOptions);
     }
     cancelOrder(orderId: number): Observable<any> {
@@ -111,6 +114,6 @@ export class OrderService {
         params = params.append('pageNum', pageNum);
         params = params.append('pageSize', pageSize);
         const requestOptions = { headers: headers, params: params };
-        return this.http.get<any>(`${this.API_URL}/paginated`, requestOptions);
+        return this.http.get<any>(`${this.API_URL}`, requestOptions);
     }
 }
