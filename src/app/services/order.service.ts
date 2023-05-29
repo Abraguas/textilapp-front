@@ -23,19 +23,7 @@ export class OrderService {
         const requestOptions = { headers: headers };
         return this.http.post<any>(this.API_URL, orderDTO, requestOptions);
     }
-    getMyOrders(): Observable<GetOrderDTO[]> {
-        let auth_token = localStorage.getItem('token');
-        const headers = new HttpHeaders({
-
-            'Content-Type': 'application/json',
-
-            'Authorization': `Bearer ${auth_token}`
-
-        });
-        const requestOptions = { headers: headers };
-        return this.http.get<GetOrderDTO[]>(this.API_URL + '/myOrders', requestOptions);
-    }
-    getPendingOrders(pageNum: number, pageSize: number): Observable<GetOrderDTO[]> {
+    getMyOrders(pageNum: number, pageSize: number): Observable<any> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -47,6 +35,22 @@ export class OrderService {
         let params = new HttpParams();
         params = params.append('pageNum', pageNum);
         params = params.append('pageSize', pageSize);
+        const requestOptions = { headers: headers, params: params };
+        return this.http.get<any>(this.API_URL + '/myOrders', requestOptions);
+    }
+    getPendingOrders(pageNum: number, pageSize: number, searchString: string): Observable<GetOrderDTO[]> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        let params = new HttpParams();
+        params = params.append('pageNum', pageNum);
+        params = params.append('pageSize', pageSize);
+        params = params.append('searchString', searchString);
         const requestOptions = { headers: headers, params: params };
         return this.http.get<GetOrderDTO[]>(this.API_URL + '/pending', requestOptions);
     }
@@ -101,7 +105,7 @@ export class OrderService {
         const requestOptions = { headers: headers, params: params };
         return this.http.get<HighestSellingProductDTO[]>(`${this.API_URL}/highestSellingProducts`, requestOptions);
     }
-    getAllPaginated(pageNum: number, pageSize: number): Observable<any> {
+    getAllPaginated(pageNum: number, pageSize: number, searchString: string): Observable<any> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -113,6 +117,7 @@ export class OrderService {
         let params = new HttpParams();
         params = params.append('pageNum', pageNum);
         params = params.append('pageSize', pageSize);
+        params = params.append('searchString', searchString);
         const requestOptions = { headers: headers, params: params };
         return this.http.get<any>(`${this.API_URL}`, requestOptions);
     }

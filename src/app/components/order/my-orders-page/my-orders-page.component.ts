@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetOrderDTO } from 'src/app/models/get-order-dto';
 import { OrderService } from 'src/app/services/order.service';
@@ -15,29 +15,36 @@ const swal: SweetAlert = require('sweetalert');
 })
 export class MyOrdersPageComponent implements OnInit, OnDestroy {
     orders: GetOrderDTO[];
+    totalPages: number;
+    currentPage: number;
+    pagesToShow: number[];
+    queryParams: Params;
     subscription: Subscription;
     constructor(
         private orderService: OrderService,
         private sessionService: SessionService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) { }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
     ngOnInit(): void {
         this.subscription = new Subscription();
-        this.loadOrders();
-    }
-    loadOrders(): void {
         this.subscription.add(
-            this.orderService.getMyOrders().subscribe({
-                next: (r: GetOrderDTO[]) => {
-                    this.orders = r.sort((a, b) => {
-                        if (b.state.name === 'Pendiente' && a.state.name !== 'Pendiente') {
-                            return 1;
-                        }
-                        return a.date < b.date ? 1 : -1;
-                    });
+            this.route.queryParams.subscribe((params) => {
+                this.loadOrders(params['pageNum']);
+            })
+        );
+    }
+    loadOrders(page: number | undefined): void {
+        this.subscription.add(
+            this.orderService.getMyOrders(page ? page : 0, 15).subscribe({
+                next: (r: any) => {
+                    this.orders = r.result;
+                    this.currentPage = r.currentPage;
+                    this.totalPages = r.totalPages;
+                    this.getPagesToShow(2);
                 },
                 error: (e) => {
                     if (this.statusCheck(e)) {
@@ -67,7 +74,7 @@ export class MyOrdersPageComponent implements OnInit, OnDestroy {
                     this.subscription.add(
                         this.orderService.cancelOrder(orderId).subscribe({
                             next: () => {
-                                this.loadOrders();
+                                this.loadOrders(this.currentPage);
                             },
                             error: (e) => {
                                 if (this.statusCheck(e)) {
@@ -80,6 +87,32 @@ export class MyOrdersPageComponent implements OnInit, OnDestroy {
                 }
             });
 
+    }
+    getPagesToShow(margin: number): void {
+        const pages: number[] = [];
+        const startPage = Math.max(0, this.currentPage - margin);
+        const endPage = Math.min(this.totalPages - 1, this.currentPage + margin);
+
+        for (let page = startPage; page <= endPage; page++) {
+            pages.push(page);
+        }
+        this.pagesToShow = pages;
+    }
+    goToPage(page: number): void {
+        this.currentPage = page;
+        let params: Params = {
+            pageNum: 0
+        };
+        params['pageNum'] = page;
+        this.router.navigate(
+            [
+
+            ],
+            {
+                relativeTo: this.route,
+                queryParams: params,
+                queryParamsHandling: 'merge'
+            });
     }
     statusCheck(e: any): boolean {
         if (e.status === 403) {
