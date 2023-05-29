@@ -1,7 +1,18 @@
 <div class="container-fluid" style="max-width: 1800px;">
     <h1 class="display-4 my-3">Pedidos pendientes</h1>
+    <form [formGroup]="usernameForm">
+        <div class=" row mb-3">
+            <div class="col-3">
+                <label for="nameInput" class="form-label">Filtrar por nombre de usuario:</label>
+                <input type="text" class="form-control" id="nameInput" formControlName="username"
+                    [class.is-invalid]="usernameForm.controls['username'].errors && usernameForm.controls['username'].touched" />
+                <span class="invalid-feedback">
+                </span>
+            </div>
+        </div>
+    </form>
     <div class="text-center" *ngIf="!orders || !(orders.length > 0)">
-        <h1 class="display-6 my-3">¡No hay pedidos pendientes!</h1>
+        <h1 class="display-6 my-3">¡No hay resultados!</h1>
     </div>
     <table class="table text-center" *ngIf="orders && orders.length > 0">
         <thead>
@@ -31,8 +42,8 @@
                 </td>
                 <td style="max-width: 180px;"><span><app-order-detail-button [modalId]="o.id"
                             [order]="o"></app-order-detail-button>
-                        <app-pay-order-button (onPaymentRegister)="loadOrders(currentPage)" [orderId]="o.id"
-                            [paymentMethods]="paymentMethods"
+                        <app-pay-order-button (onPaymentRegister)="loadOrders(currentPage,searchString)"
+                            [orderId]="o.id" [paymentMethods]="paymentMethods"
                             *ngIf="o.state.name === 'Pendiente'"></app-pay-order-button>
                         <button class=" btn btn-danger ms-2" (click)="cancelOrder(o.id)"
                             *ngIf="o.state.name === 'Pendiente'||o.state.name === 'Cobrado'">Cancelar</button>

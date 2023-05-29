@@ -19,6 +19,8 @@ const swal: SweetAlert = require('sweetalert');
     styleUrls: ['./pending-orders-page.component.css']
 })
 export class PendingOrdersPageComponent implements OnInit, OnDestroy {
+    usernameForm: FormGroup;
+    searchString: string;
     form: FormGroup;
     orders: GetOrderDTO[];
     orderStates: OrderState[];
@@ -41,6 +43,9 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
         this.form = this.formBuilder.group({
             orderState: [, [Validators.required]],
         })
+        this.usernameForm = this.formBuilder.group({
+            username: [,]
+        })
     }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
@@ -51,7 +56,25 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
         this.loadPaymentMethods();
         this.subscription.add(
             this.route.queryParams.subscribe((params) => {
-                this.loadOrders(params['pageNum']);
+                this.loadOrders(params['pageNum'], params['searchString']);
+            })
+        );
+        this.subscription.add(
+            this.usernameForm.controls['username'].valueChanges.subscribe((value) => {
+                this.searchString = value;
+                let params: Params = {
+                    searchString: ''
+                };
+                params['searchString'] = value;
+                this.router.navigate(
+                    [
+
+                    ],
+                    {
+                        relativeTo: this.route,
+                        queryParams: params,
+                        queryParamsHandling: 'merge'
+                    });
             })
         );
 
@@ -87,9 +110,9 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
             })
         );
     }
-    loadOrders(page: number | undefined): void {
+    loadOrders(page: number | undefined, username: string | undefined): void {
         this.subscription.add(
-            this.orderService.getPendingOrders(page ? page : 0, 15).subscribe({
+            this.orderService.getPendingOrders(page ? page : 0, 15, username ? username : '').subscribe({
                 next: (r: any) => {
                     this.orders = r.result;
                     this.currentPage = r.currentPage;
@@ -124,7 +147,7 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
                     this.subscription.add(
                         this.orderService.cancelOrder(orderId).subscribe({
                             next: () => {
-                                this.loadOrders(this.currentPage);
+                                this.loadOrders(this.currentPage, this.searchString);
                             },
                             error: (e) => {
                                 if (this.statusCheck(e)) {
@@ -143,7 +166,7 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.orderService.updateOrderState(this.selectedOrderId, os).subscribe({
                 next: () => {
-                    this.loadOrders(this.currentPage);
+                    this.loadOrders(this.currentPage, this.searchString);
                 },
                 error: (e) => {
                     if (this.statusCheck(e)) {

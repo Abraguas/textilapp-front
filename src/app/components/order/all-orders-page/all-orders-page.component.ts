@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GetOrderDTO } from 'src/app/models/get-order-dto';
@@ -14,6 +15,7 @@ const swal: SweetAlert = require('sweetalert');
     styleUrls: ['./all-orders-page.component.css']
 })
 export class AllOrdersPageComponent implements OnInit, OnDestroy {
+    usernameForm: FormGroup;
     orders: GetOrderDTO[];
     totalPages: number;
     currentPage: number;
@@ -24,8 +26,13 @@ export class AllOrdersPageComponent implements OnInit, OnDestroy {
         private orderService: OrderService,
         private sessionService: SessionService,
         private router: Router,
-        private route: ActivatedRoute
-    ) { }
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder
+    ) {
+        this.usernameForm = this.formBuilder.group({
+            username: [,]
+        })
+    }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
@@ -33,13 +40,30 @@ export class AllOrdersPageComponent implements OnInit, OnDestroy {
         this.subscription = new Subscription();
         this.subscription.add(
             this.route.queryParams.subscribe((params) => {
-                this.loadOrders(params['pageNum']);
+                this.loadOrders(params['pageNum'], params['searchString']);
+            })
+        );
+        this.subscription.add(
+            this.usernameForm.controls['username'].valueChanges.subscribe((value) => {
+                let params: Params = {
+                    searchString: ''
+                };
+                params['searchString'] = value;
+                this.router.navigate(
+                    [
+
+                    ],
+                    {
+                        relativeTo: this.route,
+                        queryParams: params,
+                        queryParamsHandling: 'merge'
+                    });
             })
         );
     }
-    loadOrders(page: number | undefined): void {
+    loadOrders(page: number | undefined, username: string | undefined): void {
         this.subscription.add(
-            this.orderService.getAllPaginated(page ? page : 0, 15).subscribe({
+            this.orderService.getAllPaginated(page ? page : 0, 15, username ? username : '').subscribe({
                 next: (r: any) => {
                     this.orders = r.result;
                     this.currentPage = r.currentPage;
