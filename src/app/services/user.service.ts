@@ -30,7 +30,7 @@ export class UserService {
         const requestOptions = { headers: headers };
         return this.http.put<any>(`${this.API_URL}user/self`, user, requestOptions);
     }
-    getRole(): Observable<string> {
+    getRole(): Observable<any> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -40,7 +40,7 @@ export class UserService {
 
         });
         const requestOptions = { headers: headers };
-        return this.http.get<string>(`${this.API_URL}user/role`, requestOptions);
+        return this.http.get<any>(`${this.API_URL}user/role`, requestOptions);
     }
     getSelf(): Observable<User> {
         let auth_token = localStorage.getItem('token');

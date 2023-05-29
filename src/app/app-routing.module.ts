@@ -24,22 +24,25 @@ import { RegisterStockMovementComponent } from './components/stock/register-stoc
 import { CategoryAbmPageComponent } from './components/category/category-abm-page/category-abm-page.component';
 import { HighestSellingProductsComponent } from './components/reports/highest-selling-products/highest-selling-products.component';
 import { AllOrdersPageComponent } from './components/order/all-orders-page/all-orders-page.component';
+import { AdminGuard } from './guards/admin.guard';
+import { LoggedGuard } from './guards/logged.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'login', component: LoginPageComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'my-account', component: MyAccountComponent },
-    { path: 'my-orders', component: MyOrdersPageComponent },
-    { path: 'pay-order', component: PayOrderPageComponent },
-    { path: 'pay-order/:id', component: PayOrderPageComponent },
+    { path: 'my-account', component: MyAccountComponent, canActivate: [LoggedGuard] },
+    { path: 'my-orders', component: MyOrdersPageComponent, canActivate: [LoggedGuard] },
+    { path: 'pay-order', component: PayOrderPageComponent, canActivate: [LoggedGuard] },
+    { path: 'pay-order/:id', component: PayOrderPageComponent, canActivate: [LoggedGuard] },
     {
         path: 'store', component: StoreSidebarComponent,
         children: [
             { path: '', component: ProductCatalogComponent },
             { path: '**', redirectTo: '', pathMatch: 'full' }
-        ]
+        ],
+        canActivate: [LoggedGuard]
     },
     {
         path: 'management', component: ManagementSidebarComponent,
@@ -60,7 +63,8 @@ const routes: Routes = [
             { path: 'user/ranking', component: UserRankComponent },
             { path: 'totalEarningsPerMonth', component: TotalEarningsPerMonthComponent },
             { path: 'highestSellingProducts', component: HighestSellingProductsComponent }
-        ]
+        ],
+        canActivate: [AdminGuard]
     },
     { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
