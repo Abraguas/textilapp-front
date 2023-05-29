@@ -48,7 +48,7 @@ export class AllOrdersPageComponent implements OnInit, OnDestroy {
                 },
                 error: (e) => {
                     if (this.statusCheck(e)) {
-                        swal({ title: 'Error!', text: 'Se ha producido un error al cargar tus pedidos', icon: 'error' });
+                        swal({ title: 'Error!', text: 'Se ha producido un error al cargar los pedidos', icon: 'error' });
                     }
                 }
             })
@@ -70,7 +70,6 @@ export class AllOrdersPageComponent implements OnInit, OnDestroy {
         this.pagesToShow = pages;
     }
     goToPage(page: number): void {
-        window.scrollTo(0, 0);
         this.currentPage = page;
         let params: Params = {
             pageNum: 0
