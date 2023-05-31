@@ -53,7 +53,6 @@ export class RegisterStockMovementComponent implements OnInit, OnDestroy {
         this.subscription = new Subscription();
         this.subscription.add(
             this.form.controls['isIncome'].valueChanges.subscribe((isIncome) => {
-                console.log("ola")
                 this.updateQuantityValidators(isIncome, this.selectedProduct?.stock);
             })
         );
