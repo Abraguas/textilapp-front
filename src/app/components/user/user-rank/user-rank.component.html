@@ -16,8 +16,8 @@
                     </div>
                     <div class="col-md-5 col-12">
                         <label for="endDate" class="form-label">Fecha hasta</label>
-                        <input type="date" class="form-control" id="endDate" formControlName="endDate"
-                            [class.is-invalid]="
+                        <input [min]="form.controls['startDate'].value" type="date" class="form-control" id="endDate"
+                            formControlName="endDate" [class.is-invalid]="
                             form.controls['endDate'].touched &&
                             form.controls['endDate'].errors " />
                         <span class="invalid-feedback">
@@ -33,7 +33,10 @@
             </div>
         </div>
     </form>
-    <table class="table text-center">
+    <div class="text-center" *ngIf="(users.length < 1)">
+        <h1 class="display-6 my-3">¡No hay resultados!</h1>
+    </div>
+    <table class="table text-center" *ngIf="users && users.length > 0">
         <thead>
             <tr>
                 <th scope="col">Nro</th>

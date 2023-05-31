@@ -16,8 +16,8 @@
                     </div>
                     <div class="col-md-5 col-12">
                         <label for="endDate" class="form-label">Fecha hasta</label>
-                        <input type="date" class="form-control" id="endDate" formControlName="endDate"
-                            [class.is-invalid]="
+                        <input [min]="form.controls['startDate'].value" type="date" class="form-control" id="endDate"
+                            formControlName="endDate" [class.is-invalid]="
                             form.controls['endDate'].touched &&
                             form.controls['endDate'].errors " />
                         <span class="invalid-feedback">
