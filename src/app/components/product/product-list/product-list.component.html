@@ -3,7 +3,7 @@
     <form [formGroup]="nameForm">
         <div class=" row mb-3">
             <div class="col-3">
-                <label for="nameInput" class="form-label">Filtrar por nombre de usuario:</label>
+                <label for="nameInput" class="form-label">Filtrar por nombre:</label>
                 <input type="text" class="form-control" id="nameInput" formControlName="name"
                     [class.is-invalid]="nameForm.controls['name'].errors && nameForm.controls['name'].touched" />
                 <span class="invalid-feedback">
