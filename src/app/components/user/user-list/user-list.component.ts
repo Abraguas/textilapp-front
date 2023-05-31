@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription, first } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { SessionService } from 'src/app/services/session.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,22 +17,57 @@ const swal: SweetAlert = require('sweetalert');
 export class UserListComponent {
     users: User[];
     private subscription: Subscription;
+    nameForm: FormGroup;
+    searchString: string;
     constructor(
         private sessionService: SessionService,
         private userService: UserService,
         private router: Router,
+        private route: ActivatedRoute,
         private formBuilder: FormBuilder
-    ) { }
+    ) {
+        this.nameForm = this.formBuilder.group({
+            name: [,]
+        });
+    }
     ngOnInit(): void {
         this.subscription = new Subscription();
-        this.loadUsers();
+        this.subscription.add(
+            this.route.queryParams.subscribe((params) => {
+                this.loadUsers(params['searchString']);
+            })
+        );
+        this.route.queryParams
+            .pipe(first())
+            .subscribe(params => {
+                this.nameForm.patchValue({
+                    name: params['searchString'] ? params['searchString'] : ''
+                });
+            });
+        this.subscription.add(
+            this.nameForm.controls['name'].valueChanges.subscribe((value) => {
+                let params: Params = {
+                    searchString: ''
+                };
+                params['searchString'] = value;
+                this.router.navigate(
+                    [
+
+                    ],
+                    {
+                        relativeTo: this.route,
+                        queryParams: params,
+                        queryParamsHandling: 'merge'
+                    });
+            })
+        );
     }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
-    loadUsers(): void {
+    loadUsers(searchString: string | undefined): void {
         this.subscription.add(
-            this.userService.getAll().subscribe({
+            this.userService.getAll(searchString ? searchString : '').subscribe({
                 next: (r: User[]) => {
                     this.users = r;
                 },

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginDTO } from '../models/login-dto';
 import { Observable } from 'rxjs';
@@ -54,7 +54,7 @@ export class UserService {
         const requestOptions = { headers: headers };
         return this.http.get<User>(`${this.API_URL}user/self`, requestOptions);
     }
-    getAll(): Observable<User[]> {
+    getAll(searchString: string): Observable<User[]> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -63,7 +63,9 @@ export class UserService {
             'Authorization': `Bearer ${auth_token}`
 
         });
-        const requestOptions = { headers: headers };
+        let params = new HttpParams();
+        params = params.append('searchString', searchString);
+        const requestOptions = { headers: headers, params: params };
         return this.http.get<User[]>(`${this.API_URL}user`, requestOptions);
     }
     getRanking(): Observable<UserRankingDTO[]> {
