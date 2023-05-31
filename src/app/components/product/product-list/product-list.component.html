@@ -1,6 +1,20 @@
 <div class="container-fluid" style="max-width: 1800px;">
     <h1 class="display-4 my-3">Listado Productos</h1>
-    <table class="table text-center">
+    <form [formGroup]="nameForm">
+        <div class=" row mb-3">
+            <div class="col-3">
+                <label for="nameInput" class="form-label">Filtrar por nombre de usuario:</label>
+                <input type="text" class="form-control" id="nameInput" formControlName="name"
+                    [class.is-invalid]="nameForm.controls['name'].errors && nameForm.controls['name'].touched" />
+                <span class="invalid-feedback">
+                </span>
+            </div>
+        </div>
+    </form>
+    <div class="text-center" *ngIf="!products || !(products.length > 0)">
+        <h1 class="display-6 my-3">¡No hay resultados!</h1>
+    </div>
+    <table class="table text-center" *ngIf="products && products.length > 0">
         <thead>
             <tr>
                 <th scope="col">Nombre</th>

@@ -68,7 +68,7 @@ export class RegisterStockMovementComponent implements OnInit, OnDestroy {
     }
     loadProducts() {
         this.subscription.add(
-            this.productService.getAll().subscribe({
+            this.productService.getAll("").subscribe({
                 next: (r: Product[]) => {
                     this.products = r;
                 },
