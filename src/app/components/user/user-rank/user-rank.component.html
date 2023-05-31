@@ -1,5 +1,38 @@
 <div class="container-fluid" style="max-width: 1800px;">
     <h1 class="display-4 my-3">Ranking de Clientes</h1>
+    <form [formGroup]="form">
+        <div class="form-group">
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-5 col-12">
+                        <label for="startDate" class="form-label">Fecha desde</label>
+                        <input type="date" class="form-control" id="startDate" formControlName="startDate"
+                            [class.is-invalid]="
+                            form.controls['startDate'].touched &&
+                            form.controls['startDate'].errors " />
+                        <span class="invalid-feedback">
+                            Ingrese la fecha desde por favor.
+                        </span>
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <label for="endDate" class="form-label">Fecha hasta</label>
+                        <input type="date" class="form-control" id="endDate" formControlName="endDate"
+                            [class.is-invalid]="
+                            form.controls['endDate'].touched &&
+                            form.controls['endDate'].errors " />
+                        <span class="invalid-feedback">
+                            Ingrese la fecha hasta por favor.
+                        </span>
+                    </div>
+                    <div class="col-md-2 col-12">
+                        <label for="totalEarnBtn" class="form-label">-</label>
+                        <button [disabled]="form.invalid" class="btn btn-primary form-control" id="totalEarnBtn"
+                            (click)="loadUsers()">Cargar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <table class="table text-center">
         <thead>
             <tr>

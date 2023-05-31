@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { UserRankingDTO } from 'src/app/models/user-ranking-dto';
 import { SessionService } from 'src/app/services/session.service';
@@ -14,6 +15,7 @@ const swal: SweetAlert = require('sweetalert');
     styleUrls: ['./user-rank.component.css']
 })
 export class UserRankComponent {
+    form: FormGroup;
     users: UserRankingDTO[];
     private subscription: Subscription;
     constructor(
@@ -21,21 +23,38 @@ export class UserRankComponent {
         private userService: UserService,
         private router: Router,
         private formBuilder: FormBuilder
-    ) { }
+    ) {
+        this.form = this.formBuilder.group({
+            startDate: [, [Validators.required]],
+            endDate: [, [Validators.required]],
+        });
+    }
     ngOnInit(): void {
         this.subscription = new Subscription();
-        this.loadUsers();
     }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
     loadUsers(): void {
+        const startDate = moment(this.form.value.startDate).utc();
+        const endDate = moment(this.form.value.endDate).utc();
+
+        startDate.startOf('day');
+        endDate.endOf('day');
+
+        const startDateString = startDate.format('YYYY-MM-DDTHH:mm:ss');
+        const endDateString = endDate.format('YYYY-MM-DDTHH:mm:ss');
+
         this.subscription.add(
-            this.userService.getRanking().subscribe({
+            this.userService.getRanking(startDateString, endDateString).subscribe({
                 next: (r: UserRankingDTO[]) => {
                     this.users = r;
                 },
                 error: (e) => {
+                    if (e.status === 400) {
+                        swal({ title: 'Error!', text: 'La fecha de inicio no puede superar la fecha final', icon: 'error' });
+                        return;
+                    }
                     if (this.statusCheck(e)) {
                         swal({ title: 'Error!', text: 'Se ha producido un error al cargar los usuarios', icon: 'error' });
                     }

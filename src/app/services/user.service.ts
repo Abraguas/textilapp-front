@@ -68,7 +68,7 @@ export class UserService {
         const requestOptions = { headers: headers, params: params };
         return this.http.get<User[]>(`${this.API_URL}user`, requestOptions);
     }
-    getRanking(): Observable<UserRankingDTO[]> {
+    getRanking(startDate: string, endDate: string): Observable<UserRankingDTO[]> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -77,7 +77,10 @@ export class UserService {
             'Authorization': `Bearer ${auth_token}`
 
         });
-        const requestOptions = { headers: headers };
+        let params = new HttpParams();
+        params = params.append('startDate', startDate);
+        params = params.append('endDate', endDate);
+        const requestOptions = { headers: headers, params: params };
         return this.http.get<UserRankingDTO[]>(`${this.API_URL}user/ranking`, requestOptions);
     }
 }
