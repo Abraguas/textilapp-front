@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, first } from 'rxjs';
 import { GetOrderDTO } from 'src/app/models/get-order-dto';
 import { OrderState } from 'src/app/models/order-state';
 import { PaymentMethod } from 'src/app/models/payment-method';
@@ -59,6 +59,13 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
                 this.loadOrders(params['pageNum'], params['searchString']);
             })
         );
+        this.route.queryParams
+            .pipe(first())
+            .subscribe(params => {
+                this.usernameForm.patchValue({
+                    username: params['searchString'] ? params['searchString'] : ''
+                });
+            });
         this.subscription.add(
             this.usernameForm.controls['username'].valueChanges.subscribe((value) => {
                 this.searchString = value;

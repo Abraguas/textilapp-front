@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, first } from 'rxjs';
 import { GetOrderDTO } from 'src/app/models/get-order-dto';
 import { OrderService } from 'src/app/services/order.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -43,6 +43,13 @@ export class AllOrdersPageComponent implements OnInit, OnDestroy {
                 this.loadOrders(params['pageNum'], params['searchString']);
             })
         );
+        this.route.queryParams
+            .pipe(first())
+            .subscribe(params => {
+                this.usernameForm.patchValue({
+                    username: params['searchString'] ? params['searchString'] : ''
+                });
+            });
         this.subscription.add(
             this.usernameForm.controls['username'].valueChanges.subscribe((value) => {
                 let params: Params = {
