@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import { DataEntry } from 'src/app/models/data-entry';
 
 
 @Component({
@@ -12,7 +13,7 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
     private chart: Chart;
     @Input() areValuesMoney: boolean = false;
     @Input() width: string = '700px';
-    @Input() dataEntries: { label: any, data: number }[];
+    @Input() dataEntries: DataEntry[];
     @Input() label: string = 'Label por defecto';
     colors = ['#FF6384', '#36A2EB', '#FFCE56', '#8BC34A', '#9C27B0', '#FF5722'];
     ngOnChanges(): void {
