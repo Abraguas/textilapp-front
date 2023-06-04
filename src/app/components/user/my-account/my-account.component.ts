@@ -110,12 +110,17 @@ export class MyAccountComponent {
     toggleEditing(): void {
         if (this.editingEnabled) {
             Object.keys(this.form.controls).forEach((c) => {
-                this.form.controls[c].disable();
+                if (c !== 'password') {
+                    this.form.controls[c].disable();
+                }
             });
             this.loadUserData();
         } else {
             Object.keys(this.form.controls).forEach((c) => {
-                this.form.controls[c].enable();
+                if (c !== 'password') {
+
+                    this.form.controls[c].enable();
+                }
             });
         }
         this.editingEnabled = !this.editingEnabled;
