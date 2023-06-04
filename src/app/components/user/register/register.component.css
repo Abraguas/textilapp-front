@@ -1,5 +1,5 @@
-.fondo{
-    background-image: url('../../../../assets/img/bg-min.png');
+.fondo {
+    background-image: url("../../../../assets/img/bg-min.png");
     background-size: fill;
     background-repeat: no-repeat;
     background-position: center;
@@ -8,8 +8,6 @@
     overflow: hidden;
 }
 
-
-a{
-    text-decoration: none;
-    color: white;
+.register-form {
+    width: 1000px;
 }
