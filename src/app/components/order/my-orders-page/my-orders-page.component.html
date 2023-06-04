@@ -1,6 +1,9 @@
 <div class="container-fluid" style="max-width: 1800px;">
     <h1 class="display-4 my-3">Mis pedidos</h1>
-    <table class="table text-center">
+    <div class="text-center" *ngIf="!orders || !(orders.length > 0)">
+        <h1 class="display-6 my-3">¡No hay resultados!</h1>
+    </div>
+    <table class="table text-center" *ngIf="orders && orders.length > 0">
         <thead>
             <tr>
                 <th scope="col">Nro de pedido</th>
@@ -10,7 +13,7 @@
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
-        <tbody *ngIf="orders">
+        <tbody>
             <tr *ngFor="let o of orders">
                 <td><span>{{o.id}}</span></td>
                 <td><span>{{o.date | date}}</span></td>
