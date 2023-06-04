@@ -47,7 +47,6 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
                         ticks: this.areValuesMoney ? {
 
                             callback: (value) => {
-                                // Customize the number format here
                                 return this.areValuesMoney ? value.toLocaleString('es-AR', {
                                     style: 'currency',
                                     currency: 'ARS',
@@ -61,7 +60,6 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
                     tooltip: {
                         callbacks: this.areValuesMoney ? {
                             label: (context) => {
-                                // Customize the number format for tooltip values
                                 return this.areValuesMoney ? parseFloat(context.formattedValue?.replace(/,/g, ''))?.toLocaleString('es-AR', {
                                     style: 'currency',
                                     currency: 'ARS',
@@ -79,7 +77,7 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
         let data = {
             labels: [],
             datasets: [{
-                label: 'Total de ingresos',
+                label: this.label,
                 data: [],
                 backgroundColor: this.colors.slice(0, this.dataEntries.length),
                 borderWidth: 1
