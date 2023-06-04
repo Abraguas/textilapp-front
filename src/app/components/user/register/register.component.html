@@ -1,5 +1,5 @@
 <div class="fondo">
-    <div id="main" class="container mt-5 border border-secondary rounded bg-white">
+    <div class="container mt-5 border border-secondary rounded bg-white register-form">
         <div class="py-5 px-5">
             <h3 class="mb-3">Formulario de Registro</h3>
             <form [formGroup]="form">
@@ -77,6 +77,14 @@
                         <div *ngIf="form.controls['phonenumber'].hasError('maxlength')">El teléfono
                             no debe tener más de 32 caracteres.</div>
                     </span>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" name="termsCheck" class="form-check-input" id="termsCheck"
+                        formControlName="termsCheck" />
+                    <label class="form-check-label" for="termsCheck">He leído y acepto los <a
+                            routerLink="/terms-and-conditions" target="_blank">Terminos y
+                            Condiciones</a> del
+                        servicio</label>
                 </div>
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary" [disabled]="!form.valid"
