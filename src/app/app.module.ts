@@ -46,6 +46,7 @@ import { CategoryAbmPageComponent } from './components/category/category-abm-pag
 import { HighestSellingProductsComponent } from './components/reports/highest-selling-products/highest-selling-products.component';
 import { AllOrdersPageComponent } from './components/order/all-orders-page/all-orders-page.component';
 import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
+import { TermsAndConditionsPageComponent } from './components/terms-and-conditions-page/terms-and-conditions-page.component';
 
 registerLocaleData(localeEs);
 
@@ -82,7 +83,8 @@ registerLocaleData(localeEs);
         CategoryAbmPageComponent,
         HighestSellingProductsComponent,
         AllOrdersPageComponent,
-        PaymentListComponent
+        PaymentListComponent,
+        TermsAndConditionsPageComponent
     ],
     imports: [
         BrowserModule,
