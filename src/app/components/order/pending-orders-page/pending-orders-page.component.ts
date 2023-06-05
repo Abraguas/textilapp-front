@@ -54,6 +54,7 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
         this.subscription = new Subscription();
         this.loadOrderStates();
         this.loadPaymentMethods();
+        this.subscription = new Subscription();
         this.subscription.add(
             this.route.queryParams.subscribe((params) => {
                 this.loadOrders(params['pageNum'], params['searchString']);
@@ -70,7 +71,8 @@ export class PendingOrdersPageComponent implements OnInit, OnDestroy {
             this.usernameForm.controls['username'].valueChanges.subscribe((value) => {
                 this.searchString = value;
                 let params: Params = {
-                    searchString: ''
+                    searchString: '',
+                    pageNum: 0
                 };
                 params['searchString'] = value;
                 this.router.navigate(
