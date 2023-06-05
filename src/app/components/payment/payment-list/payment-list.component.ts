@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { GetOrderDTO } from 'src/app/models/get-order-dto';
+import { Subscription, first } from 'rxjs';
 import { PaymentDTO } from 'src/app/models/payment-dto';
-import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { SessionService } from 'src/app/services/session.service';
 import { SweetAlert } from 'sweetalert/typings/core';
@@ -21,13 +20,20 @@ export class PaymentListComponent implements OnInit, OnDestroy {
     currentPage: number;
     pagesToShow: number[];
     queryParams: Params;
+    searchString: string;
+    usernameForm: FormGroup;
     subscription: Subscription;
     constructor(
         private paymentService: PaymentService,
         private sessionService: SessionService,
         private router: Router,
-        private route: ActivatedRoute
-    ) { }
+        private route: ActivatedRoute,
+        private formBuilder: FormBuilder
+    ) {
+        this.usernameForm = this.formBuilder.group({
+            username: [,]
+        })
+    }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
@@ -35,13 +41,39 @@ export class PaymentListComponent implements OnInit, OnDestroy {
         this.subscription = new Subscription();
         this.subscription.add(
             this.route.queryParams.subscribe((params) => {
-                this.loadOrders(params['pageNum']);
+                this.loadPayments(params['pageNum'], params['searchString']);
+            })
+        );
+        this.route.queryParams
+            .pipe(first())
+            .subscribe(params => {
+                this.usernameForm.patchValue({
+                    username: params['searchString'] ? params['searchString'] : ''
+                });
+            });
+        this.subscription.add(
+            this.usernameForm.controls['username'].valueChanges.subscribe((value) => {
+                this.searchString = value;
+                let params: Params = {
+                    searchString: '',
+                    pageNum: 0
+                };
+                params['searchString'] = value;
+                this.router.navigate(
+                    [
+
+                    ],
+                    {
+                        relativeTo: this.route,
+                        queryParams: params,
+                        queryParamsHandling: 'merge'
+                    });
             })
         );
     }
-    loadOrders(page: number | undefined): void {
+    loadPayments(page: number | undefined, username: string | undefined): void {
         this.subscription.add(
-            this.paymentService.getAllPaginated(page ? page : 0, 15).subscribe({
+            this.paymentService.getAllPaginated(page ? page : 0, 15, username ? username : '').subscribe({
                 next: (r: any) => {
                     this.payments = r.result;
                     this.currentPage = r.currentPage;
@@ -72,6 +104,7 @@ export class PaymentListComponent implements OnInit, OnDestroy {
         this.pagesToShow = pages;
     }
     goToPage(page: number): void {
+        console.log("a");
         this.currentPage = page;
         let params: Params = {
             pageNum: 0
