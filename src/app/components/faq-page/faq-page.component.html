@@ -1,0 +1,135 @@
+<div class="fondo">
+    <div class="container my-4 border border-secondary rounded bg-white main-card p-5">
+        <h1 class="mb-5">Preguntas Frecuentes</h1>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        ¿Como creo mi cuenta?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Puedes <strong>crear tu cuenta</strong> accionando el botón <strong>"Registrarme"</strong> en la
+                        esquina superior
+                        derecha de la
+                        página. También puedes hacer click <a routerLink="/register">aquí</a>. Desde la página de
+                        registro, deberas completar tus datos correspondientes y leer los <a
+                            routerLink="/terms-and-conditions">términos y condiciones</a> del servicio. Para completar
+                        el registro, deberás tildar la casilla "He leído y acepto los terminos y condiciones del
+                        servicio" y finalmente, presionar el boton <strong>"Registrarme"</strong> ubicado al final del
+                        formulario.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                        ¿Como hago un pedido?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Para <strong>realizar un pedido</strong>, primero deberás registrarte o, en caso de tener una
+                        cuenta, iniciar
+                        sesión con tus credenciales. Luego, dirigete a la pagina de la tienda con el botón de la barra
+                        superior o haciendo click <a routerLink="/store">aquí</a>. Una vez en la pagina de la tienda
+                        selecciona los productos que quieras agregar a tu pedido. Con la barra lateral puedes elegir la
+                        categoría y subcategoría que estés buscando y también podrás filtrar los productos por color,
+                        marca y unidad. Al seleccionar un producto podrás elegir la cantidad deseada y agregarlo al
+                        carrito. Luego podrás agregar observaciones a tu pedido en el campo ubicado debajo del carrito.
+                        Finalmente para registrar tu pedido y proceder a pagarlo deberás presionar el botón "Enviar
+                        pedido"
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        ¿Que medios de pago aceptan?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Actualmente, los <strong>medios de pago</strong> aceptados son <strong>Transferencia y
+                            Mercado Pago</strong>. A travéz de mercado pago podrás utilizar tu saldo, tarjetas de débito
+                        o tarjetas de crédito. A su vez, tendrás la posibilidad de utilizar más de una tarjeta y pagar
+                        en cuotas. ¡No te preocupes! No necesitas una cuenta de Mercadopago para utilizar este medio.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        ¿Como pago mi pedido?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Si has registrado un pedido pero aún no lo has pagado, puedes hacerlo a travéz de la pagina <a
+                            routerLink="/my-orders">Mis
+                            Pedidos</a>. Donde los pedidos con estado "Pendiente" tendrán disponible el boton "Pagar".
+                        Accionar este botón te redireccionará a la pagina de pago del pedido correspondiente. Desde aquí
+                        podrás elegir entre pagar Mercado Pago y pagar con Transferencia para completar el pago.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                        ¿Puedo cancelar un pedido?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        ¡Por supuesto! Puedes cancelar aquellos pedidos que se encuentren con estado "Pendiente" en la
+                        pagina <a routerLink="/my-orders">Mis
+                            Pedidos</a>. Para ello deberás presionar el boton "Cancelar" en la ultima columna de la
+                        tabla. <strong>¡Recuerda!</strong> Esta acción es irreversible, y en caso de arrepentirte
+                        deberás hacer un nuevo pedido en la <a routerLink="/store">tienda</a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
+                        ¿Como puedo modificar los datos de mi cuenta?
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Una vez hayas iniciado sesión, podras ver y modificar tus datos desde la página <a
+                            routerLink="/my-account">Mi cuenta</a>. Para habilitar la edición de los campos deberas
+                        presionar el botón "Editar" que se encuentra al final del formulario. Luego, para guardar los
+                        cambios que has hecho deberás presionar el botón "Guardar".
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseThree">
+                        ¿Donde puedo contactarlos?
+                    </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Puedes contactarnos por los siguientes medios:
+                        <ul>
+                            <li>Facebook: <a href="">TextilApp</a></li>
+                            <li>Twitter: <a href="">@textilapp</a></li>
+                            <li>Email: soporte@textilapp.com</li>
+                            <li>Teléfono: +54 9 351 803 4745</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

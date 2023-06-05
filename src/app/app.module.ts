@@ -47,6 +47,7 @@ import { HighestSellingProductsComponent } from './components/reports/highest-se
 import { AllOrdersPageComponent } from './components/order/all-orders-page/all-orders-page.component';
 import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 import { TermsAndConditionsPageComponent } from './components/terms-and-conditions-page/terms-and-conditions-page.component';
+import { FaqPageComponent } from './components/faq-page/faq-page.component';
 
 registerLocaleData(localeEs);
 
@@ -84,7 +85,8 @@ registerLocaleData(localeEs);
         HighestSellingProductsComponent,
         AllOrdersPageComponent,
         PaymentListComponent,
-        TermsAndConditionsPageComponent
+        TermsAndConditionsPageComponent,
+        FaqPageComponent
     ],
     imports: [
         BrowserModule,

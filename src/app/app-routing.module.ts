@@ -28,11 +28,13 @@ import { AdminGuard } from './guards/admin.guard';
 import { LoggedGuard } from './guards/logged.guard';
 import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 import { TermsAndConditionsPageComponent } from './components/terms-and-conditions-page/terms-and-conditions-page.component';
+import { FaqPageComponent } from './components/faq-page/faq-page.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'terms-and-conditions', component: TermsAndConditionsPageComponent },
+    { path: 'faq-page', component: FaqPageComponent },
     { path: 'login', component: LoginPageComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'my-account', component: MyAccountComponent, canActivate: [LoggedGuard] },
