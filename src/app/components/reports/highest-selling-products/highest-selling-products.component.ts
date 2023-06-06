@@ -8,6 +8,9 @@ import { SweetAlert } from 'sweetalert/typings/core';
 import { DataEntry } from 'src/app/models/data-entry';
 import { HighestSellingProductDTO } from 'src/app/models/highest-selling-product-dto';
 import { OrderService } from 'src/app/services/order.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 declare var require: any
 const swal: SweetAlert = require('sweetalert');
 @Component({
@@ -43,7 +46,7 @@ export class HighestSellingProductsComponent implements OnInit, OnDestroy {
 
         startDate.startOf('day');
         endDate.endOf('day');
-        
+
         const startDateString = startDate.format('YYYY-MM-DDTHH:mm:ss');
         const endDateString = endDate.format('YYYY-MM-DDTHH:mm:ss');
 
@@ -92,5 +95,18 @@ export class HighestSellingProductsComponent implements OnInit, OnDestroy {
         }
         console.error(e);
         return true;
+    }
+    openPDF(): void {
+        let DATA: any = document.getElementById('htmlData');
+        html2canvas(DATA).then((canvas) => {
+            let fileWidth = 300;
+            let fileHeight = (canvas.height * fileWidth) / canvas.width;
+            const FILEURI = canvas.toDataURL('image/png');
+            let PDF = new jsPDF('l', 'mm', 'a4');
+            let position = 0;
+            PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+            console.log(new Date().toLocaleDateString("es-AR"));
+            PDF.save(`Productos_mas_vendidos_(${new Date().toLocaleDateString("es-AR")}).pdf`);
+        });
     }
 }

@@ -9,6 +9,9 @@ import { UserService } from 'src/app/services/user.service';
 import { SweetAlert } from 'sweetalert/typings/core';
 declare var require: any
 const swal: SweetAlert = require('sweetalert');
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
 @Component({
     selector: 'app-user-rank',
     templateUrl: './user-rank.component.html',
@@ -84,5 +87,13 @@ export class UserRankComponent {
         }
         console.error(e);
         return true;
+    }
+    openPDF(): void {
+        let doc = new jsPDF('p', 'mm', 'a4');
+        doc.setFontSize(25);
+        doc.text("Clientes con mayor total de ventas", 30, 25);
+        autoTable(doc, { html: '#data-table', startY: 40 });
+        console.log(new Date().toLocaleDateString("es-AR"));
+        doc.save(`Ranking_Clientes_(${new Date().toLocaleDateString("es-AR")}).pdf`);
     }
 }

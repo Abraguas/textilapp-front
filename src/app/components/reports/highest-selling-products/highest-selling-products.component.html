@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="htmlData">
     <h1 class="display-4 my-3">Productos más vendidos</h1>
     <form [formGroup]="form">
         <div class="form-group">
@@ -24,10 +24,15 @@
                             Ingrese la fecha hasta por favor.
                         </span>
                     </div>
-                    <div class="col-md-2 col-12">
-                        <label for="totalEarnBtn" class="form-label">-</label>
-                        <button [disabled]="form.invalid" class="btn btn-primary form-control" id="totalEarnBtn"
+                    <div class="col-md-1 col-6">
+                        <label class="form-label">-</label>
+                        <button [disabled]="form.invalid" class="btn btn-primary form-control"
                             (click)="loadReport()">Cargar</button>
+                    </div>
+                    <div class="col-md-1 col-6">
+                        <label class="form-label">-</label>
+                        <button class="btn btn-danger ms-2 form-control" [disabled]="!report" (click)="openPDF()"><i
+                                class="fa-solid fa-file-pdf"></i></button>
                     </div>
                 </div>
             </div>
