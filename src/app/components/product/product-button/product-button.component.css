@@ -1,15 +1,6 @@
 .product-button {
     width: 198px;
 }
-/* .description {
-    font-size: 12px; min-height: 36px;
-    display: block;
-    text-overflow: ellipsis " ...";
-    word-wrap: break-word;
-    overflow: hidden;
-    max-height: 3.6em;
-    line-height: 1.8em;
-} */
 
 .description {
     font-size: 12px;
