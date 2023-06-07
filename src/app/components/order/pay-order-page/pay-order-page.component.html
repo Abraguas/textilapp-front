@@ -90,13 +90,14 @@
                             <tbody *ngIf="order.details">
                                 <tr *ngFor="let d of order.details">
                                     <td><span>{{d.product.name}}</span></td>
-                                    <td><span>{{d.pricePerUnit | currency: 'ARS'}}</span></td>
+                                    <td class="text-end"><span>{{d.pricePerUnit | currency: 'ARS'}}</span></td>
                                     <td><span>{{d.quantity}} {{d.product.unit.name}}<ng-container
                                                 *ngIf="d.quantity > 1"><ng-container *ngIf="!['a','e','i','o','u'].includes(
                                                         d.product.unit.name.charAt(d.product.unit.name.length - 1)
                                                         .toLowerCase())">e</ng-container>s</ng-container></span>
                                     </td>
-                                    <td><span>{{d.pricePerUnit*d.quantity | currency: 'ARS'}}</span></td>
+                                    <td class="text-end"><span>{{d.pricePerUnit*d.quantity | currency: 'ARS'}}</span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

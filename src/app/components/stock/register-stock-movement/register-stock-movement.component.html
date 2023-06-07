@@ -17,7 +17,7 @@
                         <tr *ngIf="!isAdded(p)">
                             <td><span>{{ p.name }}</span></td>
                             <td><span>{{ p.description }}</span></td>
-                            <td><span>{{ p.stock }}</span></td>
+                            <td class="text-end"><span>{{ p.stock }}</span></td>
                             <td><img style="object-fit: cover; height: 100px; width: 100px;"
                                     (error)="onImgError($event)" [src]="p.image" alt="">
                             </td>

@@ -53,11 +53,11 @@
         </thead>
         <tbody>
             <tr *ngFor="let u of users; let i = index">
-                <td><span><strong> # {{ i+1}}</strong></span></td>
+                <td class="text-end"><span><strong> # {{ i+1}}</strong></span></td>
                 <td><span>{{ u.username }}</span></td>
                 <td><span>{{ u.name }}</span></td>
                 <td><span>{{ u.lastname }}</span></td>
-                <td><span>{{ u.totalMoneySpent | currency: 'ARS'}}</span></td>
+                <td class="text-end"><span>{{ u.totalMoneySpent | currency: 'ARS'}}</span></td>
             </tr>
         </tbody>
     </table>

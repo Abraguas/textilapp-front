@@ -18,16 +18,20 @@
                 </div>
                 <div class="mb-3">
                     <label for="passwordInput" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="passwordInput" formControlName="password"
-                        [class.is-invalid]=" form.controls['password'].errors && form.controls['password'].touched" />
-                    <span class="invalid-feedback">
-                        <div *ngIf="form.controls['password'].hasError('required')">Debe
-                            ingresar una contraseña.</div>
-                        <div *ngIf="form.controls['password'].hasError('minlength')">La contraseña
-                            debe tener más de 3 caracteres.</div>
-                        <div *ngIf="form.controls['password'].hasError('maxlength')">La contraseña
-                            no debe tener más de 32 caracteres.</div>
-                    </span>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="passwordInput" formControlName="password"
+                            [class.is-invalid]=" form.controls['password'].errors && form.controls['password'].touched" />
+                        <button class="btn btn-secondary">Cambiar contraseña</button>
+                        <span class="invalid-feedback">
+                            <div *ngIf="form.controls['password'].hasError('required')">Debe
+                                ingresar una contraseña.</div>
+                            <div *ngIf="form.controls['password'].hasError('minlength')">La contraseña
+                                debe tener más de 3 caracteres.</div>
+                            <div *ngIf="form.controls['password'].hasError('maxlength')">La contraseña
+                                no debe tener más de 32 caracteres.</div>
+                        </span>
+                    </div>
+
                 </div>
                 <div class="mb-3">
                     <label for="nameInput" class="form-label">Nombre</label>

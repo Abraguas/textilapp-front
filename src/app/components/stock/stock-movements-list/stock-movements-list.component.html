@@ -47,13 +47,13 @@
                         <td><i class="fa-solid me-5"
                                 [ngClass]="m.quantity > 0? 'fa-arrow-left-long' : 'fa-arrow-right-long'"></i></td>
                         <td><span> {{ m.quantity > 0? 'Ingreso':'Egreso'}}</span></td>
-                        <td><span>{{ Math.abs( m.quantity )}} {{product.unit.name}}<ng-container
+                        <td class="text-end"><span>{{ Math.abs( m.quantity )}} {{product.unit.name}}<ng-container
                                     *ngIf="m.quantity > 1 || m.quantity < -1"><ng-container
                                         *ngIf="!['a','e','i','o','u'].includes(product.unit.name.charAt(product.unit.name.length - 1).toLowerCase())">e</ng-container>s</ng-container>
 
                             </span></td>
-                        <td><span>{{ m.priorStock? m.priorStock : '-' }}</span></td>
-                        <td><span>{{ m.priorStock? m.priorStock + m.quantity : '-' }}</span></td>
+                        <td class="text-end"><span>{{ m.priorStock? m.priorStock : '-' }}</span></td>
+                        <td class="text-end"><span>{{ m.priorStock? m.priorStock + m.quantity : '-' }}</span></td>
                         <td><span>{{ m.date? (m.date | date) : '-' }}</span></td>
                         <td style="max-width: 200px;"><span>{{ m.observations? m.observations : '-' }}</span></td>
                     </tr>

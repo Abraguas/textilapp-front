@@ -27,7 +27,7 @@
         </thead>
         <tbody *ngIf="orders">
             <tr *ngFor="let o of orders">
-                <td><span>{{o.id}}</span></td>
+                <td class="text-end"><span>{{o.id}}</span></td>
                 <td><span>{{o.username}}</span></td>
                 <td><span>{{o.date | date}}</span></td>
                 <td><span>{{o.observations? o.observations : '-'}}</span>

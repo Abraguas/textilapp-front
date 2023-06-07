@@ -25,12 +25,12 @@
         </thead>
         <tbody *ngIf="payments">
             <tr *ngFor="let p of payments">
-                <td><span>{{p.id}}</span></td>
+                <td class="text-end"><span>{{p.id}}</span></td>
                 <td><span>{{p.username}}</span></td>
-                <td><span>{{p.orderId}}</span></td>
+                <td class="text-end"><span>{{p.orderId}}</span></td>
                 <td><span>{{p.date | date}}</span></td>
                 <td><span>{{p.observations? p.observations : '-'}}</span>
-                <td><span>{{p.ammountCharged | currency: 'ARS'}}</span></td>
+                <td class="text-end"><span>{{p.ammountCharged | currency: 'ARS'}}</span></td>
                 <td><span>{{p.paymentMethod.name}}</span></td>
             </tr>
         </tbody>
