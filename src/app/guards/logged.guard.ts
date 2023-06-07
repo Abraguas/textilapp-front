@@ -22,14 +22,14 @@ export class LoggedGuard implements CanActivate {
                 if (role.token == 'CLIENT' || role.token == 'ADMIN') {
                     return true;
                 }
-                swal({ title: 'Error!', text: 'No tienes permitido el acceso a esta pagina!', icon: 'error' }).then(() => {
+                swal({ title: 'Error!', text: 'Debes iniciar sesión para acceder a esta pagina!', icon: 'error' }).then(() => {
 
                     this.router.navigate(['home']);
                 });
                 return false;
             }),
             catchError(() => {
-                swal({ title: 'Error!', text: 'No tienes permitido el acceso a esta pagina!', icon: 'error' }).then(() => {
+                swal({ title: 'Error!', text: 'Debes iniciar sesión para acceder a esta pagina!', icon: 'error' }).then(() => {
 
                     this.router.navigate(['home']);
                 });
