@@ -17,7 +17,7 @@ export class ProductButtonComponent {
     orderDetail: OrderDetailDTO;
     defaultRoute: string = "../../assets/img/default-item.jpg";
     quantity: number = 1;
-    maxQuantity: number = 20;
+    @Input() maxQuantity: number = 20;
     minQuantity: number = 1;
     onImgError(event: any): void {
         event.target.src = this.defaultRoute;
