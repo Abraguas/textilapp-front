@@ -92,7 +92,14 @@ export class UserRankComponent {
         let doc = new jsPDF('p', 'mm', 'a4');
         doc.setFontSize(25);
         doc.text("Clientes con mayor total de ventas", 30, 25);
-        autoTable(doc, { html: '#data-table', startY: 40 });
+        const startDate = moment(this.form.value.startDate).utc();
+
+        const endDate = moment(this.form.value.endDate).utc();
+        const startDateString = startDate.format('DD-MM-YYYY');
+        const endDateString = endDate.format('DD-MM-YYYY');
+        doc.setFontSize(20);
+        doc.text(`Desde: ${startDateString}  -   Hasta: ${endDateString}`, 30, 40);
+        autoTable(doc, { html: '#data-table', startY: 55 });
         console.log(new Date().toLocaleDateString("es-AR"));
         doc.save(`Ranking_Clientes_(${new Date().toLocaleDateString("es-AR")}).pdf`);
     }
