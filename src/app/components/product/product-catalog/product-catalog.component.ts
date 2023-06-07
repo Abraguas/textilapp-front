@@ -218,27 +218,27 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
                         { queryParams: { 'external_reference': r } });
                 },
                 error: (e) => {
+                    console.log(e);
                     if (e.status === 403) {
                         swal({ title: 'Error!', text: 'No tienes permitido el acceso a esta pagina!', icon: 'error' }).then(() => {
                             this.router.navigate(['home']);
-                            return;
                         });
+                        return;
                     }
                     if (e.status === 401) {
                         swal({ title: 'Error!', text: 'Tu sesión ha expirado!', icon: 'error' }).then(() => {
                             this.sessionService.logout();
-                            return;
                         });
+                        return;
                     }
                     if (e.status === 422) {
                         swal({ title: 'Error!', text: 'No hay suficiente stock', icon: 'error' }).then(() => {
-                            return;
                         });
+                        return;
                     }
-                    else {
-                        swal({ title: 'Error!', text: 'Ocurrió un error', icon: 'error' });
-                        console.error(e);
-                    }
+                    swal({ title: 'Error!', text: 'Ocurrió un error', icon: 'error' });
+                    console.error(e);
+
                 }
             })
         )
