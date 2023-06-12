@@ -10,62 +10,62 @@ declare var require: any
 const swal: SweetAlert = require('sweetalert');
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+    selector: 'app-login-page',
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
-  form: FormGroup;
-  private subscription = new Subscription();
+    form: FormGroup;
+    private subscription = new Subscription();
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private sessionService: SessionService,
-    private router: Router
-  ) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private userService: UserService,
+        private sessionService: SessionService,
+        private router: Router
+    ) {
 
-  }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+    }
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group(
-      {
-        username: [, Validators.required],
-        password: [, Validators.required]
-      }
-    );
-  }
-  login(): void {
-    if (this.form.valid) {
-      let body = new LoginDTO();
-      body = this.form.value as LoginDTO;
-      this.subscription.add(
-        this.userService.login(body).subscribe({
-          next: (r: any) => {
-            localStorage.setItem('token', r.token);
-            swal({ title: 'Bienvenido/a!', icon: 'success' });
-            this.sessionService.changeState(true);
-            this.router.navigate(['home']);
-          },
-          error: (e) => { 
-            let message = "Error de servidor"
-            if(e.status == 403) {
-              message = "Usuario y/o contraseña incorrecto"
+    ngOnInit(): void {
+        this.form = this.formBuilder.group(
+            {
+                username: [, Validators.required],
+                password: [, Validators.required]
             }
-            console.log(e);
-            swal({title:'Error al iniciar sesión', text: `${message}`, icon: 'error'});
-          }
-        })
-      );
+        );
     }
-    else {
-      swal({ title: 'Atención', text: 'Complete los campos', icon: 'warning' });
+    login(): void {
+        if (this.form.valid) {
+            let body = new LoginDTO();
+            body = this.form.value as LoginDTO;
+            this.subscription.add(
+                this.userService.login(body).subscribe({
+                    next: (r: any) => {
+                        localStorage.setItem('token', r.token);
+                        swal({ title: 'Bienvenido/a!', icon: 'success' });
+                        this.sessionService.changeState(true);
+                        this.router.navigate(['home']);
+                    },
+                    error: (e) => {
+                        let message = "Error de servidor"
+                        if (e.status == 401) {
+                            message = "Usuario y/o contraseña incorrecto"
+                        }
+                        console.log(e);
+                        swal({ title: 'Error al iniciar sesión', text: `${message}`, icon: 'error' });
+                    }
+                })
+            );
+        }
+        else {
+            swal({ title: 'Atención', text: 'Complete los campos', icon: 'warning' });
+        }
     }
-  }
-  return(): void {
-    this.router.navigate(['home']);
-  }
+    return(): void {
+        this.router.navigate(['home']);
+    }
 }
