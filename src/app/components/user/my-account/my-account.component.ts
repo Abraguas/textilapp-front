@@ -141,11 +141,15 @@ export class MyAccountComponent {
                     },
                     error: (e) => {
                         console.log(e);
-                        swal({
-                            title: "Error!",
-                            text: `Error al registrarse: ${e.error.message}`,
-                            icon: "error",
-                        });
+                        let errorString;
+                        if (e.error.message.toLowerCase().includes('email')) {
+                            errorString = 'El email ya se encuentra en uso';
+                        } else if (e.error.message.toLowerCase().includes('username')) {
+                            errorString = 'El usuario ya se encuentra en uso';
+                        } else {
+                            errorString = e.error.message;
+                        }
+                        swal({ title: 'Error!', text: `Error al actualizar datos: ${errorString}`, icon: 'error' });
                     },
                 })
             );
