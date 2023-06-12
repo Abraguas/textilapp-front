@@ -2,3 +2,6 @@
     overflow-y: scroll;
     max-height: 92%;
 }
+textarea {
+    resize: none;
+}
