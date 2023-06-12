@@ -218,7 +218,6 @@ export class ProductCatalogComponent implements OnInit, OnDestroy {
                         { queryParams: { 'external_reference': r } });
                 },
                 error: (e) => {
-                    console.log(e);
                     if (e.status === 403) {
                         swal({ title: 'Error!', text: 'No tienes permitido el acceso a esta pagina!', icon: 'error' }).then(() => {
                             this.router.navigate(['home']);
