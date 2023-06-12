@@ -67,9 +67,7 @@ export class StoreSidebarComponent implements OnInit, OnDestroy {
 
     }
     initBrandForm(): void {
-        // BRANDS
         const brandControls: any = {};
-        console.log(this.queryParams);
         this.brands.forEach(brand => {
             if (this.queryParams['brand'].includes(brand.id.toString())) {
                 brandControls[brand.id] = new FormControl(true);
@@ -83,7 +81,6 @@ export class StoreSidebarComponent implements OnInit, OnDestroy {
         })
     }
     initColorForm(): void {
-        // COLORS
         const colorControls: any = {};
         this.colors.forEach(color => {
             if (this.queryParams['color'].includes(color.id.toString())) {
@@ -98,7 +95,6 @@ export class StoreSidebarComponent implements OnInit, OnDestroy {
         })
     }
     initUnitForm(): void {
-        // UNITS
         const unitControls: any = {};
         this.units.forEach(unit => {
             if (this.queryParams['unit'].includes(unit.id.toString())) {
