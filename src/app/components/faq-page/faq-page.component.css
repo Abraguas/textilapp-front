@@ -7,10 +7,12 @@
     min-height: 94vh;
     overflow: hidden;
 }
+
 .main-card {
     max-width: 1200px;
-    height: 82vh;
+    min-height: 82vh;
 }
+
 p {
     text-align: justify;
 }
