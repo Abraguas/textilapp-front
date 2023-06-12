@@ -82,14 +82,10 @@ export class PayOrderPageComponent implements OnInit {
     ngOnInit(): void {
         this.subscription.add(
             this.route.queryParams.subscribe(params => {
-                console.log(params);
                 this.orderId = parseInt(params['external_reference']);
                 this.loadOrder();
                 if (params['payment_id'] && params['payment_id'] !== 'null') {
                     if (params['status'] !== 'null') {
-                        //Mandar id de pago a back {
-                        // aprobado -> mensaje de exito
-                        // rechazado -> mensaje de error
                         this.subscription.add(
                             this.paymentService.getPaymentState(parseInt(params['payment_id'])).subscribe({
                                 next: (r: any) => {
@@ -113,8 +109,7 @@ export class PayOrderPageComponent implements OnInit {
                         );
 
                     } else {
-                        alert("ohhh... unu... volviste... no pagaste...")
-                        //Mensaje de error
+                        console.error("No se pagó la orden");
                     }
                 }
             })
