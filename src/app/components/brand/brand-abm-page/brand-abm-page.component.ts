@@ -66,6 +66,7 @@ export class BrandAbmPageComponent implements OnInit, OnDestroy {
                 this.auxiliarService.deleteBrand(brandId).subscribe({
                     next: () => {
                         this.loadBrands();
+                        this.cancelEditing();
                     },
                     error: (e) => {
                         if (this.statusCheck(e)) {

@@ -84,6 +84,8 @@ export class CategoryAbmPageComponent implements OnInit, OnDestroy {
                 this.categoryService.delete(categoryId).subscribe({
                     next: () => {
                         this.loadCategories();
+                        this.cancelSubCategoryEditing();
+                        this.cancelCategoryEditing();
                     },
                     error: (e) => {
                         if (this.statusCheck(e)) {
@@ -150,6 +152,7 @@ export class CategoryAbmPageComponent implements OnInit, OnDestroy {
                 this.categoryService.deleteSubCategory(subCategoryId).subscribe({
                     next: () => {
                         this.loadCategories();
+                        this.cancelSubCategoryEditing();
                     },
                     error: (e) => {
                         if (this.statusCheck(e)) {
@@ -172,6 +175,7 @@ export class CategoryAbmPageComponent implements OnInit, OnDestroy {
                 next: () => {
                     swal({ title: 'Listo!', text: `Subcategoría registrada exitosamente.`, icon: 'success' }).then(() => {
                         this.loadCategories();
+                        this.cancelSubCategoryEditing();
                         this.subCategoryForm.reset();
                     });
 
