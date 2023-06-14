@@ -29,14 +29,14 @@
                             </span>
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">{{d.product.name}}</div>
-                                ${{d.pricePerUnit*d.quantity}}
+                                {{d.pricePerUnit*d.quantity| currency: 'ARS'}}
                             </div>
                             <button class="btn btn-close align-self-center ms-2" (click)="removeDetail(d)"></button>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-start"
                             [ngClass]="'list-group-item-primary' ">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">TOTAL: ${{totalPrice}}</div>
+                                <div class="fw-bold">TOTAL: {{totalPrice | currency: 'ARS'}}</div>
                             </div>
                             <p class="m-0">Items: {{totalQuantity}}</p>
                         </li>

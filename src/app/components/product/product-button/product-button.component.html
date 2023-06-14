@@ -4,7 +4,7 @@
         <div class="row p-1 d-flex flex-column align-items-center justify-content-center">
             <div class="d-flex align-items-center">
                 <img [src]="product.image || defaultRoute" class="img-fluid rounded prod-img"
-                    (error)="onImgError($event)" style="object-fit: cover; height: 170px; width: 170px;"
+                    (error)="onImgError($event)" style="object-fit: cover; height: 190px; width: 190px;"
                     [alt]="product.name">
             </div>
 
@@ -12,7 +12,8 @@
                 <p class="m-0 name">{{product.name}}</p>
                 <p class="text-muted m-0 description">{{product.description}}
                 </p>
-                <p class=" m-0"><strong>$ {{product.pricePerUnit}}</strong> x {{product.unit ? product.unit.name : ''}}
+                <p class=" m-0"><strong>{{product.pricePerUnit | currency: 'ARS'}}</strong> x {{product.unit ?
+                    product.unit.name : ''}}
                 </p>
                 <p *ngIf="product.stock > 0" class="m-0 text-secondary text-muted description"><strong>STOCK:
                         {{product.stock}}</strong>
