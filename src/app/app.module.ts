@@ -48,6 +48,7 @@ import { AllOrdersPageComponent } from './components/order/all-orders-page/all-o
 import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 import { TermsAndConditionsPageComponent } from './components/terms-and-conditions-page/terms-and-conditions-page.component';
 import { FaqPageComponent } from './components/faq-page/faq-page.component';
+import { ChangePasswordComponent } from './components/user/change-password/change-password.component';
 
 registerLocaleData(localeEs);
 
@@ -86,7 +87,8 @@ registerLocaleData(localeEs);
         AllOrdersPageComponent,
         PaymentListComponent,
         TermsAndConditionsPageComponent,
-        FaqPageComponent
+        FaqPageComponent,
+        ChangePasswordComponent
     ],
     imports: [
         BrowserModule,

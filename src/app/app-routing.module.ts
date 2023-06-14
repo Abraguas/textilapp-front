@@ -29,6 +29,7 @@ import { LoggedGuard } from './guards/logged.guard';
 import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 import { TermsAndConditionsPageComponent } from './components/terms-and-conditions-page/terms-and-conditions-page.component';
 import { FaqPageComponent } from './components/faq-page/faq-page.component';
+import { ChangePasswordComponent } from './components/user/change-password/change-password.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -38,6 +39,7 @@ const routes: Routes = [
     { path: 'login', component: LoginPageComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'my-account', component: MyAccountComponent, canActivate: [LoggedGuard] },
+    { path: 'change-password', component: ChangePasswordComponent, canActivate: [LoggedGuard] },
     { path: 'my-orders', component: MyOrdersPageComponent, canActivate: [LoggedGuard] },
     { path: 'pay-order', component: PayOrderPageComponent, canActivate: [LoggedGuard] },
     { path: 'pay-order/:id', component: PayOrderPageComponent, canActivate: [LoggedGuard] },
