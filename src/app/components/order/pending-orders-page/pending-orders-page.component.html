@@ -93,9 +93,12 @@
                         <label class="form-label" for='orderState'>Estado</label>
                         <select class="form-control form-select" name="orderState" id="orderState"
                             formControlName="orderState">
-                            <option *ngFor="let os of orderStates" [ngValue]="os">
-                                {{os.name}}
-                            </option>
+                            <ng-container *ngFor="let os of orderStates">
+                                <option *ngIf="os.name !== 'Cancelado'" [ngValue]="os">
+                                    {{os.name}}
+                                </option>
+                            </ng-container>
+
                         </select>
                     </div>
                 </form>
