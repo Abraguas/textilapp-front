@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { ClientRegisterDTO } from "src/app/models/client-register-dto";
 import { User } from "src/app/models/user";
 import { SessionService } from "src/app/services/session.service";
 import { UserService } from "src/app/services/user.service";
