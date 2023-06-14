@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ClientRegisterDTO } from '../models/client-register-dto';
 import { User } from '../models/user';
 import { UserRankingDTO } from '../models/user-ranking-dto';
+import { ChangePasswordDTO } from '../models/change-password-dto';
 
 @Injectable()
 export class UserService {
@@ -29,6 +30,18 @@ export class UserService {
         });
         const requestOptions = { headers: headers };
         return this.http.put<any>(`${this.API_URL}user/self`, user, requestOptions);
+    }
+    updatePassword(body: ChangePasswordDTO): Observable<any> {
+        let auth_token = localStorage.getItem('token');
+        const headers = new HttpHeaders({
+
+            'Content-Type': 'application/json',
+
+            'Authorization': `Bearer ${auth_token}`
+
+        });
+        const requestOptions = { headers: headers };
+        return this.http.put<any>(`${this.API_URL}user/self/passwordReset`, body, requestOptions);
     }
     getRole(): Observable<any> {
         let auth_token = localStorage.getItem('token');
