@@ -40,13 +40,13 @@ export class RegisterProductComponent implements OnInit, OnDestroy {
     ) {
         this.form = this.formBuilder.group(
             {
-                name: [, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-                description: [, [Validators.maxLength(300)]],
+                name: [, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+                description: [, [Validators.maxLength(255)]],
                 brand: [, [Validators.required]],
                 pricePerUnit: [, [Validators.required, Validators.min(1)]],
                 unit: [, [Validators.required]],
-                observations: [, [Validators.maxLength(300)]],
-                measurment: [, [Validators.maxLength(30)]],
+                observations: [, [Validators.maxLength(255)]],
+                measurment: [, [Validators.maxLength(255)]],
                 color: [, [Validators.required]],
                 category: [, [Validators.required]],
                 subCategory: [, [Validators.required]],

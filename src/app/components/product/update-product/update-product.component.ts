@@ -44,13 +44,13 @@ export class UpdateProductComponent {
     ) {
         this.form = this.formBuilder.group(
             {
-                name: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-                description: [{ value: "", disabled: true }, [Validators.maxLength(300)]],
+                name: [{ value: "", disabled: true }, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+                description: [{ value: "", disabled: true }, [Validators.maxLength(255)]],
                 brand: [{ value: "", disabled: true }, [Validators.required]],
                 pricePerUnit: [{ value: "", disabled: true }, [Validators.required, Validators.min(1)]],
                 unit: [{ value: "", disabled: true }, [Validators.required]],
-                observations: [{ value: "", disabled: true }, [Validators.maxLength(300)]],
-                measurment: [{ value: "", disabled: true }, [Validators.maxLength(30)]],
+                observations: [{ value: "", disabled: true }, [Validators.maxLength(255)]],
+                measurment: [{ value: "", disabled: true }, [Validators.maxLength(255)]],
                 color: [{ value: "", disabled: true }, [Validators.required]],
                 category: [{ value: "", disabled: true }, [Validators.required]],
                 subCategory: [{ value: "", disabled: true }, [Validators.required]],

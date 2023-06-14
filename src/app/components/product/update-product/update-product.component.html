@@ -11,7 +11,7 @@
                 <div *ngIf="form.controls['name'].hasError('minlength')">El
                     nombre debe tener más de 3 caracteres.</div>
                 <div *ngIf="form.controls['name'].hasError('maxlength')">El nombre
-                    no debe tener más de 32 caracteres.</div>
+                    no debe tener más de 255 caracteres.</div>
             </span>
         </div>
         <div class="mb-3">
@@ -45,7 +45,7 @@
             && form.controls['description'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['description'].hasError('maxlength')">La descripcion
-                    no debe tener más de 300 caracteres.</div>
+                    no debe tener más de 255 caracteres.</div>
             </span>
         </div>
         <div class="mb-3">
@@ -55,7 +55,7 @@
             && form.controls['observations'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['observations'].hasError('maxlength')">Las observaciones
-                    no deben tener más de 300 caracteres.</div>
+                    no deben tener más de 255 caracteres.</div>
             </span>
         </div>
         <div class="mb-3">
@@ -65,7 +65,7 @@
             && form.controls['measurment'].touched" />
             <span class="invalid-feedback">
                 <div *ngIf="form.controls['measurment'].hasError('maxlength')">Las medidas
-                    no deben tener más de 30 caracteres.</div>
+                    no deben tener más de 255 caracteres.</div>
             </span>
         </div>
         <div class="mb-3">
