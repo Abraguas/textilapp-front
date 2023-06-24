@@ -99,7 +99,7 @@ export class HighestSellingProductsComponent implements OnInit, OnDestroy {
     openPDF(): void {
         let DATA: any = document.getElementById('htmlData');
         html2canvas(DATA).then((canvas) => {
-            let fileWidth = 300;
+            let fileWidth = 280;
             let fileHeight = (canvas.height * fileWidth) / canvas.width;
             const FILEURI = canvas.toDataURL('image/png');
             let PDF = new jsPDF('l', 'mm', 'a4');

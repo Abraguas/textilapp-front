@@ -117,13 +117,11 @@ export class UserRankComponent {
             { header: 'Importe total de ventas', key: 'totalMoneySpent', width: 32, outlineLevel: 1, style: { numFmt: '$ #,##0.00' } }
         ];
         let rows = [];
+        let i = 1;
         for (let u of this.users) {
-            let property: keyof typeof u;
-            let arr = [];
-            for (property in u) {
-                arr.push(u[property]);
-            }
+            let arr = [i, u.username, u.name, u.lastname, u.totalMoneySpent];
             rows.push(arr);
+            i++;
         }
         worksheet.addTable({
             name: 'Ranking_de_clientes',

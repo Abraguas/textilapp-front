@@ -61,11 +61,12 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
                     tooltip: {
                         callbacks: this.areValuesMoney ? {
                             label: (context) => {
-                                return this.areValuesMoney ? parseFloat(context.formattedValue?.replace(/,/g, ''))?.toLocaleString('es-AR', {
+                                console.log(parseFloat(context.formattedValue?.replaceAll(',', '')));
+                                return this.areValuesMoney ? parseFloat(context.formattedValue?.replaceAll(',', ''))?.toLocaleString('es-AR', {
                                     style: 'currency',
                                     currency: 'ARS',
                                     minimumFractionDigits: 2,
-                                }) : parseFloat(context.formattedValue?.replace(/,/g, ''))?.toLocaleString('es-AR');
+                                }) : parseFloat(context.formattedValue?.replaceAll('.', ''))?.toLocaleString('es-AR');
                             },
                         } : undefined,
                     }
