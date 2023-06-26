@@ -19,7 +19,8 @@
                             <td><span>{{ p.description }}</span></td>
                             <td class="text-end"><span>{{ p.stock }}</span></td>
                             <td><img style="object-fit: cover; height: 100px; width: 100px;"
-                                    (error)="onImgError($event)" [src]="p.image" alt="">
+                                    (error)="onImgError($event)" [src]="'http://localhost:9090/image/' + p.image"
+                                    alt="">
                             </td>
                             <td><button class="btn btn-primary" (click)="selectProduct(p)">Seleccionar</button></td>
                         </tr>

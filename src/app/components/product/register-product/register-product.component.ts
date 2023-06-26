@@ -10,6 +10,7 @@ import { SubCategoryDTO } from 'src/app/models/sub-category-dto';
 import { Unit } from 'src/app/models/unit';
 import { AuxiliarService } from 'src/app/services/auxiliar.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { ImageService } from 'src/app/services/image.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SessionService } from 'src/app/services/session.service';
 import { SweetAlert } from 'sweetalert/typings/core';
@@ -23,20 +24,25 @@ const swal: SweetAlert = require('sweetalert');
 })
 export class RegisterProductComponent implements OnInit, OnDestroy {
     form: FormGroup;
+    fileForm: FormGroup;
     brands: Brand[];
     units: Unit[];
     colors: Color[];
     categories: CategoryDTO[];
     subCategories: SubCategoryDTO[];
+    imagePreview: any;
+    imageName: string;
     private subscription = new Subscription();
     product: Product;
+
     constructor(
         private formBuilder: FormBuilder,
         private productService: ProductService,
         private auxiliarService: AuxiliarService,
         private router: Router,
         private sessionService: SessionService,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private imageService: ImageService
     ) {
         this.form = this.formBuilder.group(
             {
@@ -54,6 +60,9 @@ export class RegisterProductComponent implements OnInit, OnDestroy {
                 isListed: [,],
             }
         );
+        this.fileForm = this.formBuilder.group({
+            image: ['']
+        })
     }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
@@ -78,6 +87,34 @@ export class RegisterProductComponent implements OnInit, OnDestroy {
             )
         )
     }
+    onFileSelected(event: any) {
+        if (event.target.files && event.target.files.length > 0) {
+            const reader = new FileReader();
+            let self = this;
+            reader.onload = function (event) {
+                self.imagePreview = event.target ? event.target.result : '';
+            };
+            const file: File = event.target.files[0];
+            reader.readAsDataURL(file);
+            this.fileForm.get('image')!.setValue(file);
+        }
+    }
+
+    save(): void {
+        const file = this.fileForm.get('image')!.value;
+        this.subscription.add(
+            this.imageService.save(file).subscribe({
+                next: (r) => {
+                    this.imageName = r.message;
+                    this.uploadProduct();
+                },
+                error: (e) => {
+                    this.statusCheck(e);
+                }
+            })
+        );
+    }
+
     loadCategories(): void {
         this.subscription.add(
             this.categoryService.getAll().subscribe({
@@ -152,10 +189,11 @@ export class RegisterProductComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    save(): void {
+    uploadProduct(): void {
         delete this.form.value.category;
         this.product = this.form.value;
         this.product.stock = 0;
+        this.product.image = this.imageName;
         this.subscription.add(
             this.productService.save(this.product).subscribe({
                 next: () => {

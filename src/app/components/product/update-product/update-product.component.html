@@ -125,8 +125,11 @@
             </span>
         </div>
         <div class="mb-3">
-            <label for="imageInput" class="form-label">Imagen</label>
-            <input type="text" class="form-control" id="imageInput" formControlName="image" />
+            <form [formGroup]="fileForm">
+                <label for="formFile" class="form-label">Imagen</label>
+                <input type="file" class="form-control" (change)="onFileSelected($event)" formControlName="image"
+                    accept="image/*">
+            </form>
         </div>
         <div class="mb-3 form-check">
             <input type="checkbox" name="isListedInput" class="form-check-input" id="isListedInput"
@@ -138,12 +141,16 @@
                 (click)="toggleEditing()">Editar</button>
             <button *ngIf="editingEnabled" type="button" class="btn btn-primary" [disabled]="!this.form.valid"
                 (click)="save()">Guardar</button>
-            <button type="button" class="btn btn-secondary ms-3" (click)="return()">Volver</button>
+            <button *ngIf="!editingEnabled" type="button" class="btn btn-secondary ms-3"
+                (click)="return()">Volver</button>
+            <button *ngIf="editingEnabled" type="button" class="btn btn-secondary ms-3"
+                (click)="toggleEditing()">Cancelar</button>
         </div>
     </form>
     <h5 class="mb-3">Previsualización del producto:</h5>
     <div class="div d-flex justify-content-center">
 
-        <app-product-button *ngIf="product" [product]="product" [isNonFunctional]="true"></app-product-button>
+        <app-product-button *ngIf="product" [product]="product" [image]="imagePreview"
+            [isNonFunctional]="true"></app-product-button>
     </div>
 </div>

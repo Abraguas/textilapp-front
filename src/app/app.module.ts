@@ -49,6 +49,7 @@ import { PaymentListComponent } from './components/payment/payment-list/payment-
 import { TermsAndConditionsPageComponent } from './components/terms-and-conditions-page/terms-and-conditions-page.component';
 import { FaqPageComponent } from './components/faq-page/faq-page.component';
 import { ChangePasswordComponent } from './components/user/change-password/change-password.component';
+import { ImageService } from './services/image.service';
 
 registerLocaleData(localeEs);
 
@@ -106,7 +107,8 @@ registerLocaleData(localeEs);
         OrderService,
         AuxiliarService,
         StockMovementService,
-        PaymentService
+        PaymentService,
+        ImageService
     ],
     bootstrap: [AppComponent]
 })

@@ -10,6 +10,7 @@ import { SubCategoryDTO } from 'src/app/models/sub-category-dto';
 import { Unit } from 'src/app/models/unit';
 import { AuxiliarService } from 'src/app/services/auxiliar.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { ImageService } from 'src/app/services/image.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SessionService } from 'src/app/services/session.service';
 import { SweetAlert } from 'sweetalert/typings/core';
@@ -23,6 +24,7 @@ const swal: SweetAlert = require('sweetalert');
 })
 export class UpdateProductComponent {
     form: FormGroup;
+    fileForm: FormGroup;
     brands: Brand[];
     units: Unit[];
     colors: Color[];
@@ -32,6 +34,8 @@ export class UpdateProductComponent {
     product: Product;
     productId: number;
     editingEnabled: boolean = false;
+    imagePreview: any;
+    imageName: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -40,7 +44,8 @@ export class UpdateProductComponent {
         private router: Router,
         private route: ActivatedRoute,
         private sessionService: SessionService,
-        private categoryService: CategoryService
+        private categoryService: CategoryService,
+        private imageService: ImageService
     ) {
         this.form = this.formBuilder.group(
             {
@@ -58,7 +63,40 @@ export class UpdateProductComponent {
                 isListed: [{ value: "", disabled: true },],
             }
         );
+        this.fileForm = this.formBuilder.group({
+            image: [{ value: "", disabled: true },]
+        })
 
+    }
+    onFileSelected(event: any) {
+        if (event.target.files && event.target.files.length > 0) {
+            const reader = new FileReader();
+            let self = this;
+            reader.onload = function (event) {
+                self.imagePreview = event.target ? event.target.result : '';
+            };
+            const file: File = event.target.files[0];
+            reader.readAsDataURL(file);
+            this.fileForm.get('image')!.setValue(file);
+        }
+    }
+
+    save(): void {
+        const file = this.fileForm.get('image')!.value;
+        if (typeof file === 'string') {
+            this.uploadProduct();
+        }
+        this.subscription.add(
+            this.imageService.save(file).subscribe({
+                next: (r) => {
+                    this.imageName = r.message;
+                    this.uploadProduct();
+                },
+                error: (e) => {
+                    this.statusCheck(e);
+                }
+            })
+        );
     }
     compareFn(c1: any, c2: any): boolean {
         return c1 && c2 && (c1.id === c2.id || c2 === c1.id);
@@ -71,7 +109,6 @@ export class UpdateProductComponent {
             this.form.valueChanges.subscribe(
                 val => {
                     this.product = val as Product;
-                    console.log(val);
                 }
             )
         )
@@ -100,6 +137,7 @@ export class UpdateProductComponent {
                             subCategory: subCatDTO
                         }
                     });
+                    this.fileForm.get('image')!.patchValue(this.product.image);
                 },
                 error: (e) => {
                     if (e.status === 403) {
@@ -124,7 +162,6 @@ export class UpdateProductComponent {
         this.subscription.add(
             this.categoryService.getAll().subscribe({
                 next: (r) => {
-                    console.log(r);
                     this.categories = r as CategoryDTO[];
                     this.subscription.add(
                         this.form.controls['category'].valueChanges.subscribe(
@@ -212,18 +249,25 @@ export class UpdateProductComponent {
             Object.keys(this.form.controls).forEach((c) => {
                 this.form.controls[c].disable();
             });
+            Object.keys(this.fileForm.controls).forEach((c) => {
+                this.fileForm.controls[c].disable();
+            });
             this.loadProduct();
         } else {
             Object.keys(this.form.controls).forEach((c) => {
                 this.form.controls[c].enable();
             });
+            Object.keys(this.fileForm.controls).forEach((c) => {
+                this.fileForm.controls[c].enable();
+            });
         }
         this.editingEnabled = !this.editingEnabled;
     }
-    save(): void {
+    uploadProduct(): void {
         delete this.form.value.category;
         this.product = this.form.value;
         this.product.stock = 0;
+        this.product.image = this.imageName;
         this.subscription.add(
             this.productService.update(this.product, this.productId).subscribe({
                 next: () => {
