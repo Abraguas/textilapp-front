@@ -42,11 +42,10 @@ export class TotalEarningsPerMonthComponent implements OnInit, OnDestroy {
     loadReport(): void {
         const startDate = moment(this.form.value.startDate).utc();
         const endDate = moment(this.form.value.endDate).utc();
-        // Round the start date to the beginning of the month
-        startDate.startOf('month');
 
-        console.log(startDate);
-        // Round the end date to the end of the month
+        // Rounding dates to the beggining and end of the months to get data of the full month rather
+        // than only the period between the dates
+        startDate.startOf('month');
         endDate.endOf('month');
         const startDateString = startDate.format('YYYY-MM-DDTHH:mm:ss');
         const endDateString = endDate.format('YYYY-MM-DDTHH:mm:ss');
