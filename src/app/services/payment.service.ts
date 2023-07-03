@@ -61,7 +61,8 @@ export class PaymentService {
         const requestOptions = { headers: headers };
         return this.http.post<any>(`${this.API_URL}`, body, requestOptions);
     }
-    getAllPaginated(pageNum: number, pageSize: number, searchString: string): Observable<any> {
+    getAllPaginated(pageNum: number, pageSize: number, searchString: string,
+        startDate: string | undefined, endDate: string | undefined): Observable<any> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -74,6 +75,10 @@ export class PaymentService {
         params = params.append('pageNum', pageNum);
         params = params.append('pageSize', pageSize);
         params = params.append('searchString', searchString);
+        if (startDate && endDate) {
+            params = params.append('startDate', startDate);
+            params = params.append('endDate', endDate);
+        }
         const requestOptions = { headers: headers, params: params };
         return this.http.get<any>(`${this.API_URL}`, requestOptions);
     }

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription, first } from 'rxjs';
 import { PaymentDTO } from 'src/app/models/payment-dto';
 import { PaymentService } from 'src/app/services/payment.service';
 import { SessionService } from 'src/app/services/session.service';
 import { SweetAlert } from 'sweetalert/typings/core';
+import * as moment from 'moment';
 declare var require: any
 const swal: SweetAlert = require('sweetalert');
 
@@ -22,6 +23,7 @@ export class PaymentListComponent implements OnInit, OnDestroy {
     queryParams: Params;
     searchString: string;
     usernameForm: FormGroup;
+    dateForm: FormGroup;
     subscription: Subscription;
     constructor(
         private paymentService: PaymentService,
@@ -33,6 +35,10 @@ export class PaymentListComponent implements OnInit, OnDestroy {
         this.usernameForm = this.formBuilder.group({
             username: [,]
         })
+        this.dateForm = this.formBuilder.group({
+            startDate: [, [Validators.required]],
+            endDate: [, [Validators.required]],
+        });
     }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
@@ -41,7 +47,7 @@ export class PaymentListComponent implements OnInit, OnDestroy {
         this.subscription = new Subscription();
         this.subscription.add(
             this.route.queryParams.subscribe((params) => {
-                this.loadPayments(params['pageNum'], params['searchString']);
+                this.loadPayments(params['pageNum'], params['searchString'], params['startDate'], params['endDate']);
             })
         );
         this.route.queryParams
@@ -49,6 +55,10 @@ export class PaymentListComponent implements OnInit, OnDestroy {
             .subscribe(params => {
                 this.usernameForm.patchValue({
                     username: params['searchString'] ? params['searchString'] : ''
+                });
+                this.dateForm.patchValue({
+                    startDate: params['startDate'] ? moment(params['startDate'], 'YYYY-MM-DDTHH:mm:ss').format("YYYY-MM-DD") : '',
+                    endDate: params['endDate'] ? moment(params['endDate'], 'YYYY-MM-DDTHH:mm:ss').format("YYYY-MM-DD") : '',
                 });
             });
         this.subscription.add(
@@ -70,10 +80,42 @@ export class PaymentListComponent implements OnInit, OnDestroy {
                     });
             })
         );
-    }
-    loadPayments(page: number | undefined, username: string | undefined): void {
         this.subscription.add(
-            this.paymentService.getAllPaginated(page ? page : 0, 15, username ? username : '').subscribe({
+            this.dateForm.valueChanges.subscribe(() => {
+                if (this.dateForm.valid) {
+                    const startDate = moment(this.dateForm.value.startDate).utc();
+                    const endDate = moment(this.dateForm.value.endDate).utc();
+
+                    startDate.startOf('day');
+                    endDate.endOf('day');
+
+                    const startDateString = startDate.format('YYYY-MM-DDTHH:mm:ss');
+                    const endDateString = endDate.format('YYYY-MM-DDTHH:mm:ss');
+                    let params: Params = {
+                        pageNum: 0,
+                        startDate: '',
+                        endDate: ''
+                    };
+                    params['startDate'] = startDateString;
+                    params['endDate'] = endDateString;
+                    this.router.navigate(
+                        [
+
+                        ],
+                        {
+                            relativeTo: this.route,
+                            queryParams: params,
+                            queryParamsHandling: 'merge'
+                        });
+
+                }
+            })
+        );
+    }
+    loadPayments(page: number | undefined, username: string | undefined,
+        startDate: string | undefined, endDate: string | undefined): void {
+        this.subscription.add(
+            this.paymentService.getAllPaginated(page ? page : 0, 15, username ? username : '', startDate, endDate).subscribe({
                 next: (r: any) => {
                     this.payments = r.result;
                     this.currentPage = r.currentPage;
