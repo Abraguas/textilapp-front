@@ -76,7 +76,11 @@ export class StockMovementService {
         const requestOptions = { headers: headers, params: params };
         return this.http.get<StockMovementDTO[]>(`${this.API_URL}/report`, requestOptions);
     }
-    getAllMovements(): Observable<StockMovementProdDTO[]> {
+    getAllMovements(
+        searchString: string,
+        startDate: string | undefined,
+        endDate: string | undefined
+    ): Observable<StockMovementProdDTO[]> {
         let auth_token = localStorage.getItem('token');
         const headers = new HttpHeaders({
 
@@ -85,7 +89,13 @@ export class StockMovementService {
             'Authorization': `Bearer ${auth_token}`
 
         });
-        const requestOptions = { headers: headers };
+        let params = new HttpParams();
+        params = params.append('searchString', searchString);
+        if (startDate && endDate) {
+            params = params.append('startDate', startDate);
+            params = params.append('endDate', endDate);
+        }
+        const requestOptions = { headers: headers, params: params };
         return this.http.get<StockMovementProdDTO[]>(`${this.API_URL}`, requestOptions);
     }
 }
