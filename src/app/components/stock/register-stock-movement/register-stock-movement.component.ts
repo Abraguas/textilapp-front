@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription, first } from 'rxjs';
 import { Product } from 'src/app/models/product';
 import { StockMovement } from 'src/app/models/stock-movement';
 import { ProductService } from 'src/app/services/product.service';
@@ -21,6 +21,7 @@ const swal: SweetAlert = require('sweetalert');
 export class RegisterStockMovementComponent implements OnInit, OnDestroy {
     Math: any = Math;
     form: FormGroup;
+    nameForm: FormGroup;
     defaultRoute: string = "../../assets/img/default-item.jpg";
     products: Product[];
     selectedProduct: Product | undefined;
@@ -34,7 +35,8 @@ export class RegisterStockMovementComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private productService: ProductService,
         private sessionService: SessionService,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) {
         this.form = this.formBuilder.group(
             {
@@ -45,6 +47,9 @@ export class RegisterStockMovementComponent implements OnInit, OnDestroy {
 
             }
         );
+        this.nameForm = this.formBuilder.group({
+            name: [,]
+        });
     }
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
@@ -56,7 +61,36 @@ export class RegisterStockMovementComponent implements OnInit, OnDestroy {
                 this.updateQuantityValidators(isIncome, this.selectedProduct?.stock);
             })
         );
-        this.loadProducts();
+        this.subscription = new Subscription();
+        this.subscription.add(
+            this.route.queryParams.subscribe((params) => {
+                this.loadProducts(params['searchString']);
+            })
+        );
+        this.route.queryParams
+            .pipe(first())
+            .subscribe(params => {
+                this.nameForm.patchValue({
+                    name: params['searchString'] ? params['searchString'] : ''
+                });
+            });
+        this.subscription.add(
+            this.nameForm.controls['name'].valueChanges.subscribe((value) => {
+                let params: Params = {
+                    searchString: ''
+                };
+                params['searchString'] = value;
+                this.router.navigate(
+                    [
+
+                    ],
+                    {
+                        relativeTo: this.route,
+                        queryParams: params,
+                        queryParamsHandling: 'merge'
+                    });
+            })
+        );
     }
     updateQuantityValidators(isIncome: boolean, prodStock: number | undefined): void {
         this.form.controls['quantity'].setValidators([
@@ -65,9 +99,9 @@ export class RegisterStockMovementComponent implements OnInit, OnDestroy {
         ]);
         this.form.controls['quantity'].updateValueAndValidity();
     }
-    loadProducts() {
+    loadProducts(searchString: string | undefined) {
         this.subscription.add(
-            this.productService.getAll("").subscribe({
+            this.productService.getAll(searchString ? searchString : '').subscribe({
                 next: (r: Product[]) => {
                     this.products = r;
                 },
@@ -98,7 +132,8 @@ export class RegisterStockMovementComponent implements OnInit, OnDestroy {
             this.stockMovementService.registerAll(this.stockMovements).subscribe({
                 next: () => {
                     swal({ title: 'Listo!', text: `Movimientos registrados exitosamente.`, icon: 'success' }).then(() => {
-                        this.loadProducts();
+                        this.loadProducts('');
+                        this.nameForm.reset();
                         this.selectedProduct = undefined;
                         this.stockMovements = [];
                         this.form.reset();
