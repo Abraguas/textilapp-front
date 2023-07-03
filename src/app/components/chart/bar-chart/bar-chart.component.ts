@@ -61,12 +61,15 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
                     tooltip: {
                         callbacks: this.areValuesMoney ? {
                             label: (context) => {
-                                console.log(parseFloat(context.formattedValue?.replaceAll(',', '')));
-                                return this.areValuesMoney ? parseFloat(context.formattedValue?.replaceAll(',', ''))?.toLocaleString('es-AR', {
-                                    style: 'currency',
-                                    currency: 'ARS',
-                                    minimumFractionDigits: 2,
-                                }) : parseFloat(context.formattedValue?.replaceAll('.', ''))?.toLocaleString('es-AR');
+                                let number: number = context.raw ? context.raw as number : 0
+                                if (this.areValuesMoney === true) {
+                                    return number.toLocaleString('es-AR', {
+                                        style: 'currency',
+                                        currency: 'ARS',
+                                        minimumFractionDigits: 2,
+                                    })
+                                }
+                                return number.toLocaleString('es-AR');
                             },
                         } : undefined,
                     }
@@ -76,6 +79,9 @@ export class BarChartComponent implements AfterViewInit, OnChanges {
         });
     }
     updateChart(): void {
+        if (!this.chart) {
+            return;
+        }
         let data = {
             labels: [],
             datasets: [{
