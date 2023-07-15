@@ -260,6 +260,4 @@ export class CategoryAbmPageComponent implements OnInit, OnDestroy {
         return true;
     }
 }
-{
 
-}
