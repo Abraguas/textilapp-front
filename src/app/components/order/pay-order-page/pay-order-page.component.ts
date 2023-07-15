@@ -33,7 +33,7 @@ export class PayOrderPageComponent implements OnInit {
         private router: Router,
         private sessionService: SessionService
     ) {
-        this.mp = new MercadoPago('APP_USR-8289a4b1-1b65-4a4a-8acb-526184559cef');
+        this.mp = new MercadoPago('APP_USR-dfe0ebe1-55fd-4e4f-9966-4271e7c90a55');
         this.bricksBuilder = this.mp.bricks();
 
     }
